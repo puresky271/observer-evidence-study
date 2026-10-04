@@ -13,7 +13,13 @@ secrets*.toml
 # outside the repository.
 deidentification_denylist.json
 
-# Held back by the 2026-10-05 scan: carries canon character identities.
-# Kept on disk for audit continuity, excluded from version control until an
-# opaque-ID derivative replaces it.
-audits/confirmatory_query_readiness_report.json
+# Readiness reports carry canon character identities until an opaque-ID
+# derivative exists (see RELEASE_BLOCKERS.md). The pattern is broader than any
+# file currently on disk on purpose: a narrow rule stops matching the moment a
+# copy is renamed, and a stale unversioned duplicate of this report did sit here
+# until 2026-10-05. The tracked freeze in audits/ is not matched.
+audits/confirmatory_query_readiness_report*.json
+
+# Any artifact staging area: research material enters this repository only as a
+# de-identified derivative, never by being copied in first.
+staging_not_for_release/
