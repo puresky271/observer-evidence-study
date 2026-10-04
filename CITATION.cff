@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+title: "Observer-Scoped Evidence: Release Candidate"
+message: "Please cite the accompanying manuscript and the exact release tag."
+type: software
+authors:
+  - family-names: "Observer Evidence Study"
+    given-names: "Contributors"
+date-released: 2026-10-04
+license: MIT
+repository-code: https://github.com/REPLACE_AFTER_REVIEW/observer-evidence-study

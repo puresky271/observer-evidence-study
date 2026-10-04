@@ -1,0 +1,86 @@
+{
+  "schema_version": "part1-baseline-freeze-v2",
+  "freeze_date": "2026-10-04",
+  "status": "FROZEN",
+  "scope": "Part I protocol feasibility, external-validity layer, and fixed external harness case study",
+  "v15_external_validity": {
+    "family_count": 12,
+    "package_lineage_count": 9,
+    "scene_class_count": 4,
+    "projection_conditions": 216,
+    "model_calls": 0,
+    "validation_status": "PASS",
+    "artifact_status": "FROZEN_NO_MODEL",
+    "interpretation": "protocol transfer and coverage stress evidence; not a population-level geographic generalization estimate"
+  },
+  "observer_protocol": {
+    "development_families": 6,
+    "development_conditions": 144,
+    "sealed_families": 12,
+    "sealed_conditions": 288,
+    "e0_status": "PASS",
+    "e1_structural_status": "PASS",
+    "model_calls": 0
+  },
+  "twin_gate_v3": {
+    "status": "PASS",
+    "arms_tested": 288,
+    "hidden_twin_comparisons": 216,
+    "perturbation_sensitive_arms": 216,
+    "families_with_detection_power": 9,
+    "visible_positive_controls": 9,
+    "model_calls": 0,
+    "scope": "tested hidden-state end-window leak class only"
+  },
+  "validity_gate": {
+    "status": "PASS",
+    "families": 3,
+    "conditions": 72,
+    "source_attested_sensitive_arms": 50,
+    "hidden_expiry_comparisons": 24,
+    "model_calls": 0,
+    "scope": "projection-level source-attested validity; no model-level validity claim"
+  },
+  "external_gatemem_case": {
+    "status": "AUDITED_CASE_STUDY",
+    "commit": "603f9f4b4ba4b77f043c20f85687fa016fd720b0",
+    "checkpoints": 552,
+    "privacy_context_leakage": "126/184",
+    "deletion_context_leakage": "141/184",
+    "answer_leakage": "0%",
+    "provider": "stub",
+    "policy": "TF-IDF rag_policy",
+    "model_calls": 0,
+    "interpretation": "single external harness/domain case study; not a cross-system estimate"
+  },
+  "exploratory_response_usability": {
+    "status": "DESCRIPTIVE_ONLY",
+    "slots": 288,
+    "successful_calls": 288,
+    "usable": 217,
+    "empty": 68,
+    "finish_reason_length": 71,
+    "semantic_rating": "PENDING",
+    "independent_unit": "family"
+  },
+  "claim_boundaries": [
+    "No model semantic accuracy or failure-rate claim.",
+    "No inter-rater reliability claim; semantic rating remains pending.",
+    "No population-level geographic generalization claim.",
+    "No claim that the tested gates cover all possible leak classes.",
+    "No redistribution of upstream benchmark files, complete answers, hidden checkpoints, production secrets, or reversible IP/location mappings."
+  ],
+  "source_hashes": {
+    "v15_validation_report": "1BC1AC38C8AAF3CDF7B58B23234A956BCFC5C88A7530146DCF7FC6F3B5AB41CB",
+    "v15_artifact_manifest": "36E0B8C7727A36FC927E53A4C15AB4FA04C8AFEF4CFDA16806AB9EFA0BADEDA2",
+    "e0_gate_report": "D87E2196680034042B7B3A522B8AB81EF1EB2FF671F4C47F24B0D4336D556C6D",
+    "e1_metrics": "D755DC21956BA33F28344A2A3C2DF334EC770A27A497A9E7A3293D3055CB45F6",
+    "twin_gate_report_v3": "A350914C87B2F99E58BF2C5434684946A4F57CB37A2912840A4E7FF0B88A92E0",
+    "validity_validation_report": "55BB4BEF9CA2C92E2DFDA1C0C8A4A401D08BCA00F40DD565D6FD98FC33A27F71",
+    "e2_full_validation": "EDC9731961770A632DF61F885CC263AEF43FB9A245A37A54F52A6CFADB92A0E6",
+    "en_source": "CC18BE8A708E477F416940FE96B7DE3167B2C0029D5E2331C6485BC08AEFE859",
+    "zh_source": "F91805BB76AD1E875B9A6FC509C751DCDA5A8DDC4EB742B1D899A8FA57A30BED",
+    "en_pdf": "CD9E65B861CAEF5F7D74F03D2BAFCD7C3C6B8AAAC550F3A8F7841BBAD716AE9C",
+    "zh_pdf": "207E3042E06F91D8423ED0D9D96C10B1E73AAA54FEE6DFD0BEE4242DE54AFBBA"
+  }
+}

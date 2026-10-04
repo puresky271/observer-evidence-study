@@ -1,0 +1,11 @@
+{
+  "_comment": [
+    "Explicit exemptions from the de-identification denylist. An exemption is",
+    "printed in the scan output with its reason; it is never silent. Adding an",
+    "entry here is a reviewable act, which is the point: a rule with no way to",
+    "be waived gets waived informally instead."
+  ],
+  "README.md": "Names the host project only inside the sentence disclaiming that its expressive content, production secrets, reversible location mappings, upstream benchmark files, hidden checkpoints and review keys are included. Removing the name would make the disclaimer unverifiable.",
+  "DATA_LICENSE": "Same disclaimer sentence as README.md, stating what the data licence does not cover.",
+  "scan_release_deidentification.py": "Contains synthetic leak-shaped fixtures inside its own self_test so the scanner can prove it is able to exclude something. The fixtures are constructed literals, not real data."
+}

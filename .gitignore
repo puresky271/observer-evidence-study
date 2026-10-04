@@ -1,0 +1,19 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+figures/exported/*.png
+figures/exported/*.pdf
+release_key.json
+review_key.json
+secrets*.toml
+
+# Pre-publication de-identification (see RELEASE_BLOCKERS.md).
+# The denylist must never enter version control: a file that enumerates the
+# forbidden tokens is itself a leak, which is why the scanner loads it from
+# outside the repository.
+deidentification_denylist.json
+
+# Held back by the 2026-10-05 scan: carries canon character identities.
+# Kept on disk for audit continuity, excluded from version control until an
+# opaque-ID derivative replaces it.
+audits/confirmatory_query_readiness_report.json

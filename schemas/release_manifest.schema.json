@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["schema_version", "status", "files"],
+  "properties": {
+    "schema_version": {"const": "observer-study-release-manifest-v1"},
+    "status": {"enum": ["DRAFT_NOT_PUBLIC", "PUBLIC"]},
+    "files": {"type": "array", "items": {"type": "object", "required": ["path", "category", "source", "upstream_license_or_tos", "transformation", "real_world_content", "reversible_mapping", "sha256", "allowed_use", "exclusion_reason"]}}
+  }
+}

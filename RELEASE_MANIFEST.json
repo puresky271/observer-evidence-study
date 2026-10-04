@@ -1,0 +1,14 @@
+{
+  "schema_version": "observer-study-release-manifest-v1",
+  "status": "DRAFT_NOT_PUBLIC",
+  "canonical_local_source": "D:/python/observer-evidence-study-release",
+  "files": [
+    {"path": "src/", "category": "original_code", "source": "this release", "upstream_license_or_tos": "none", "transformation": "none", "real_world_content": false, "reversible_mapping": false, "sha256": "directory-hash-generated-at-release", "allowed_use": "code reuse under LICENSE", "exclusion_reason": ""},
+    {"path": "schemas/", "category": "schema_and_validator", "source": "this release", "upstream_license_or_tos": "none", "transformation": "none", "real_world_content": false, "reversible_mapping": false, "sha256": "directory-hash-generated-at-release", "allowed_use": "protocol reuse", "exclusion_reason": ""},
+    {"path": "data/synthetic_opaque/", "category": "synthetic_opaque_data", "source": "this release", "upstream_license_or_tos": "none", "transformation": "opaque ID transformation", "real_world_content": false, "reversible_mapping": false, "sha256": "directory-hash-generated-at-release", "allowed_use": "CC-BY-4.0 candidate", "exclusion_reason": ""},
+    {"path": "figures/source_data/", "category": "figure_source_data", "source": "frozen Part I baseline", "upstream_license_or_tos": "see audit records", "transformation": "derived aggregate only", "real_world_content": false, "reversible_mapping": false, "sha256": "generated-at-release", "allowed_use": "reproduce figures", "exclusion_reason": ""},
+    {"path": "figures/scripts/", "category": "figure_script", "source": "this release", "upstream_license_or_tos": "none", "transformation": "none", "real_world_content": false, "reversible_mapping": false, "sha256": "generated-at-release", "allowed_use": "reproduce figures", "exclusion_reason": ""},
+    {"path": "audits/", "category": "audit_report", "source": "this release", "upstream_license_or_tos": "see report", "transformation": "aggregated and hashed", "real_world_content": false, "reversible_mapping": false, "sha256": "generated-at-release", "allowed_use": "audit and reproduction", "exclusion_reason": ""},
+    {"path": "references/", "category": "third_party_reference", "source": "upstream repositories and papers", "upstream_license_or_tos": "per-source records", "transformation": "metadata only", "real_world_content": false, "reversible_mapping": false, "sha256": "generated-at-release", "allowed_use": "citation and acquisition instructions", "exclusion_reason": "raw upstream data not redistributed"}
+  ]
+}
