@@ -51,10 +51,28 @@ COORD = re.compile(r"3[5-7]\.\d{4,}\s*,\s*13[89]\.\d{4,}")
 SECRET = re.compile(
     r"(?i)(sk-[A-Za-z0-9]{16,}|api[_-]?key\s*[:=]\s*\S{8,}|password\s*[:=]\s*\S{6,}"
     r"|gho_[A-Za-z0-9]{20,}|BEGIN [A-Z ]*PRIVATE KEY)")
-USERPATH = re.compile(r"(?i)[A-Z]:\\+Users\\+[A-Za-z0-9_.]+|/home/[a-z0-9_]+/")
+# Any absolute path, not only one under a home directory. The first version of
+# this pattern matched only a drive letter followed by a Users directory, which
+# is why a published README could carry an absolute path to the host project
+# through a scan whose whole job was to stop that: the leak was real, the regex
+# was narrower than the claim. Doubled separators are matched too, since JSON and
+# Markdown both escape them.
+USERPATH = re.compile(r"(?i)\b[A-Za-z]:[\\/]{1,2}[A-Za-z0-9_.\-]+|[\\/]{1,2}home[\\/]+[a-z0-9_]+[\\/]")
 UPSTREAM_FIELD = re.compile(r"\b(leak_targets|judge_spec|not_include)\b")
 UPSTREAM_CKPT = re.compile(r"\b(education|household|medical|office)_episode_[a-z0-9_]+_ckpt_\d+\b")
 SKIP_DIRS = {".git", "__pycache__", "build", "venv", "node_modules", ".pytest_cache"}
+
+# The self-test fixtures are constructed rather than written literally. A literal
+# absolute path or upstream checkpoint id in this file is caught by this file's own
+# scan, and the alternative -- allowlisting the scanner -- is the mechanism that
+# let a real leak through once already: an exemption granted for a synthetic
+# fixture also covers anything added to that file later, unreviewed. Constructing
+# them keeps the allowlist down to the two disclaimer sentences that genuinely
+# need it.
+FIXTURE_PATH = ("script at " + chr(67) + ":" + chr(92) * 2 + "Users" + chr(92) * 2
+                + "someone" + chr(92) * 2 + "repo" + chr(92) * 2 + "x.py\n")
+FIXTURE_CKPT = ("office" + chr(95) + "episode" + chr(95) + "custom" + chr(95) + "en" + chr(95)
+                + "001" + chr(95) + "a" + chr(95) + "b" + chr(95) + "ckpt" + chr(95) + "03")
 
 
 def load_denylist(path: Path) -> dict:
@@ -122,31 +140,106 @@ def scope_of(path: Path, toplevel: Path | None, tracked: set[str] | None) -> str
     return "gating" if rel in tracked else "advisory"
 
 
+def reason_class(reason: str) -> str:
+    return reason.split(":", 1)[0]
+
+
+def apply_allowlist(result: dict, entry) -> dict:
+    """Exempt only the reason classes the allowlist names, never the whole file.
+
+    The first version exempted a file outright, keyed on its basename. That let a
+    published README carry an absolute host-project path straight through: the
+    file was allowlisted for naming the host project inside a disclaimer, and the
+    exemption then covered a leak in a command example nobody had reviewed. An
+    exemption scoped to a class is reviewable; an exemption scoped to a file is
+    an exemption from the scan.
+    """
+    if isinstance(entry, str):
+        entry = {"reason": entry, "exempt_classes": None}
+    exempt = entry.get("exempt_classes")
+    result["allowlist_reason"] = entry.get("reason", "")
+    if exempt is None:
+        result["decision"] = "ALLOWLISTED"
+        result["allowlist_scope"] = "whole_file_UNSCOPED"
+        result["still_excluded"] = []
+        return result
+    kept = [r for r in result["reasons"] if reason_class(r) not in set(exempt)]
+    waived = [r for r in result["reasons"] if reason_class(r) in set(exempt)]
+    result["allowlist_scope"] = f"classes:{','.join(sorted(exempt))}"
+    result["waived"] = waived
+    result["still_excluded"] = kept
+    result["decision"] = "EXCLUDE" if kept else "ALLOWLISTED"
+    return result
+
+
+def load_allowlist(path: Path) -> dict:
+    data = json.loads(path.read_text(encoding="utf-8"))
+    data.pop("_comment", None)
+    unscoped = sorted(k for k, v in data.items() if isinstance(v, str) or v.get("exempt_classes") is None)
+    if unscoped:
+        print(f"WARNING: {len(unscoped)} allowlist entr{'y' if len(unscoped) == 1 else 'ies'} exempt a "
+              f"whole file rather than named reason classes: {', '.join(unscoped)}")
+    return data
+
+
 def self_test(deny: dict, tmp: Path) -> dict:
     """The scan must be able to admit and to exclude, or ADMIT means nothing."""
     clean = tmp / "clean.md"
     dirty_canon = tmp / "dirty_canon.md"
     dirty_path = tmp / "dirty_path.md"
     dirty_ckpt = tmp / "dirty_ckpt.jsonl"
+    dirty_nonhome = tmp / "dirty_nonhome.md"
     clean.write_text("A study over three families with opaque identifiers.\n", encoding="utf-8")
     dirty_canon.write_text(f"family {deny['canon_identities'][0]} admitted\n", encoding="utf-8")
-    dirty_path.write_text(r"script at C:\Users\someone\repo\x.py" + "\n", encoding="utf-8")
+    dirty_path.write_text(FIXTURE_PATH, encoding="utf-8")
     dirty_ckpt.write_text('{"leak_targets": ["x"], "checkpoint_id": '
-                          '"office_episode_custom_en_001_a_b_ckpt_03"}\n', encoding="utf-8")
+                          f'"{FIXTURE_CKPT}"' + '}\n', encoding="utf-8")
+    # The regression that motivated broadening USERPATH: an absolute path to a
+    # project directory that is not under any home directory.
+    dirty_nonhome.write_text("run it with --input-root " + chr(68) + ":" + chr(92) * 2
+                             + "python" + chr(92) * 2 + "some_project" + chr(92) * 2
+                             + "experiments\n", encoding="utf-8")
     tracked = {"clean.md", "dirty_canon.md"}
+
+    mixed = classify(dirty_nonhome, deny)
+    mixed["reasons"] = ["canon_identity:1_x", "absolute_user_path:D:"]
+    scoped_one = apply_allowlist(dict(mixed), {"reason": "r", "exempt_classes": ["canon_identity"]})
+    scoped_both = apply_allowlist(dict(mixed), {"reason": "r",
+                                                "exempt_classes": ["canon_identity", "absolute_user_path"]})
+    unscoped = apply_allowlist(dict(mixed), "a bare string exempts everything")
+
     checks = {
         "admits_a_clean_file": classify(clean, deny)["decision"] == "ADMIT",
         "excludes_a_canon_identity": classify(dirty_canon, deny)["decision"] == "EXCLUDE",
         "excludes_an_absolute_user_path": classify(dirty_path, deny)["decision"] == "EXCLUDE",
         "excludes_upstream_hidden_fields": classify(dirty_ckpt, deny)["decision"] == "EXCLUDE",
         "denylist_is_not_empty": bool(deny["canon_identities"]) and bool(deny["real_place_names"]),
+        # The regression: an absolute path outside any home directory. The old
+        # pattern admitted this file, and a published README carried exactly it.
+        "excludes_a_non_home_absolute_path": classify(dirty_nonhome, deny)["decision"] == "EXCLUDE",
         # The scope split must actually discriminate: a tracked leak gates, an
         # untracked one only advises, and without git everything gates.
         "tracked_file_is_gating": scope_of(tmp / "dirty_canon.md", tmp, tracked) == "gating",
         "untracked_file_is_advisory": scope_of(tmp / "dirty_ckpt.jsonl", tmp, tracked) == "advisory",
         "no_git_makes_everything_gating": scope_of(tmp / "dirty_ckpt.jsonl", None, None) == "gating",
+        # An allowlist scoped to one class must not waive the others.
+        "scoped_allowlist_still_excludes_unwaived_classes": scoped_one["decision"] == "EXCLUDE",
+        "scoped_allowlist_waives_only_what_it_names": scoped_both["decision"] == "ALLOWLISTED",
+        "unscoped_allowlist_is_labelled_as_such":
+            unscoped["allowlist_scope"] == "whole_file_UNSCOPED",
+        # The fixtures are constructed from character codes, so a typo would make
+        # them stop matching and the exclusion checks above would pass for the
+        # wrong reason. These assert the fixtures are what they claim to be.
+        "fixture_path_really_matches_the_path_pattern": bool(USERPATH.search(FIXTURE_PATH)),
+        "fixture_checkpoint_really_matches_the_checkpoint_pattern":
+            bool(UPSTREAM_CKPT.search(FIXTURE_CKPT)),
+        # This file needs no allowlist entry, which is the point of constructing
+        # the fixtures: a scanner that had to exempt itself could not be used to
+        # argue that an exemption is exceptional.
+        "this_source_file_is_admitted_by_its_own_rules":
+            classify(Path(__file__).resolve(), deny)["decision"] == "ADMIT",
     }
-    for path in (clean, dirty_canon, dirty_path, dirty_ckpt):
+    for path in (clean, dirty_canon, dirty_path, dirty_ckpt, dirty_nonhome):
         path.unlink(missing_ok=True)
     failed = sorted(k for k, v in checks.items() if v is not True)
     return {"checks": checks, "failed": failed,
@@ -173,7 +266,7 @@ def main() -> int:
     args = parser.parse_args()
 
     deny = load_denylist(args.denylist)
-    allow = json.loads(args.allowlist.read_text(encoding="utf-8")) if args.allowlist else {}
+    allow = load_allowlist(args.allowlist) if args.allowlist else {}
     if args.self_test:
         import tempfile
         with tempfile.TemporaryDirectory() as tmp:
@@ -198,8 +291,7 @@ def main() -> int:
                 continue
             result = classify(path, deny)
             if result["decision"] == "EXCLUDE" and path.name in allow:
-                result["decision"] = "ALLOWLISTED"
-                result["allowlist_reason"] = allow[path.name]
+                apply_allowlist(result, allow[path.name])
             result["scope"] = scope
             result["tracked"] = scope == "gating" and tracked is not None
             table[str(path)] = result
@@ -227,22 +319,27 @@ def main() -> int:
     if allowed:
         print("\n--- ALLOWLISTED (exempt from the denylist, with a recorded reason) ---")
         for key in allowed:
+            entry = table[key]
             print(f"  {Path(key).name}")
-            print(f"      reason: {table[key]['allowlist_reason']}")
-            for reason in table[key]["reasons"]:
-                print(f"      would otherwise exclude: {reason}")
+            print(f"      reason: {entry['allowlist_reason']}")
+            print(f"      scope: {entry.get('allowlist_scope', 'whole_file_UNSCOPED')}")
+            for reason in entry.get("waived", entry["reasons"]):
+                print(f"      waived: {reason}")
     if gating_exclude:
         print("\n--- EXCLUDE (tracked: this WOULD be published) ---")
         for key in gating_exclude:
             print(f"  {Path(key).name}")
-            for reason in table[key]["reasons"]:
+            entry = table[key]
+            if entry.get("allowlist_scope"):
+                print(f"      allowlist covers {entry['allowlist_scope']} but not these:")
+            for reason in entry.get("still_excluded") or entry["reasons"]:
                 print(f"      {reason}")
     if advisory_exclude:
         print("\n--- ADVISORY (untracked on disk inside the repository: not published today,"
               " but one `git add -f` or one .gitignore edit away) ---")
         for key in advisory_exclude:
             print(f"  {Path(key).name}")
-            for reason in table[key]["reasons"]:
+            for reason in table[key].get("still_excluded") or table[key]["reasons"]:
                 print(f"      {reason}")
     if args.json:
         args.json.write_text(json.dumps(table, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

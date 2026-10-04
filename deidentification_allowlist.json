@@ -1,11 +1,34 @@
 {
   "_comment": [
     "Explicit exemptions from the de-identification denylist. An exemption is",
-    "printed in the scan output with its reason; it is never silent. Adding an",
-    "entry here is a reviewable act, which is the point: a rule with no way to",
-    "be waived gets waived informally instead."
+    "printed in the scan output with its reason and its scope; it is never silent.",
+    "",
+    "Each entry names the reason CLASSES it waives, not the file. A whole-file",
+    "exemption is an exemption from the scan: the first version of this file",
+    "keyed on basename alone, so a README allowlisted for naming the host project",
+    "inside a disclaimer also waived an absolute host-project path that had been",
+    "added later, in a command example nobody re-reviewed. It was published.",
+    "",
+    "A bare string value still works and is reported as whole_file_UNSCOPED so",
+    "that an unreviewed exemption is visible rather than inherited.",
+    "",
+    "An entry for scan_release_deidentification.py was removed on 2026-10-05.",
+    "The scanner no longer needs an exemption: its self-test fixtures are built",
+    "from character codes, and its --self-test asserts that its own source file",
+    "is ADMIT. A scanner that had to exempt itself could not be used to argue",
+    "that an exemption is exceptional, and that entry had already been widened in",
+    "effect once: granted for the fixtures, it then covered a real absolute path",
+    "under the same whole-file rule.",
+    "",
+    "Adding an entry here is a reviewable act, which is the point: a rule with no",
+    "way to be waived gets waived informally instead."
   ],
-  "README.md": "Names the host project only inside the sentence disclaiming that its expressive content, production secrets, reversible location mappings, upstream benchmark files, hidden checkpoints and review keys are included. Removing the name would make the disclaimer unverifiable.",
-  "DATA_LICENSE": "Same disclaimer sentence as README.md, stating what the data licence does not cover.",
-  "scan_release_deidentification.py": "Contains synthetic leak-shaped fixtures inside its own self_test so the scanner can prove it is able to exclude something. The fixtures are constructed literals, not real data."
+  "README.md": {
+    "reason": "Names the host project only inside the sentence disclaiming that its expressive content, production secrets, reversible location mappings, upstream benchmark files, hidden checkpoints and review keys are included. Removing the name would make the disclaimer unverifiable.",
+    "exempt_classes": ["canon_identity", "real_place_name"]
+  },
+  "DATA_LICENSE": {
+    "reason": "Same disclaimer sentence as README.md, stating what the data licence does not cover.",
+    "exempt_classes": ["canon_identity", "real_place_name"]
+  }
 }

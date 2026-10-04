@@ -31,12 +31,16 @@ has been replaced by the two sets below, each of which can be.
 | Scan | Candidate set | Result |
 |---|---|---|
 | release-candidate scan | the 14 artifacts this document names: both manuscripts, the v3 GateMem reports, the corpus instance file, the v4 twin reports, the v3 validity analysis, the v6 freeze and manifest, the v3 consistency audit, the gate-status register | 1 ADMIT, 13 EXCLUDE, exit 1 |
-| repository scan | the tracked set of *this* repository (`git ls-files`) | 0 EXCLUDE, 3 ALLOWLISTED, exit 0 |
+| repository scan | the tracked set of *this* repository (`git ls-files`) | 0 EXCLUDE, exit 0 |
 
 The repository row states the invariant, not the file count: the count moves every
 time a file is added, and a count written into prose is stale the next commit. The
-claim that matters is that nothing tracked is excluded, and the three allowlisted
-files are the two disclaimer sentences and the scanner's own self-test fixtures.
+claim that matters is that nothing tracked is excluded. Two files are allowlisted,
+both only for the sentence in which they name the host project in order to
+disclaim its content. A third exemption, for the scanner's own self-test fixtures,
+was removed: the fixtures are now built from character codes and the scanner's
+`--self-test` asserts that its own source file is admitted, so a scanner that no
+longer needs to exempt itself is the stronger position.
 
 The only admitted release candidate is `part1_baseline_freeze_revision_v6`. Every
 other one is a blocker instance below. The repository scan gates on the tracked
@@ -130,6 +134,58 @@ shape and field.
   multiple Tokyo locations. Place names in prose are acceptable; a locator that
   resolves to real coordinates is not. The scan reports both and a human decides.
 
+## What was already published, and cannot be unpublished (2026-10-05)
+
+Two absolute local paths reached the public repository before the gate could stop
+them. They are fixed at HEAD and **still present in git history** at commits
+`c99840e` and `1f8e9ea`. A public push is cached, forked and indexed, so removing
+a line from HEAD is a correction, not a retraction. What leaked:
+
+| File | Leaked value | Sensitivity |
+|---|---|---|
+| `README.md` (line 21) | an absolute path to the host project's study directory, inside a reproduction command | names the host project and the author's directory layout |
+| `RELEASE_MANIFEST.json` | `canonical_local_source`, an absolute path to this checkout | author machine layout only |
+
+Neither is a secret, a credential, a canon identity or a real coordinate. Both are
+still failures of the gate that exists to prevent them, and the second was found
+only after the gate was fixed — so the honest statement is that the scan reported
+clean while a tracked file leaked, twice.
+
+Three reasons the scan missed them, all now fixed:
+
+1. **The path pattern was narrower than the claim.** `USERPATH` matched a drive
+   letter followed by a `Users` directory. A path to a project directory anywhere
+   else on the drive did not match. Broadened to any drive-letter absolute path,
+   with doubled separators, since JSON and Markdown both escape them.
+2. **The allowlist exempted whole files.** `README.md` was allowlisted for naming
+   the host project inside its disclaimer, keyed on basename. That exemption then
+   covered a leak added later, in a command example nobody re-reviewed. Allowlist
+   entries now name the reason *classes* they waive; an unwaived class still
+   excludes, and a bare-string entry is reported as `whole_file_UNSCOPED` rather
+   than silently honoured.
+3. **The closing condition counted only `EXCLUDE`.** A file moved to
+   `ALLOWLISTED` left the count, so an exemption was indistinguishable from a
+   clean file in the exit code. The output now prints the scope of every
+   exemption and what it waived.
+
+## The release-manifest auditor passed a manifest that measured nothing
+
+`audit_release_manifest.py` reported `PASS` over a manifest in which all seven
+`sha256` fields held the literal string `generated-at-release`, one listed
+directory did not exist, and `status` said `DRAFT_NOT_PUBLIC` while the repository
+was published. Three of its checks tested a `redistribution` field that no entry
+carried, so they could not fire. Its only status rule rejected `PUBLIC`, which
+means it failed a manifest for telling the truth about itself and passed one that
+lied — the inversion this study's own mechanism register calls out.
+
+Rewritten to check existence, digests, status and self-consistency, with a
+`--self-test` that constructs a violating manifest for each predicate, and a
+`--write-digests` mode so digests are measured rather than transcribed. Directory
+digests are sha256 over the sorted `relpath\0filesha256` lines beneath them; the
+construction is published in the manifest, because a directory hash nobody can
+recompute is not a hash. Against the manifest as it stood, the rewrite reports
+nine errors.
+
 ## Scanner scope defect (found and fixed 2026-10-05)
 
 The scanner walked the working tree and gated on it. That is the wrong
@@ -202,7 +258,12 @@ Two conditions, both required:
    and each of the three blocker classes above must be closed by transforming a
    derivative, not by relaxing the scanner.
 
-The scanner carries its own `--self-test`, which must pass before either verdict
-is trusted; a scanner that could not exclude anything would otherwise report a
-clean repository by construction. Self-test as of this revision: 8 checks, 0
-failed, `SELF_TEST_PASS`.
+Both gates carry a `--self-test`, and both must pass before either verdict is
+trusted; a gate that could not fail would otherwise report a clean repository by
+construction. Neither self-test count is quoted here, for the reason given above:
+a number in prose is stale the next time a check is added. Run them.
+
+A third condition applies to `RELEASE_MANIFEST.json` specifically:
+`audit_release_manifest.py --manifest RELEASE_MANIFEST.json --root .` must report
+`PASS`. Its `--self-test` constructs a violating manifest for every predicate, so
+a check that cannot fire is caught there rather than discovered by a reviewer.

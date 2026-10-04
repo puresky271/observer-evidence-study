@@ -1,14 +1,95 @@
 {
-  "schema_version": "observer-study-release-manifest-v1",
-  "status": "DRAFT_NOT_PUBLIC",
-  "canonical_local_source": "D:/python/observer-evidence-study-release",
+  "schema_version": "observer-study-release-manifest-v2",
+  "status": "PUBLIC",
+  "status_note": "The repository is published. What is public is the tooling, the schemas and the opaque synthetic fixtures listed below. The research material - manuscripts, gate reports, freezes, corpus measurement - is deliberately absent and is gated by RELEASE_BLOCKERS.md.",
+  "remote": "https://github.com/puresky271/observer-evidence-study",
+  "digest_construction": "For a directory, sha256 over the UTF-8 encoding of the sorted lines 'relpath\\0filesha256' for every file beneath it, skipping .git, __pycache__, build, venv, node_modules and .pytest_cache. Recompute with: audit_release_manifest.py --manifest RELEASE_MANIFEST.json --root . --write-digests. Digests are measured, never transcribed; the previous revision of this file carried the literal string 'generated-at-release' in all seven sha256 fields and its auditor passed it.",
   "files": [
-    {"path": "src/", "category": "original_code", "source": "this release", "upstream_license_or_tos": "none", "transformation": "none", "real_world_content": false, "reversible_mapping": false, "sha256": "directory-hash-generated-at-release", "allowed_use": "code reuse under LICENSE", "exclusion_reason": ""},
-    {"path": "schemas/", "category": "schema_and_validator", "source": "this release", "upstream_license_or_tos": "none", "transformation": "none", "real_world_content": false, "reversible_mapping": false, "sha256": "directory-hash-generated-at-release", "allowed_use": "protocol reuse", "exclusion_reason": ""},
-    {"path": "data/synthetic_opaque/", "category": "synthetic_opaque_data", "source": "this release", "upstream_license_or_tos": "none", "transformation": "opaque ID transformation", "real_world_content": false, "reversible_mapping": false, "sha256": "directory-hash-generated-at-release", "allowed_use": "CC-BY-4.0 candidate", "exclusion_reason": ""},
-    {"path": "figures/source_data/", "category": "figure_source_data", "source": "frozen Part I baseline", "upstream_license_or_tos": "see audit records", "transformation": "derived aggregate only", "real_world_content": false, "reversible_mapping": false, "sha256": "generated-at-release", "allowed_use": "reproduce figures", "exclusion_reason": ""},
-    {"path": "figures/scripts/", "category": "figure_script", "source": "this release", "upstream_license_or_tos": "none", "transformation": "none", "real_world_content": false, "reversible_mapping": false, "sha256": "generated-at-release", "allowed_use": "reproduce figures", "exclusion_reason": ""},
-    {"path": "audits/", "category": "audit_report", "source": "this release", "upstream_license_or_tos": "see report", "transformation": "aggregated and hashed", "real_world_content": false, "reversible_mapping": false, "sha256": "generated-at-release", "allowed_use": "audit and reproduction", "exclusion_reason": ""},
-    {"path": "references/", "category": "third_party_reference", "source": "upstream repositories and papers", "upstream_license_or_tos": "per-source records", "transformation": "metadata only", "real_world_content": false, "reversible_mapping": false, "sha256": "generated-at-release", "allowed_use": "citation and acquisition instructions", "exclusion_reason": "raw upstream data not redistributed"}
+    {
+      "path": "src/",
+      "category": "original_code",
+      "source": "this release",
+      "upstream_license_or_tos": "none",
+      "transformation": "none",
+      "real_world_content": false,
+      "reversible_mapping": false,
+      "sha256": "0a65021c46f1169196e38fbf6d3ab41615ea159171d5aa934033a364c741cf86",
+      "allowed_use": "code reuse under LICENSE",
+      "exclusion_reason": ""
+    },
+    {
+      "path": "schemas/",
+      "category": "schema_and_validator",
+      "source": "this release",
+      "upstream_license_or_tos": "none",
+      "transformation": "none",
+      "real_world_content": false,
+      "reversible_mapping": false,
+      "sha256": "ff6482ed0b323500fe60457aa8dc65e2975c10f5def2b7f088311eb052f3924b",
+      "allowed_use": "protocol reuse",
+      "exclusion_reason": ""
+    },
+    {
+      "path": "data/synthetic_opaque/",
+      "category": "synthetic_opaque_data",
+      "source": "this release",
+      "upstream_license_or_tos": "none",
+      "transformation": "opaque ID transformation",
+      "real_world_content": false,
+      "reversible_mapping": false,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "allowed_use": "CC-BY-4.0 candidate",
+      "exclusion_reason": ""
+    },
+    {
+      "path": "figures/source_data/",
+      "category": "figure_source_data",
+      "source": "frozen Part I baseline",
+      "upstream_license_or_tos": "see audit records",
+      "transformation": "derived aggregate only",
+      "real_world_content": false,
+      "reversible_mapping": false,
+      "sha256": "723ee14ce8fb6d72b2055253d9c5aa33860cae3d2cd751d0e5967bf5f6d00158",
+      "allowed_use": "reproduce figures",
+      "exclusion_reason": ""
+    },
+    {
+      "path": "figures/scripts/",
+      "category": "figure_script",
+      "source": "this release",
+      "upstream_license_or_tos": "none",
+      "transformation": "none",
+      "real_world_content": false,
+      "reversible_mapping": false,
+      "sha256": "aee73bbed002c77a2971d75ec2bddfcaa253830f8edf3ea39310a3137250ecd8",
+      "allowed_use": "reproduce figures",
+      "exclusion_reason": ""
+    },
+    {
+      "path": "audits/",
+      "category": "audit_report",
+      "source": "this release",
+      "upstream_license_or_tos": "see report",
+      "transformation": "aggregated and hashed",
+      "real_world_content": false,
+      "reversible_mapping": false,
+      "sha256": "261afc7fcb3af16f0e76908649ce7e4372d3586a25e713fccbc6fcb46216c0b8",
+      "allowed_use": "audit and reproduction",
+      "exclusion_reason": ""
+    },
+    {
+      "path": "references/",
+      "category": "third_party_reference",
+      "source": "upstream repositories and papers",
+      "upstream_license_or_tos": "per-source records",
+      "transformation": "metadata only",
+      "real_world_content": false,
+      "reversible_mapping": false,
+      "sha256": "",
+      "digest_status": "NOT_COMPUTED",
+      "planned": true,
+      "allowed_use": "citation and acquisition instructions",
+      "exclusion_reason": "raw upstream data not redistributed; the directory does not exist yet, and the previous revision of this manifest listed it as though it did"
+    }
   ]
 }
