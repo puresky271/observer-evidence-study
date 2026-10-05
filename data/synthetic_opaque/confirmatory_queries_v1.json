@@ -1,0 +1,45 @@
+{
+  "schema_version": "confirmatory-query-authoring-v1",
+  "status": "AUTHORING_CANDIDATE",
+  "oracle_read": false,
+  "families": [
+    {
+      "family_id": "family_opaque_01",
+      "scene_class_id": "synthetic_scope",
+      "query_count": 4,
+      "queries": [
+        {
+          "query_id": "family_opaque_01:confirmatory:q01",
+          "role": "current_supported",
+          "at_jst": "2026-01-01T09:00:00+09:00",
+          "question": "截至 2026-01-01T09:00:00+09:00，观察者能否根据当前证据确认 entity_99f6595b6cb4 的 entity_91af1fc1887e 状态？"
+        },
+        {
+          "query_id": "family_opaque_01:confirmatory:q02",
+          "role": "history_expiry",
+          "at_jst": "2026-01-01T12:00:00+09:00",
+          "question": "截至 2026-01-01T12:00:00+09:00，观察者能否确认 entity_99f6595b6cb4 过去是否有过 entity_91af1fc1887e 的观察记录？"
+        },
+        {
+          "query_id": "family_opaque_01:confirmatory:q03",
+          "role": "unknown_scope",
+          "at_jst": "2026-01-01T15:00:00+09:00",
+          "question": "截至 2026-01-01T15:00:00+09:00，观察者能否确认 entity_99f6595b6cb4 在 entity_7d045a8bd7cf 中具有未提供证据的 entity_91af1fc1887e 状态？"
+        },
+        {
+          "query_id": "family_opaque_01:confirmatory:q04",
+          "role": "scope_recipient_or_plan",
+          "at_jst": "2026-01-01T18:00:00+09:00",
+          "question": "截至 2026-01-01T18:00:00+09:00，观察者能否确认与 entity_99f6595b6cb4 相关的 entity_91af1fc1887e 是否属于当前观察者可直接确认的范围？"
+        }
+      ],
+      "authoring": {
+        "oracle_read": false,
+        "source_manifest_sha256": "9de8ae36254e0d25e639dc82f0fba896cfdc68d4e40cad8cc3f4261912f40a16",
+        "evidence_stream_sha256": "b78dd53d3a5600128f39e2b1d97feadcd9c9981af6190fe04144e2a635d9f92a",
+        "refresh_trace_sha256": "f2b5af5629a0c59ef9c180c969efc4a4c6113ff2e57aaedb53734bb7a87b81b6",
+        "generator": "observer_study.author_queries.v1"
+      }
+    }
+  ]
+}

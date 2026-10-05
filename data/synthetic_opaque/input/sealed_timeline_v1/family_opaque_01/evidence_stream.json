@@ -1,0 +1,19 @@
+{
+  "schema_version": "observer-study-evidence-stream-v1",
+  "evidence": [
+    {
+      "evidence_id": "evidence_opaque_01",
+      "claim": {
+        "subject_ref": "entity_subject_01",
+        "predicate": "state_current",
+        "value": "supported"
+      },
+      "scope": {
+        "target_space_ref": "space_opaque_01",
+        "observer_ref": "observer_opaque_01"
+      },
+      "observed_at_jst": "2026-01-01T09:00:00+09:00",
+      "valid_until_jst": "2026-01-01T18:00:00+09:00"
+    }
+  ]
+}

@@ -30,5 +30,13 @@
   "DATA_LICENSE": {
     "reason": "Same disclaimer sentence as README.md, stating what the data licence does not cover.",
     "exempt_classes": ["canon_identity", "real_place_name"]
+  },
+  "paper_part1_en_public.tex": {
+    "reason": "The de-identified manuscript intentionally retains one real place-name mention describing the public spatial substrate; no canon identity or coordinate mapping is waived.",
+    "exempt_classes": ["real_place_name"]
+  },
+  "paper_part1_zh_public.tex": {
+    "reason": "The de-identified manuscript intentionally retains one real place-name mention describing the public spatial substrate; no canon identity or coordinate mapping is waived.",
+    "exempt_classes": ["real_place_name"]
   }
 }

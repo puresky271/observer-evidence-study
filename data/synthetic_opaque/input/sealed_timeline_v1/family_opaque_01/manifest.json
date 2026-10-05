@@ -1,0 +1,7 @@
+{
+  "schema_version": "observer-study-family-v1",
+  "family_id": "family_opaque_01",
+  "scene_class_id": "synthetic_scope",
+  "authoring_status": "PUBLIC_SYNTHETIC_FIXTURE",
+  "contains_private_semantics": false
+}

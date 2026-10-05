@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="842" height="595" viewBox="0 0 842 595">
+<title>Part I evidence planes and audit boundary</title>
+<desc>De-identified schematic of source registry, observer evidence, evaluator-only Oracle, projection, gate audit and delivery boundary.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<text x="36" y="48" font-family="sans-serif" font-size="20" font-weight="700" fill="#1F2933">Part I: evidence planes and audit boundary</text>
+<text x="36" y="68" font-family="sans-serif" font-size="11" fill="#4B5563">The evaluator-only Oracle is retained for checking but excluded from observer-visible context.</text>
+<line x1="168" y1="241" x2="204" y2="181" stroke="#4B5563" stroke-width="2"/>
+<polygon points="204,181 197,177 197,185" fill="#4B5563"/>
+<line x1="168" y1="241" x2="204" y2="256" stroke="#4B5563" stroke-width="2"/>
+<polygon points="204,256 197,252 197,260" fill="#4B5563"/>
+<line x1="344" y1="181" x2="390" y2="219" stroke="#4B5563" stroke-width="2"/>
+<polygon points="390,219 383,215 383,223" fill="#4B5563"/>
+<line x1="344" y1="256" x2="390" y2="219" stroke="#4B5563" stroke-width="2"/>
+<polygon points="390,219 383,215 383,223" fill="#4B5563"/>
+<line x1="546" y1="219" x2="590" y2="219" stroke="#4B5563" stroke-width="2"/>
+<polygon points="590,219 583,215 583,223" fill="#4B5563"/>
+<line x1="344" y1="386" x2="655" y2="245" stroke="#4B5563" stroke-width="2"/>
+<polygon points="655,245 648,241 648,249" fill="#4B5563"/>
+<line x1="655" y1="245" x2="655" y2="358" stroke="#4B5563" stroke-width="2"/>
+<polygon points="655,358 648,354 648,362" fill="#4B5563"/>
+<rect x="36" y="217" width="132" height="48" rx="6" fill="#E8F1F8" stroke="#334E68" stroke-width="1.5"/>
+<text x="102.0" y="245.0" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#1F2933">source registry</text>
+<rect x="204" y="157" width="140" height="48" rx="6" fill="#E8F1F8" stroke="#334E68" stroke-width="1.5"/>
+<text x="274.0" y="185.0" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#1F2933">observer evidence</text>
+<rect x="204" y="232" width="140" height="48" rx="6" fill="#E8F1F8" stroke="#334E68" stroke-width="1.5"/>
+<text x="274.0" y="260.0" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#1F2933">refresh trace</text>
+<rect x="390" y="193" width="156" height="52" rx="6" fill="#D9EEE6" stroke="#334E68" stroke-width="1.5"/>
+<text x="468.0" y="223.0" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#1F2933">projection</text>
+<text x="468.0" y="211.0" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#1F2933">context</text>
+<rect x="204" y="362" width="140" height="48" rx="6" fill="#F7E5D5" stroke="#334E68" stroke-width="1.5"/>
+<text x="274.0" y="390.0" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#1F2933">evaluator-only Oracle</text>
+<rect x="590" y="193" width="130" height="52" rx="6" fill="#F5E6B8" stroke="#334E68" stroke-width="1.5"/>
+<text x="655.0" y="223.0" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#1F2933">gate audit</text>
+<rect x="590" y="358" width="160" height="52" rx="6" fill="#E5E5E5" stroke="#334E68" stroke-width="1.5"/>
+<text x="670.0" y="388.0" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#1F2933">v16 delivery boundary</text>
+<text x="36" y="490" font-family="sans-serif" font-size="10" fill="#1F2933">v16 evidence: 288 sealed projection conditions; 216 nested arms; 9 distinct hidden perturbations; 120 gate checks.</text>
+<text x="36" y="507" font-family="sans-serif" font-size="10" fill="#1F2933">Release: only derived, opaque, aggregate artifacts cross the public boundary; source and hidden labels remain local.</text>
+</svg>

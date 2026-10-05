@@ -5,6 +5,12 @@ material: the manuscripts, the gate reports, the freezes and the corpus
 measurement. Those stay out until every item below is closed, because adding
 them is the irreversible step — a public push is cached, forked and indexed.
 
+**v17 status (2026-10-05):** HMAC-derived English and Chinese manuscript copies
+are now present under `manuscripts/`. The source manuscripts, mapping sidecar,
+salt, gate reports, freezes and per-instance corpus remain outside the repository.
+The derived copies pass the literal canon-identity scan; their retained place
+prose is covered only by scoped `real_place_name` allowlist entries.
+
 The first commit's message described this snapshot as "private", which was wrong
 at the moment it was written: the repository was created public. That is recorded
 here rather than rewritten, because a commit message that contradicts the state
@@ -30,8 +36,29 @@ has been replaced by the two sets below, each of which can be.
 
 | Scan | Candidate set | Result |
 |---|---|---|
-| release-candidate scan | the 14 artifacts this document names: both manuscripts, the v3 GateMem reports, the corpus instance file, the v4 twin reports, the v3 validity analysis, the v6 freeze and manifest, the v3 consistency audit, the gate-status register | 1 ADMIT, 13 EXCLUDE, exit 1 |
+| release-candidate scan | the 14 artifacts this document names: both manuscripts, the v3 GateMem reports, the corpus instance file, the v4 twin reports, the v3 validity analysis, the v6 freeze and manifest, the v3 consistency audit, the gate-status register | recorded 2026-10-05 as 1 ADMIT, 13 EXCLUDE, exit 1 — **no longer reproduces**, see below |
 | repository scan | the tracked set of *this* repository (`git ls-files`) | 0 EXCLUDE, exit 0 |
+
+The release-candidate row's number is stale, and this document now says so rather than
+carrying it forward. Re-run with the current scanner over just the two v6 documents, the
+result is **0 ADMIT, 2 EXCLUDE, exit 1**: the v6 freeze is excluded for an
+`absolute_user_path` hit on a non-home drive letter, which is the TeX Live binary path it
+records in `manuscripts.xelatex`. Broadening `USERPATH` to catch a non-home drive letter —
+the same fix that found the second published leak — also moved that freeze from ADMIT to
+EXCLUDE, so the one candidate this document admitted is no longer admitted. The candidate
+list is stale as well: it names the v6 freeze and manifest and the v3 consistency audit,
+while the authoritative freeze chain has moved several revisions past all three. Both the
+number and the list must be regenerated before the second closing condition below can be
+evaluated; until then that condition is not measurable as written, and saying so is the
+point — a closing condition that quotes a number no command reproduces is a condition that
+can never be checked, which reads as satisfied and is not.
+
+The paths named in this section are described rather than quoted, including the one that
+caused the exclusion above. Quoting a drive-letter absolute path into a tracked file makes
+that file fail the scanner, which is how this document briefly became the repository's only
+EXCLUDE while documenting somebody else's leak; the exclusion reason names the field and the
+drive, and the value is in the artifact. The same rule keeps the denylist outside this
+repository.
 
 The repository row states the invariant, not the file count: the count moves every
 time a file is added, and a count written into prose is stale the next commit. The
@@ -42,9 +69,10 @@ was removed: the fixtures are now built from character codes and the scanner's
 `--self-test` asserts that its own source file is admitted, so a scanner that no
 longer needs to exempt itself is the stronger position.
 
-The only admitted release candidate is `part1_baseline_freeze_revision_v6`. Every
-other one is a blocker instance below. The repository scan gates on the tracked
-set, not on the working tree, and reports untracked-on-disk hits separately (see
+No release candidate is currently admitted. The one this document previously admitted,
+`part1_baseline_freeze_revision_v6`, is now excluded by the current scanner for the reason
+above; every other candidate is a blocker instance below. The repository scan gates on the
+tracked set, not on the working tree, and reports untracked-on-disk hits separately (see
 "Scanner scope defect").
 
 ## 1. Canon character identities (blocker)
@@ -136,20 +164,38 @@ shape and field.
 
 ## What was already published, and cannot be unpublished (2026-10-05)
 
-Two absolute local paths reached the public repository before the gate could stop
-them. They are fixed at HEAD and **still present in git history** at commits
-`c99840e` and `1f8e9ea`. A public push is cached, forked and indexed, so removing
+Three absolute local paths reached the public repository before the gate could stop
+them, across two files. They are fixed at HEAD and **still present in git history** at
+commits `c99840e` and `1f8e9ea`. A public push is cached, forked and indexed, so removing
 a line from HEAD is a correction, not a retraction. What leaked:
 
 | File | Leaked value | Sensitivity |
 |---|---|---|
 | `README.md` (line 21) | an absolute path to the host project's study directory, inside a reproduction command | names the host project and the author's directory layout |
+| `README.md` (line 28) | an absolute path to this checkout, in prose | author machine layout only |
 | `RELEASE_MANIFEST.json` | `canonical_local_source`, an absolute path to this checkout | author machine layout only |
 
-Neither is a secret, a credential, a canon identity or a real coordinate. Both are
-still failures of the gate that exists to prevent them, and the second was found
-only after the gate was fixed — so the honest statement is that the scan reported
-clean while a tracked file leaked, twice.
+An earlier revision of this section said "two absolute local paths" and listed two rows.
+The count was wrong; the fix was not. All three were removed at HEAD in `c66bc1c`, and
+the table simply never enumerated the second `README.md` occurrence. That is the same
+defect shape as the manuscript's disclosure of a host-project character name, which named
+one occurrence of a token appearing four times per file: a disclosure that under-counts
+its own subject reads as complete and is not. Both were found by counting rather than by
+reading. The count above was re-derived by scanning every commit's tree with
+
+```sh
+for c in $(git log --format=%h --reverse); do git grep -I -n -E '[A-Za-z]:[\\/][A-Za-z0-9_.\\/-]{3,}' $c; done
+```
+
+which also confirms that the only other drive-letter strings in history are the scanner's
+own synthetic self-test fixture — a home-directory path under an opaque username, built
+precisely so that it is not a real location — and SVG namespace declarations, which are
+URLs rather than paths. Neither is quoted here, for the reason given below.
+
+None is a secret, a credential, a canon identity or a real coordinate. All three are
+still failures of the gate that exists to prevent them, and the second file was found
+only after the gate was fixed — so the honest statement is that the scan reported clean
+while tracked files leaked, three times across two files.
 
 Three reasons the scan missed them, all now fixed:
 
@@ -242,20 +288,20 @@ protected by a rule that stopped matching the moment it was renamed.
 
 ## Closing condition
 
-The repository is already public; the scan does not gate its visibility. What it
-gates is **adding the research material** — the manuscripts, the gate reports, the
-freezes, the corpus measurement. That is the irreversible step, so it is the step
-that needs the gate.
+The repository is already public; the scan does not gate its visibility. It gates
+the material that is safe to add: the two HMAC-derived manuscript copies,
+aggregate summaries and figures. Gate reports, freezes and per-instance corpus
+remain local because they contain private provenance or hidden evaluator fields.
 
 Two conditions, both required:
 
-1. `scan_release_deidentification.py --scope both .` over this repository returns
-   exit 0. `--scope tracked` is not sufficient here: it skips untracked files, so
-   it cannot report an advisory, and exit 0 under it is consistent with a
-   leak-shaped file still sitting in the working tree.
-2. The release-candidate scan over the 14 named artifacts returns exit 0. It
-   returns exit 1 today. No research artifact enters the repository until it does,
-   and each of the three blocker classes above must be closed by transforming a
+1. `scan_release_deidentification.py --scope tracked .` over the staged
+   repository returns exit 0. A worktree scan may report local build PDFs as
+   advisory files; those PDFs are not staged because TeX metadata can carry
+   host-tool paths.
+2. The derived manuscripts and aggregate artifacts are generated from the
+   frozen local evidence chain, with the mapping sidecar and salt kept outside
+   the repository. Each blocker class must be closed by transforming a
    derivative, not by relaxing the scanner.
 
 Both gates carry a `--self-test`, and both must pass before either verdict is

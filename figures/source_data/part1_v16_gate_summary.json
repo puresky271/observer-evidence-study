@@ -1,0 +1,17 @@
+{
+  "freeze_revision": "v17",
+  "gate_status": "PASS",
+  "gate_checks": 120,
+  "vacuous_checks": 0,
+  "model_calls": 0,
+  "harness_executions": 0,
+  "development_conditions": 144,
+  "sealed_projection_conditions": 288,
+  "validity_projection_conditions": 72,
+  "distinct_hidden_perturbations": 9,
+  "reference_sensitive_nested_arms": 216,
+  "informative_hidden_comparisons": 10,
+  "attested_sensitive_arms": 62,
+  "attested_reaction_required_arms": 50,
+  "pdf_pages": {"en": 27, "zh": 24}
+}

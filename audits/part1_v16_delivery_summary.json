@@ -1,0 +1,27 @@
+{
+  "schema_version": "observer-study-part1-delivery-summary-v1",
+  "freeze_revision": "v17",
+  "manuscript_status": "INTERNAL_REVIEW_ONLY",
+  "gate": {
+    "status": "PASS",
+    "checks": 120,
+    "vacuous_checks": 0,
+    "detection_power": "FULL",
+    "model_calls": 0,
+    "harness_executions": 0,
+    "human_ratings": 0
+  },
+  "pdf": {"english_pages": 27, "chinese_pages": 24},
+  "probe": {"status": "PROBE_PASS", "english_needles": 85, "chinese_needles": 79, "forbidden_needles": 62},
+  "release_boundary": {
+    "manuscripts_in_public_repo": "deidentified_tex_derivatives_only",
+    "public_manuscripts": [
+      "manuscripts/paper_part1_en_public.tex",
+      "manuscripts/paper_part1_zh_public.tex"
+    ],
+    "source_manuscripts_in_public_repo": false,
+    "upstream_hidden_fields_in_public_repo": false,
+    "synthetic_opaque_fixture": true,
+    "svg_figure": "figures/exported/fig4_part1_v16_evidence_boundary.svg"
+  }
+}

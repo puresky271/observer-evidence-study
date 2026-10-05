@@ -1,0 +1,395 @@
+\documentclass[UTF8,11pt]{ctexart}
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{seqsplit}
+\usepackage{graphicx}
+\emergencystretch=5em
+\title{面向时间敏感主张的观察者范围证据\\\large 第一部分：门禁空洞性自审计与无模型合同可行性检验}
+\author{作者名单与单位待外部审阅后补齐}
+\date{2026年10月5日}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+回答时间敏感问题的智能体应区分观察者可访问证据与隐藏世界状态。valid time、transaction time 与来源追溯均是既有概念；本稿研究其可执行表示，以及本该验证它的那些仪器。对某一系统自身评测门禁的一次无模型自审计——覆盖 288 个确定性投影条件与 216 个参照敏感嵌套臂——发现一个隐藏世界扰动在受比较的 artifact 构建之前就已被丢弃，因此它所供给的那个相等断言不可能失败；依赖它的非干扰主张已撤回。把该失效推广，得到一份登记册，列出九种结构上互不相同的机制，说明一个确定性、无模型的断言何以不可反驳，其中一条是递归的：「已无空洞合取项」这份报告本身就是一条没有任何扰动能到达的断言。每一种机制都以不依赖本系统的方式陈述，并附一个读者可对自家门禁执行的检测问句。对一个固定在某 commit 的外部基准，一次成对形变探针撤回了我们自己的第二条推断：对该 scorer 而言表示等价并不保持判决，因为它的词边界保护只作用于某个 ASCII 字符类内部，于是六个候选等价算子中有三个会在两个方向上移动判决；因此良性变换类必须逐算子认证。在该基准公开发布的语料上，45 个标识符型 target（44 个前缀、1 个后缀）逐字存在却未被命中，但按 checkpoint 重算，其 context 侧判决会改变的数量为 0，并由一个必须翻转的自测 fixture 背书。确认性查询门禁报告 FAIL，84 条查询全部仍是占位符。本文不作任何语义评分、外部基线、模型质量或通用方法的主张。
+\end{abstract}
+
+\noindent\textbf{关键词：} 观察者范围证据；时间限定证据有效性；刷新采样；故障定向差分审计；门禁空洞性；可复现评测
+
+\section{引言}
+动态环境中的智能体需要区分观察者实际感知、接收或执行的事实，与全局模拟器状态、过期支持、计划和历史记录。LongMemEval 研究对话记忆中的时间推理，TimeChara 检查叙事时间点上的角色知识，产品级记忆层已经在存储双时态事实，近期 living-world benchmark 关注长时程互动。本文聚焦更窄的证据获取边界：哪些带时间戳的事实对某个观察者可用、何时被采样，以及不可见世界变化能否影响最终上下文。
+
+本文报告协议可行性与协议自审计，不报告回答模型性能。artifact 支持可复现失败分析与候选门禁要求，尚未确立新的门禁方法。时间线 family 由同一冻结 authoring 程序生成，不是独立人工作者创作的样本。研究问题是：能否表示并重放观察者证据、刷新采样和 current/history 投影，同时将评估专用标签隔离在观察者可见投影之外。
+
+\section{相关工作与研究定位}
+\noindent\textbf{时间有效性不是我们的贡献。} 把「事实成立的区间」与「系统得知它的时刻」分开，是时态数据库的标准双时态模型，可见于 Snodgrass 与 Ahn 的分类工作和 TSQL2 语言规范，并由 Jensen、Snodgrass 与 Soo（1996）扩展到时态数据库的依赖理论；同一区分在 W3C 传感器本体中即 \texttt{phenomenonTime} 与 \texttt{resultTime}。SQL 方言早已提供与我们投影器同形的半开区间 as-of 语义。我们至今仍未产出的 \texttt{unknown} 栏，其前身早在 1993 年就被命名为 valid-time indeterminacy。
+
+\noindent\textbf{智能体记忆已经实现了时间限定事实。} Zep 及其 Graphiti 引擎维护带四个时间戳的双时态模型，对被子证据取代的边执行失效而非删除；但它记录的失效边界是系统在检测到时间矛盾后推断得到的，并非来源在写入时声明的。A-TMA 把「幽灵记忆」拆成记忆库维护、检索与答题时刻三层失败，并向答题器暴露 current、historical、transition 三种标签。WorldLines 用一套 observer-grounded、visibility-aware 的记忆来评测长时程具身助手。2026 年的一批工作直接度量陈旧记忆的后果：STALE 关注没有显式否定的隐含冲突，TEPA 关注撤销被取代的记忆，另一项工作测量记忆固化时丢掉的时间线索（并在 mem0、Graphiti、Letta 三条已安装管线上验证），还有针对检索中过时文档干扰的动态基准。TRACE 通过带认证的返回来治理演化多智能体系统中的记忆有效期，并把「有效信息可用性」与「无效信息拒斥」分开报告，因此有效期治理本身是一个活跃的设计空间，而不是一个开放问题（Xiong 等，2026）。
+
+\noindent\textbf{观察者范围与 as-of gold 同样不是我们的贡献。} 三项 2026 年工作已经占据本稿框架否则会显得主张的位置。一种 audience-bound 持久记忆在写入时记录当时的 audience，只允许通过显式的、对象特定的 grant 扩大它，只有当每个当前 viewer 都属于其授权 audience 之一时该条目才进入模型尝试，未解析的 viewer 以 fail closed 方式退回 public-only；并在显式身份、来源追溯与完全中介假设下报告 sound 与 policy-complete，且以一万条多方历史做前瞻性冻结确认——其中无范围检索在 82\% 的 context 中暴露了禁止条目（Liu, 2026）。那已经是一份带来源追溯、fail-closed、且有冻结确认设计的观察者范围准入合同，因此「把证据限定到 viewer」这件事本稿没有任何贡献。另一项关于跨任务族干扰的研究把同一分工写成结论句：certification 决定一次编辑是否被支持，而 retrieval scope 决定该证据被授权用在何处；它用一个 execution-grounded gate 在 27 条成对随机顺序流上度量了这一差别（Cheng 等, 2026）。另有一个针对智能体系统中「授权受限证据」的基准，是与本稿证据限定这一半最接近的既有测试套件；它评测的是智能体在其无权查看的证据上的表现，而不是审计那个决定权限的门禁（Tallam, 2026）。评测侧，一个 drift-aware benchmark 已经把每次变更写入 append-only ground-truth ledger、从该 ledger 而非活动存储计算 gold answer、在两个时间戳上都解析 ground truth，并把「检索时正确、评测时错误」的回答标为区别于推理错误的 freshness error（Singh 等, 2026）。因此 as-of gold 解析与 freshness/reasoning 二分是已发表的工程实现，不是本稿贡献；本稿剩下的局部差异只在于有效期由来源在记录时声明，而不是由系统事后推断。另有安全方向的工作已经把 temporal authorization 一词用于对确定性 pre-execution 检查做轨迹级门禁（Chitan, 2026），因此本稿刻意回避该术语，统一使用 time-scoped evidence validity。最后，把记忆层故障误归因到模型这件事已被命名并直接度量，其反事实组合测试能在取证基线全部失败处定位因果条目（Ahad 等, 2026）；第 4 节的目标对齐控制是这一关切在 evaluator-only 标签上的特化实例，不是对它的发现。
+
+\noindent\textbf{弃权与第三个标签。} 支持／反驳／信息不足三分类在事实核查中早已是标准标签；检索系统的不可回答性评测有专门指标；时间敏感问答中的弃权已被明确研究；在选择性预测文献里弃权用 risk-coverage 曲线度量。因此本协议里任何「说不确定」的能力都是这些工作的实例化，而不是新机制。
+
+\noindent\textbf{非干扰与门禁有效性同样不新。} 非干扰源自 1980 年代初的安全策略文献；用两次执行的比较把它归约为安全性问题是 self-composition，用参考实现作为 oracle 测试非干扰也已有发表工作。断言因测试构造而不能被目标故障反驳属于空洞性问题，度量测试套件能否发现缺陷叫变异分析。自然语言处理评测中的对应卫生做法包括 hypothesis-only 基线检查。变异测试此后已被转向评测器自身：由响应缺陷驱动的 rubric 生成（Yang 等，2026）、用 11 个变异算子探测语义 judge（Delcourt 等，2026）、以播种 mutant 审计基准严谨性并显式区分 stillborn／equivalent／unsupported 判决类（Bhadra，2026）、以及在 outcome-blind 条件下度量可复现性防护并把等价 mutant 排除出分母（Shulepov，2026）。这些工作已经提供了算子登记表、故障激活要求与分层分母，因此本文不贡献其中任何一套机制。另有一条工程线把「比较的准入」与「单臂完成」分开，并在报告任何结果之前用 replay 与变异拒绝无效比较（Fu 等，2026）。最直接的一项是针对软件智能体基准中 task-scoped state oracle 的确定性变异测试协议：它注入六类有害状态故障与三类经 schema 认证的良性变换，把官方分数与受控参考规则对比，报告 applicable mutation 分母并附 Wilson 区间，且在某个基准贡献的 applicable mutation 过少时明确拒绝做基准排名（Sun，2026）。那正是本稿原先计划的协议；它属于既有工作，本文不作主张。在智能体场景中同样已有工作证明：把一个自演化指标的 anchor guard 去掉，它就塌缩为一个恒真通过的检测器（vacuous always-pass detector），而任务分数无法验证产生它的评测器（Zhang 等，2026）。一项覆盖 83 篇研究的系统性综述按「裁决的权威从何而来」而非按其形式来给 LLM test oracle 分类，并指出 oracle 质量通常是靠与某个已知 oracle 相似来判定的，而不是靠是否捕获了注入故障（Mughal 与 Bilal，2026）；那句话正是本稿所处缺口的表述，不是本稿的发现。另有两条区分是本文采纳而非提出的：故障触发不等于故障检出，即使充分性准则抵达了故障路径，检出率通常仍只有约 1--2\%，主要瓶颈是生成的 oracle 错误（Hamidi 等，2026）；以及嵌套样本不是独立单位，因此 rule-level battery 把比较单位报为规则或凭证类型，而不是生成的字符串条数（Mishra，2026）。metamorphic testing 正是「在没有显式 oracle 时断言相关输入的输出之间关系」的标准名称，且已针对语言模型做过大规模综述与实测（Cho 等，2025）。把不可核验的候选保留在 review 表示中而非静默丢弃的确定性来源接入门禁，以及拒绝把 22 个通过的一致性测试当作超出已执行路径之外的证据，同样是已发表的工程实践（Girda 与 Groza，2026）。同一类危害已在另一种仪器上被报告过：一个基于 LLM 的安全日志评测器，其解析会静默抑制掉它本应评分的条目，于是出错的是尺子而不是被测量的系统（Garware 与 Zisad，2026）。第 4 节的匹配器守卫是另一种仪器上的另一种机制，引用该工作是为了说明「仪器侧抑制」是一个已被承认的失效类别，不是为本文的具体发现提供先例。评测报告必须携带其方法学而不只是分数，这是整体性智能体评测基础设施那条线的论点（Kapoor 等，2025）；也正因如此，本稿在它报告的每一个计数旁边都同时给出分母、检测力陈述与空洞性披露。还有一条属于此处而不属于贡献段，因为它是既有工作而不是缺口。一份对证据包验证器的审计发表了具名定义：「当验证器在某个应有的绑定、比较或覆盖义务缺失、被绕过或语义上未被审视时仍返回接受，它就表现出一次 vacuous pass」（Hill，2026，Definition 1），并给出它为该类识别的共同祖先——一条没有活性证明的不存在断言——以及一个与本稿登记册同样携带的递归形态的实例。因此这套词汇与这个类别是已发表的。本稿贡献的范围更窄：在一套确定性、无模型的评测门禁内枚举出九种结构上互不相同的机制，每一条绑定到保留的 artifact 与脚本摘要，外加解剖节里的逐机制处理。前一轮评审曾报告那条递归条目没有任何占据者；那一轮用的是本稿自己的词表去检索，而在邻居词表下只需一条查询就命中了这篇论文，所以缺口在检索规程而不在文献。
+
+\noindent\textbf{当前可以保留的有限贡献。} artifact 把观察者证据、来源声明有效期、评估专用标签和门禁失败记录分开；这种分离属于记账，不作为主张提出。在前述各段之后仍有三条残差点，每一条都很窄。第一，也是最强的一条：门禁状态表把「一个确定性、无模型的断言为何不可能失败」归类为九个结构上互不相同的原因。已发表的变异审计登记的是 mutant 的判决类——killed、survived、stillborn、equivalent、unsupported——那是一条关于 mutant 的轴；本表是一条关于断言的轴，两者并不重合。在已复核的已发表 oracle 侧工作中，有一条命名并测量了与本文 M5 同族的单一机制，但没有枚举本文九条；Hill 的验证器侧审计另行枚举了五类 fail-open 与 vacuous-pass，但没有提供本文这种九条、逐机制的处理（Canedo，2026；Hill，2026）。所以本表主张的不是该机制的首次发现，而是九种机制在同一套确定性门禁内的枚举与逐条 artifact 绑定。本段的英文版比中文版多保留了一轮无限定的全称句，而那是它最不该幸存的位置。其中一条是递归的：「已无空洞合取项」这一断言本身就是一条任何输入都无法反驳的断言，它挺过了第一次重发，直到第二次重发才被找到。第二，当门禁的扰动集合产生不出任何敏感臂时报告 \texttt{INCONCLUSIVE} 而不是 \texttt{PASS}，这是一个判决语义选择，不是检测技术；目前只在需要它的两台门禁中的一台上落地。第三，良性变换类必须针对消费它的 scorer 逐算子认证：第 4 节显示六个候选表示等价算子中有三个改变了外部匹配器的判决，且两个方向都有。GateMem fixture 背后的那条危害——对一个秘密做变异时必须协同变换所有指称它的 evaluator-only target，且标签与数据不再匹配的 fixture 不是合法 mutant——在别处已被构造性地处理：gold label 由变异本身派生，因此协同变换不可能被遗忘（de Oliveira 等，2026），以及以等价 mutant 排除的形式处理；我们没有找到已发表对应物的，是把它表述为显式变异算子契约并同时给出已演示反例，我们主张的只是这个合取。因此当前稿件属于对单一系统自身门禁的无模型自审计，外加一次合同可行性检验，不是新的非干扰方法，没有证明来源声明有效期的优势，也不是跨系统测量。更广的测量主张需要真实执行路径中的故障注入、可否证基线与多个外部 harness。
+
+\section{方法}
+\subsection{证据平面}
+每个 timeline family 包含验证者专用来源登记、观察者证据流、刷新轨迹、模型可见投影和评估者专用 Oracle。来源 payload 记录授权、参与者、模态、空间范围、可用时间、事件时间依据和有效性。验证器检查来源与证据字段一致性、摘要闭包、依赖无环、对触发器的准入检查，以及带 JST 偏移的严格时间戳。该流程只证明合成数据在声明的 authoring 程序下的文件完整性，不证明真实世界感知发生过，也不能证明作者未错误标记来源。图~\ref{fig:evidence-plane-overview-zh} 概括观察者可见上下文、评估专用标签与审计边界的分离。
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/part1_evidence_plane_overview.pdf}
+\caption{证据平面与审计边界。来源与刷新 artifact 进入观察者可见投影；评估专用 Oracle 留在该上下文之外，门禁审计检查可达性、溯源与交付完整性。}
+\label{fig:evidence-plane-overview-zh}
+\end{figure}
+
+
+空间 substrate 复用了部署项目维护的候选空间包，包括拓扑与地理引用。就 sealed 语料而言，事实主体、观察者身份、证据断言、查询和 Oracle 标签均为本实验生成，不是生产角色对话或真实用户事件。V1.5 覆盖层是另一回事：其主体标识沿用部署项目的 canon 角色身份，对外发布的 locator 必须是不透明的，只能通过未发布的模块解析到真实坐标。
+
+\subsection{投影与刷新}
+刷新策略包括 \texttt{on\_query}、\texttt{fixed\_interval} 和 \texttt{event\_trigger}。每种策略分别与 evidence-scoped policy 和 1,200 秒 timestamp freshness 基线交叉（1,200 秒是协议的设计常量，不是任何 artifact 的字段；此处明确标注，因为有效性威胁一节的早先修订曾声称本稿每个数字都绑定 artifact 或标为派生）。投影器只接收观察者证据、来源声明有效期、刷新轨迹和策略，不接收 world timeline 或 Oracle。point support 在 evidence-scoped policy 下仅于观察时刻为 current；计划保持为计划，不推出执行。unknown 由缺少可准入支持表示，其标签只存在于评估 Oracle。
+
+\subsection{独立单位与故障定向不变性审计}
+目标分析单位是 concrete timeline family。检查点、刷新策略、投影策略、重复和成对扰动均为嵌套观测。v3 将不可访问状态的结束时刻跨过查询瞬时，但 \texttt{project\_query} 通过 \texttt{**\_hidden\_world} 收下隐藏平面后将其丢弃。因此被测 projection、context 和 payload 使用相同的观察者输入；这检查该路径的重复一致性，不能证明门禁会拒绝具有历史泄漏的实现。另行运行的、复刻该历史泄漏语义的参照投影器在 216 个嵌套臂上改变输出，但没有被替换进同一被测执行链。可见信号正控只检查输入敏感性。
+
+隔离不可访问输入本身是合理的架构边界。缺失的是能够让同一门禁失败的端到端故障注入。后续的隐藏平面扰动检查应在真实观察者抽取边界之前改变隐藏世界 artifact，同时保持观察者观测不变。来源声明有效期变异则改变可见证据，应要求对应输出反应。把隐藏结束时刻写进已声明的 \texttt{valid\_until} 会改变信息策略，不能再称为隐藏世界非干扰测试。输入差异和预期必须逐平面记录；观察者输入零差异本身不等于空洞：使 v3 相等断言空洞的（vacuous），不是缺少输入差异，而是被测执行链中不存在任何该门禁本可拒绝的故障实现。把「从未抵达断言的 mutant」与「断言未能拒绝的 mutant」区分开来，正是基准变异审计中已有的 stillborn 与 survived 之分（Bhadra，2026）；本文是采纳该区分，而不是提出它。
+
+\subsection{分配方案}
+开发批次在三个类别中各包含两条 family：\path{home_acoustic_scope_exit}、\path{home_visual_occlusion} 和 \path{school_schedule_vs_presence}。随后冻结十二个 family，在 \path{public_private_access}、\path{coverage_edge_vs_unobserved_inside}、\path{cross_day_history_retention} 和 \path{recipient_scoped_communication} 中各分配三条。allocation commitment 为 \texttt{\seqsplit{75186e728faac41f73660eb78e20d2515bbf10063cb1103f1aa995b61db41631}}。具体计算是从解析后的 \path{sealed_allocation_v1.json} 对象中仅去掉 \texttt{allocation\_sha256}，通过 \texttt{rfc8785.dumps}（版本 0.1.4）生成规范字节，再计算 SHA-256。重现的 pre-image 位于 \path{peer_review_revision_v1/allocation_preimage.jcs.json}。为保证字节级 provenance，该 pre-image 保留历史上的 analysis-unit 措辞；本稿正文改用更精确的 family 层描述。所有 family 共用生成器，不能估计独立作者间变异。
+
+\section{结果}
+六条开发时间线 family 通过无模型合同门禁，产生 144 个条件。冻结阶段覆盖 12 个 family、3 种刷新策略、2 种投影策略和 4 个检查点，共 288 个条件；这个总数来自 \path{sealed_timeline_v1/validation_report.json} 的 \texttt{projection\_conditions} 字段。以实际代码派生 sampler provenance 替换占位摘要后，冻结验证报告零错误、零模型调用。v3 报告记录九个 family 的 216 个参照敏感嵌套臂；它们归约为 9 个不同的隐藏窗口扰动（每个 family 一个），在单一变异算子和单一故障类别下各自重复 24 次。由于隐藏参数被丢弃，本文撤回其非干扰 PASS 解读。九个 family 产出可归因到单条 \texttt{evidence\_id} 的可见正控。独立的 recipient 门禁记录三个 communication family 上的 27 个隔离检查；这些局部检查不验证隐藏状态门禁或回答质量。
+
+三条时间线的有效期诊断在 72 个条件中重算摘要并重新验证声明式变体；这个总数来自 \path{sealed_validity_v2/validation_report.json} 的 \texttt{projection\_conditions} 字段。artifact 记录 62 个列归属变化臂，而门禁的预期谓词要求 50 个臂反应。一次逐臂重推导（其结果与冻结 artifact 的五个聚合量逐位相同）把余下 12 个归因于 re-attestation 裁剪：变体构造器把每个移动后的有效期下限钉在「该行自身观测时刻 + 1 分钟」，因此有效期仍可能落在查询瞬时之前，而这一段正是预期谓词刻意不作要求的区间。12 个全部落在该区间，无一无法解释，所以这一缺口反映的是谓词比实际反应面更窄，而不是一批错误变化。隐藏侧记录 24 组比较，其中只有 10 组是信息性的：窗口筛选不考虑 snapshot 归属，而参照投影器会跳过未准入的行，因此另外 14 组里被扰动的行根本没进入该查询的 snapshot，两侧都无法作出反应。参照敏感性覆盖了全部 10 组信息性比较，但这个数字在本样本上是一个恒等式而不是比率：在全部 24 行上，「使一组比较成为信息性」的标志与「使其参照敏感」的标志完全共线，因此没有任何输入能让它变成 10 组中的 9 组。参照敏感性仅存在于唯一携带隐藏窗口的那个 family；诚实的检测力分母是 10 而不是 24，该故障类别只在三个 family 中的一个上被触发。两侧结构不同：声明式变体改变被消费的证据字节，隐藏变体只改变被丢弃的参数，因此它们并不构成同一次比较的两个臂；先准入一组比较、再把它的臂当作证据，是 Fu 等（2026）所报告的那条纪律。因此这里只证明声明有效期能够影响投影，不确立隐藏状态非干扰或相对推断式失效的优势。
+
+\paragraph{V1.5 覆盖层。} adapter 产生来自九个准入空间包的十二条冻结 SceneFrame lineage，覆盖住宅、学校/机构、公共室内和户外商业走廊，空间 substrate 以多个东京地点为原型。候选行要求显式补齐 source、observer scope、validity 和 Oracle。最终十二条 lineage 覆盖 216 个投影条件（12 条 lineage × 每条 18 个嵌套臂；与 sealed 语料审计中的 216 个参照敏感臂是不同的量），模型调用为 0。历史报告在产生候选的 lineage 中记载 contract、package-scope、隐藏平面扰动、validity 和可见正控 PASS；第十三个零候选包为 INCONCLUSIVE。这些隐藏平面 PASS 不能克服隐藏输入被丢弃的问题，不作为非干扰证据。原始 frame 与 sealed corpus 保持隔离；sunshine-city 与荒川 fixture 仅作开发回归，零候选包作为 adapter 缺口记录。这些结果描述覆盖与协议迁移，不构成总体地理泛化估计。
+
+\begin{sloppypar}
+\subsection{外部重放与被撤回的 fixture 推断}
+固定 GateMem commit \texttt{\seqsplit{603f9f4b4ba4b77f043c20f85687fa016fd720b0}} 的 household TF--IDF policy baseline 使用 stub provider，无模型调用。供应 artifact 是 \path{results/gatemem_rag_policy_stub_household/summary.json}：其 \texttt{n\_checkpoints} 为 552，\texttt{n\_privacy}、\texttt{n\_safety} 与 \texttt{n\_utility} 各为 184，下面引用的每一个比率都来自它的四个 leakage-rate 字段；本稿早先修订引用了这些数字却没有点名它们的来源文件。stub 重放包含 552 条 checkpoint 记录。在带标签的子集中，privacy context leakage 为 126/184（68.48\%），deletion 标记的 checkpoint 为 141/184（76.63\%）。两个分子都是派生量——各为所报比率乘以其分母 184——因为该 artifact 记录的是比率而不是计数。最终回答 leakage 为 0\%。重放报告没有对剩余 184 条记录的组成作出对账，也没有标识 episode 或 harness 层级聚类；因此这些是单一外部案例中的 checkpoint 层计数，不构成跨系统证据。后者反映 stub 配置，不代表学习模型的安全性。
+
+我们构造的 PIN fixture 把 episode 文本中的 \texttt{2864} 改为 \texttt{9999}，却在 \texttt{leak\_targets} 和 \texttt{judge\_spec.not\_include} 中保留旧值。prompt 仍含新值，旧目标 scorer 从 1.0 变为 0.0；对同一份预测将两个目标字段同步更新为 \texttt{9999} 后，检测恢复至 1.0。因此该变异引入了数据与目标失配，不能证明上游 oracle 对合法重命名 fixture 存在缺陷。可见 query 正控仍报告泄漏。这是一个外部案例而非跨系统估计。
+
+\subsection{该控制的两次重发各自发现了什么}
+该控制此后被两次重发为可自测的门禁，而每一次重发都在其前身里找到一个不可能失败的合取项。第一次发现早先版本的 headline 合取项把 context digest 与它自己比较，因为两个 case 读取同一份 prediction。第二次又发现另一处合取项的一半同样是脚本控制流的定理：stale 分支是一份未被变异的深拷贝，因此它与冻结记录之间的字段差异按构造为空，任何输入都不可能让它非空——而彼时稿件已经开始声称「不再有任何合取项是定理」。两处现在都只作为披露记录、不再作为检查项；取代第二处的成对形式改为把两个被评分的 checkpoint 互相做差异比较，这能捕获分支之间的引用别名。当前版本带 13 项检查与 15 个对自身输入的扰动，每一个都会翻转判决，且没有残留的空扰动。完整叙述——包括两次重发之间那一次自称已完备、因而必须再重发一次才找到自己错误的稿件修订——放在附录~\ref{app:reissue-history-zh}：它属于附录，因为那是本审计自身的历史，而不是关于被审计系统的结果。
+
+\subsection{匹配器的词边界保护}
+对上游匹配器的静态探针（与 scorer 摘要一同记录；被摘要的文件是固定 commit 上的上游 scorer，其文件名与完整摘要见「数据与代码可用性」中点名的门禁状态登记文件，不在正文重复）显示：它大小写不敏感、会归一化空白、且不做 Unicode 兼容折叠。早先版本从这些探针推出「协同变换（co-transformed）的表示层改动不会改变判决」，并进一步推出「表示等价类算子产出 0 个有效阳性」；该推断已被撤回。那 9 个探针都是单点断言，其中两个已经把反驳它的事实并列记录下来却从未互相比较，因此该块对它所支撑的那条性质根本没有检测力。取代它的做法评估 7 组成对关系，每组都在一个 ASCII 臂与一个协同变换臂上运行，断言的是两个判决之间的关系而不是任何单个判决。六个经认证的等价算子中有三个破坏了该关系，且两个方向都有。
+
+匹配器只在归一化后的目标 fullmatch 某个字符类时才加上词边界保护，而该字符类由脚本从上游源码中提取并记录进 artifact；全角数字与逗号都在该类之外，因此协同变换后的目标会静默失去保护并过度检出——\texttt{9999} 不会命中 \texttt{99990} 内部，而其全角孪生体会命中全角对应串内部；同时一个未被改动的 ASCII 目标在 CJK 相邻上下文中会检出不足，因为 CJK 字符算作词字符。对该 scorer 而言，只有大小写与空白（含全角空格）是被认证为良性的表示层改动。因此下一阶段的结论与先前记录的相反：良性变换类不能被假定，必须针对消费它的 scorer 逐算子认证。这仍然只是对字符串匹配器的静态、源码接地观察。它不是被测变异被门禁检出、不进入任何检出率分母，也不是门禁检测力。它本身也不构成任何随附 fixture 标签有误的证据；下一段报告同一机制在该基准公开发布的语料上的实测结果，并刻意不作裁定。
+
+\paragraph{同一机制在公开语料上的实测。} 由于上面的机制是在我们自己写的字符串上建立的，我们在同一固定 commit 上、
+以无模型且只读的方式，在该基准随附发布的语料上重新测了一遍。91 个 episode、2218 个 checkpoint 上共有 7652 个 target 实例，分布在三个字段（\texttt{leak\_targets}、\texttt{judge\_spec.include}、\texttt{judge\_spec.not\_include}）。其中 59 个实例上，target 在该 checkpoint 的 as-of 可见 episode 文本中（经空白折叠与大小写折叠后）逐字存在，而官方匹配器却返回未命中。这 59 个中有 14 个是长度不超过 3 的纯数字 target，出现在更长的数字内部——例如 \texttt{26} 出现在年份里、\texttt{94} 出现在更长的标识符里——对这些实例，词边界守卫的行为是正确的，把它们算作漏检会夸大结论，因此单独报告并从下面的数字中排除。余下 45 个是标识符前缀或后缀探针（44 个前缀、1 个后缀），其中 34 个位于 \texttt{leak\_targets}（24 个 safety、10 个 privacy checkpoint，占该字段 2601 个实例的 1.31\%；这 24、10 与 1.31\% 都是被点名语料字段的归约而非字段本身，故此处标为派生量），10 个位于 \texttt{judge\_spec.not\_include}，1 个位于 \texttt{judge\_spec.include}。它们的形态如 \texttt{TC-20}, \texttt{JRX-77}, \texttt{ORX-80}, \texttt{LPX-91}，每一个都是某个更长标识符的真前缀，而 episode 文本里确实包含那个更长的标识符。上游文档把 \texttt{leak\_targets} 定义为「用于泄漏评测的受保护字符串或模式」，任何地方都没有提出整词匹配要求，而产生这些漏检的那个守卫在我们能找到的文档里没有任何记载。
+
+我们不作裁定。如果 \texttt{leak\_targets} 的意图是检测受保护字符串是否出现在模型可见文本中，那么一个逐字存在却被报为不存在的字面量就是官方泄漏指标的一个假阴性；如果其意图是整词匹配，那么守卫是正确的，而 fixture 选择了一个是更长标识符前缀的 target，这属于标注问题。要在两者之间裁定需要一条分类规则，而现在能写出的任何规则都是在看到数据之后写的，因此无法预注册；两种读法都在 artifact 中逐实例记录，均不断言。另有四条限制。第一条是：实例计数不等于后果。上游对一个 checkpoint 的评分，是把 \texttt{any\_pattern\_hits} 在一\emph{组}模式上做析取——safety 用 \texttt{leak\_targets}，privacy 用 \texttt{not\_include} 与 \texttt{leak\_targets} 的并集——因此当同一组里另有模式命中时，一个被抑制的目标不改变任何东西。按 checkpoint 重算，59 个被抑制实例中有 58 个落在真正会被评分的组里；第 59 个位于一个 privacy checkpoint 的 \texttt{judge\_spec.include}，而 scorer 对该 query type 根本不读这个字段，它被单独报告而非丢弃，以便 59 个全部有归属。这 58 个分布在 40 个 checkpoint 上，而在「逐字存在即应命中」这一读法下，其 context 侧判决会改变的 checkpoint 数量是 \textbf{0}：每一个都还有同组的另一个目标命中。端到端判决是 answer 侧与 context 侧的析取，而本测量没有模型输出，因此它只界定 context 侧分量，对该析取不作主张。做这项重算的脚本带自测，其中一个 fixture \emph{必须}产生翻转，因为一台测不出非零值的检测器所报出的 0 不是结果。所以上面的计数是关于匹配器的陈述，而这个 0 才是关于分数的陈述；只报前者不报后者，恰恰会诱导出本文在别处拒绝授权的那种推断。没有任何模型输出被评分：泄漏指标作用于检索得到的 prompt context，而本测量作用于源 episode 文本，因此被确立的是「匹配器在这种形态下看不见这些字面量」，而不是「任何已发布分数是错的」。该结果不是被测变异被门禁检出，也不满足本文任何停止条件。还有一条看似成立的连带主张被实测否掉了：1006 个含逗号 target 中有 971 个与其去分隔符形式给出不同判决，但其中两种形式同时出现在文本里的实例为 0 个，因此该分歧是两个不同字面串的预期行为、不是表示层 artefact，不作为发现报告。
+stale 与 aligned 这一对判决依然无法区分「oracle 脆弱」与「oracle 正确」，因为那个对齐后的判决是字面子串语义的直接推论；而表示等价块能够区分二者，并且确实区分了。上游 MIT 代码及标记为 CC-BY-4.0 的数据不在此重新分发（Ren 等，2026）。
+\end{sloppypar}
+
+\begin{table}[h]
+\centering
+\caption{无模型 authoring 结果。}
+\label{tab:authoring-zh}
+\begin{tabular}{lrrr}
+\toprule
+阶段 & Family 数 & 条件数 & 模型调用\\
+\midrule
+开发批次 & 6 & 144 & 0\\
+冻结 authoring & 12 & 288 & 0\\
+有效期语料 & 3 & 72 & 0\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{探索性响应可用性}
+在当时报告的 context 与 recipient 检查之后，以温度 0、最大 1,024 token 运行探索批次。288 次调用全部完成，重试为 0；该 0 是运行配置的性质，此处标为设计常量，而不是当作 artifact 字段呈现。互斥主状态为 217 个 \emph{usable}、68 个 \emph{empty}、3 个 \emph{非空截断}（artifact 字段为 \texttt{usable}、\texttt{empty} 和 \texttt{nonempty\_truncated}）。另有 71 次 \texttt{finish\_reason=length}（artifact 字段为 \texttt{truncated}；24.65\%）。68 个 empty 全部同时属于 length 终止，因此 68 个 empty 与 3 个非空截断臂都是这 71 次的子集，并集恰为 71。两列不可相加，也都不是模型质量分数。
+
+\begin{table}[h]
+\centering
+\caption{按批次、刷新策略和投影策略汇总的响应可用性描述。}
+\label{tab:usability-zh}
+\small
+\begin{tabular}{lrrrrr}
+\toprule
+分组 & 嵌套臂数 & Usable & Empty & Length finish & 可用率 \\
+\midrule
+总体 & 288 & 217 & 68 & 71 & 75.35\% \\
+\texttt{event\_trigger} & 96 & 75 & 19 & 21 & 78.12\% \\
+\texttt{fixed\_interval} & 96 & 74 & 22 & 22 & 77.08\% \\
+\texttt{on\_query} & 96 & 68 & 27 & 28 & 70.83\% \\
+\texttt{evidence\_scoped} & 144 & 117 & 27 & 27 & 81.25\% \\
+\texttt{timestamp\_ttl} & 144 & 100 & 41 & 44 & 69.44\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+附录表~\ref{tab:family-usability-zh} 展示 family 层面的结果；它放在附录，是因为本稿不在其之上报告任何推断。每行包含 24 个嵌套臂，目标独立单位仍是 family。我们不在臂层面报告置信区间或显著性检验：臂嵌套于 family，臂层面的推断会构成伪重复（Hurlbert, 1984）。表~\ref{tab:usability-zh} 与附录表~\ref{tab:family-usability-zh} 中的比率都是嵌套臂的点描述，任何后续推断都必须以 family 为单位。该批次中 communication family 的可用率最高，部分 access 与 coverage family 的空回答更多；在语义评分完成前，不把任何 strategy、policy 或 family 差异解释为因果效果。
+
+
+
+\section{讨论与局限}
+结果记录了冻结 package cluster 上可执行的证据表示与确定性重放。自审计撤回了不充分的门禁解读，也纠正了被旧标签混杂的外部 oracle 缺陷主张。探索批次不估计时间意识、证据遵从、目标正确率或机制效应；语义评分仍暂缓。family 共用 authoring 程序与 package cluster，嵌套观测不增加 family 层面的样本量，任何 strategy 或 policy 差异都不作因果解释。新模型调用前需要零证据或不透明实体对照，以区分证据作用与可识别场所名称的先验知识。
+
+\noindent\textbf{审计撤回了什么。} 两项 v2 检查、v3 的被测隐藏输入检查，以及第 4 节那十二份 V1.5 分支隐藏平面报告，共享同一个「隐藏输入被丢弃」的缺陷；它们的 PASS 一律不作为非干扰证据引用。artifact 保留供审计连续性使用。288 次调用的 manifest 还记录了一份已 superseded 且发生漂移的脚本：\path{run_context_twin_gate_v2.py} 从封存时的 4,184 字节变为当前 4,485 字节（\texttt{04a3f0b6\ldots9fdd74} → \texttt{e4dfb9f8\ldots75a69}）；该漂移只发生在模块 docstring（现在承载撤回声明），没有一行可执行代码被改动。新审计记录完整新旧摘要并标记 DRIFT。历史 manifest 一律保留而不改写，因此第三方对付费批次做完整性校验仍会得到 DRIFT；响应描述统计不能修复该 provenance 缺口。早先的授权泄漏结论也有过度解读，更正在下段。表~\ref{tab:gate-status-zh} 列出本稿引用的每一台门禁、其状态与导致该状态的缺陷。
+
+\begin{table}[h]
+\centering
+\caption{门禁状态与 known-bad 登记。VOID 表示其记录的判决不得被引用；SUPERSEDED 表示后续脚本修好了一个使早先判决不具信息量的缺陷；REF-ONLY PASS 即机器状态 \texttt{PASS\_REFERENCE\_ONLY}，且只用于其 artifact 确实记录了该状态的行。若某行写的是「按记录为 PASS」，则该 artifact 并不带这个标记，其旁边的重新归类是本稿的解读而非机器状态。完整脚本摘要见「数据与代码可用性」中点名的门禁状态登记文件。}
+\label{tab:gate-status-zh}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}p{0.055\textwidth}p{0.265\textwidth}p{0.15\textwidth}p{0.42\textwidth}@{}}
+\toprule
+编号 & 门禁 / artifact & 状态 & 缺陷或限制 \\
+\midrule
+M1 & \path{run_twin_gate_sealed_v2.py} & VOID & 扰动的世界对象没有任何函数接收 \\
+M1 & \path{run_context_twin_gate_v2.py} & VOID + DRIFT & 同一缺陷；记录的摘要已不匹配（仅 docstring 变更） \\
+M1, M2 & \path{twin_v4/twin_gate_report_v4.json} & REF-ONLY PASS（已撤回） & 隐藏平面在 \path{validate_observer_v2.py:642} 被吞掉；相等断言是被调方签名的定理；全部敏感性来自旁路参照投影器；被测链中未注入任何故障。\texttt{PASS\_REFERENCE\_ONLY} 是 v4 的机器状态；被取代的 \path{twin_v3/twin_gate_report_v3.json} 对同一缺陷记录的是无限定的 \texttt{PASS}，而本行的早先修订引用 v3 却写着 v4 的状态 \\
+M1, M2 & 12 份 \path{v1_5_admitted_*/twin_v3/} & 按记录为 PASS；本稿重新归类为参照专用（已撤回） & 同一条丢弃隐藏输入的路径。这十二份 artifact 记录的是无限定的 \texttt{PASS}，并不带任何参照专用标记，因此与上面的 \path{twin_v4} 行不同，这里的重新归类是本稿对它们的解读而不是机器状态；该解读由侧车文件 \path{twin_v3/INTERPRETATION_WITHDRAWN_2026-10-05.md} 承载，它以模式指称这十二份，字节本身不改写。该侧车自陈的送达机制是「随目录一起被读到」，这对存放它的那个目录成立，对这十二个目录不成立——它们的目录里只有各自的两个 JSON 文件：只打开其中之一的读者看到的是无限定的 \texttt{PASS}，旁边没有任何警告。一条警告如果其送达机制到不了它所警告的对象，那就是本文审计的那种失效模式，所以此处选择写出这个缺口而不是悄悄补上；早先的措辞把侧车放在了它并不在的那些字节旁边。第 13 个零候选包为 INCONCLUSIVE \\
+M3, M4 & \path{validity_v1/validity_gate_report_v1.json} & VALID, LIMITED & 声明式一侧确实走了被测链；但隐藏侧分母被虚增（24 组比较、10 组信息性），PASS 阈值只是「非零」而无覆盖率下限，且没有 INCONCLUSIVE 分支 \\
+M5 & \path{audit_gatemem_target_alignment.py}（v1） & SUPERSEDED & 其 headline 合取项把一个值与它自己比较：两个 case 读取同一份 prediction，该相等不可能失败 \\
+M6, M9 & \path{audit_gatemem_target_alignment_v2.py} & SUPERSEDED & 11 个自测扰动确实全部翻转，但仍有一处合取项的一半是脚本自身控制流的定理，且其记录的结论断言了一个被 v3 反驳的表示等价稳定性 \\
+-- & \path{audit_gatemem_target_alignment_v3.py} & REPRODUCED & 15 个自测扰动全部翻转判决；两处先前的定理降级为披露；6 个经认证的等价算子中有 3 个破坏判决保持，且两个方向都有 \\
+M7 & \path{audit_confirmatory_query_readiness.py}（v1） & SUPERSEDED & 没有查询行的 family 会以 \texttt{query\_count: 0} 通过，且泄漏计数重复了占位符计数 \\
+-- & \path{audit_confirmatory_query_readiness_v2.py} & FAIL & 84 条确认性查询全部仍是占位符；检测力 PARTIAL，四个分支未被触发。这就是测量阶段的起点状态，而它不是一个可起步的状态 \\
+M8 & \path{run_paper_claim_consistency_audit.py}（v1） & 无检测力 & 对撤回前与撤回后的稿件给出完全相同的 PASS；它检查字符串是否出现，而不检查主张的方向 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent\textbf{九种机制。} 表中第一列的编号才是本稿真正贡献的东西，它们分类的是断言而不是 mutant。
+\textbf{M1}：被扰动的输入从未抵达受比较的 artifact，因为它在被比较之物构建之前就已被上游丢弃。
+\textbf{M2}：所断言的相等是被调方签名的定理——承载扰动的形参被吞掉、从未被读取。
+\textbf{M3}：通过阈值是「非零」而不是一个声明的覆盖率下限，因此一个敏感臂就能替整个语料通过。
+\textbf{M4}：分母把对两侧都空洞的比较也计入，从而虚增表观检出率。
+\textbf{M5}：某个合取项把一个值与它自己比较，因为它的两个操作数来自同一来源。
+\textbf{M6}：合取项的某一半是审计脚本自身控制流的定理，因此被测系统的任何输入都无法使其为假。
+\textbf{M7}：空输入集满足谓词，于是一个没有任何行的 family 也通过。
+\textbf{M8}：探针检查的是字符串是否出现，而不是主张的方向，因此在主张被撤回前后给出完全相同的通过。
+\textbf{M9}：一组单点探针无法反驳一条关系型主张，因为没有任何探针把一个臂与它的变换孪生臂相比较。
+已发表的变异审计登记的是 mutant 的判决类——killed、survived、stillborn、equivalent、unsupported——
+那是一条关于 mutant 的轴。已复核的已发表 oracle 侧属性之一是期望值锚定（expected-value anchoring），
+它命名并测量了「一个 oracle 不可能失败」的单一机制（Canedo，2026）；Hill 的验证器侧审计另行枚举了五类 fail-open 与 vacuous-pass；对工具型 agent 环境的契约审计
+则把工具宣称的表面对照其实现核验，并把每个分数的来源追到判决层（Bellibatlu 等，2026）。
+M1 到 M9 是一条关于断言的轴。两者都没有枚举「一台评测门禁中一个确定性、无模型的断言为何不可能失败」
+这些结构上互不相同的原因，也都没有处理下文的递归情形；一台门禁可以在 mutant 那条轴上干净、
+却在断言这条轴上恒真。锚定与 M5 同族——M5 的两个操作数同源——而与 M6 只是近亲：M6 讲的是审计脚本
+自身的控制流，不是被测的那个 oracle。因此本稿主张的不是该机制的首次发现，
+而是它与另外八种机制在同一套确定性门禁内的共现，且每一条都绑定到保留的 artifact 与脚本摘要。
+
+其中一条是递归的，也正是本登记表以当前形态存在的原因。目标对齐门禁的第一次重发报告称「已无空洞合取项」。
+那份报告本身就是高一层的一个 M6 实例：该主张由一个没有任何扰动能够到达的合取项半项承载，因此没有任何输入
+能够反驳它，需要第二次重发才把它找出来。同一观察已在另一台仪器上被独立发表（Hill，2026，第 7.4 节），因此这一条记录的是收敛，不是发现。重发只有两次、没有第三次，因此这里的序数可以对照磁盘上的两个脚本
+版本核验，而不必靠读者容忍；本段的早先修订在一处写「第三次」、另一处写「第二次」，而编译出的 PDF 两个都带着。
+一台报告「空洞性不存在」的仪器，与它所报告的对象受制于同一批失效
+模式；我们找到的唯一防御，是对那条完备性主张本身也施加扰动。
+
+
+\noindent\textbf{合同主张的边界。} 承载回答批次的那 288 个条件全部使用 point support，因此投影器中唯一能携带有效期的 source-attested 分支在其中从未被触达；在 point 规则下，evidence-scoped 策略退化为一句话：「仅在观察瞬时为 current」。新增的三条时间线语料已经让该分支进入实验并在全部 72 个条件上通过 strict 校验，但它尚未接任何模型调用，因此不存在模型层的有效期结论。投影合同也不产出 unknown 栏：schema 只定义 \texttt{current} 与 \texttt{history}，288 条重建 prompt context 中的 \texttt{unknown} 字段全为空，尽管回答 prompt 明确告诉模型存在该栏、且十二个 family 的 Oracle 都用原因码标注了 unknown 检查点；因此 unknown calibration 是在比「给定未知清单」更强的条件下测量的，合同表述必须写成评估侧而非投影侧。授权方面我们更正一处早先结论：合同验证器本就拒收指向错误的 artifact（未授权的 source 引用与非收件人的观察者），在这两类探针下，12 个受测 family（\path{twin_v4/twin_gate_report_v4.json} 的 \texttt{guarded\_families\_tested}；十二份 per-family artifact 各自记 0，聚合值只在根报告里）无一在未授权情况下进入 context；因此我们只就被探测的类别报告无泄漏，不对未探测的错指类别作主张。投影器自身的守卫现已补上：它对冻结语料是纯 no-op（288 个臂的列归属聚合摘要为 \texttt{e96e2b81\ldots604d8e}，记录于 \path{FINAL_PAPER_PLAN_2026-10-03.md} 第 13.2 节），并且可以失败——把一条通信证据改指向非收件人后，其渲染行数由 1 变为 0。direct observation 的空间 scope 仍由包级验证器负责，不在本文任何门禁覆盖之内。
+
+\noindent\textbf{缺失的对照。} 我们没有把任何现有记忆系统作为基线，因此无法主张来源声明式有效期优于已部署的时间感知记忆层所使用的推断式失效。当前设计里唯一的对照是我们自己的 freshness 策略与我们自己的 evidence-scoped 策略。该批次只使用单一模型 \texttt{deepseek-flash}，温度 0、最大 1,024 token；artifact 未记录比提供方标签更细的模型版本标识。只有一套 prompt 装配、没有第三方复现，因此这些描述性结果不视为可迁移。协议里定义了「把全部可见上下文直接塞进 prompt」的反事实基线，但尚未运行。
+
+\section{空洞断言的解剖}
+\label{sec:anatomy-zh}
+上面的门禁状态登记表按编号列出九种机制，每一条旁边是暴露它的那台门禁与保留它的 artifact。它们所属的那一类并非在此首次被命名：一份对证据包验证器的审计已经发表了 vacuous pass 的具名定义、把该定义映射到 CWE 条目，并对它自己加固后的验证器给出了可用的伪造（Hill，2026）。本节补充的是在那条已发表类别之下的逐机制处理。本节是其中意图可迁移的部分：对每一种机制给出四样东西——一个完全不提及本系统的结构特征、一个既有学科为何抓不到它的原因、一个读者无需运行我们任何门禁就能对自家门禁提出的问题、以及我们找到的最小失败示例。本节内容不依赖宿主项目。此处早先的更强主张——不依赖那个外部基准、也不依赖本稿别处报告的任何计数——被本节自己的四个最小示例证伪：它们引用了 72 个条件的有效期语料、24 组中 10 组信息性比较、\texttt{2864} 这个 fixture 取值与九个可见正控，其中一个还用到了外部基准的匹配器。因此可迁移的是对每一种机制的四要素处理，不是每一个示例的独立性。这些示例在规模上也都不是最小的：其中四个是从本包真实 artifact 按原规模转录来的，所以「我们找到的会失败的最小示例」描述的是一个示例在论证中扮演的角色，不是「不存在更小示例」的证明。
+
+这四样东西不是装饰，也不能互相替代。结构特征说明该找什么。「为何漏掉」说明为什么一个已经给该症状起过名字的学科仍然会漏掉它——这才是把某种机制单立一条、而不是并入既有条目的唯一理由。那个问题是可迁移的产物，因为跑不了我们门禁的读者仍然跑得了它。最小示例则是把「机制」与「感觉」区分开的东西。
+
+\paragraph{M1：被扰动的输入从未抵达受比较的 artifact。}
+\emph{结构特征。}注入点与比较点之间有一个阶段丢弃、忽略或覆写了被扰动的平面，于是比较的两个臂由同一批字节构建。
+\emph{为何漏掉。}变异测试已经有一个词描述它——没有任何断言看见过的 mutant 叫 stillborn——但 stillborn mutant 是作为记账步骤从检出率分母里被移除的，不是作为 harness 的故障被调查的。该学科给症状分了类，然后把它扔掉。
+\emph{问题。}对你的套件注入的每一个扰动，把比较两侧的字节 dump 出来做 diff。diff 为空就说明该扰动不在被测 artifact 里，无论判决写的是什么。
+\emph{最小示例。}断言 \texttt{normalise(a) == normalise(b)}，而注入的差异恰好在 \texttt{normalise} 会剥掉的那部分 \texttt{a} 里。
+
+\paragraph{M2：被断言的相等是被调方签名的定理。}
+\emph{结构特征。}待测性质由某个类型、schema 或函数契约所蕴含，因此没有任何运行时输入能违反它。
+\emph{为何漏掉。}在一份通过/失败报告里，一个永远通过的检查与一个因为系统正确而通过的检查长得完全一样。测试条数与覆盖率指标都把它算作一条已执行的断言。
+\emph{问题。}对你断言的每一个相等，说出能反驳它的那个输入。若你不改动被调方签名就构造不出来，那你证明的是一条定理，不是测了一个系统。
+\emph{最小示例。}断言一个标注为返回非空列表的函数返回了非空列表。
+
+\paragraph{M3：通过阈值是「非零」而不是一个事先声明的下限。}
+\emph{结构特征。}谓词是 \texttt{count > 0}，而所作出的主张需要的是 \texttt{count >= k}，其中 \texttt{k} 在运行之前就已固定。
+\emph{为何漏掉。}测试文献里的充分性准则通常表述为覆盖义务，因此一台报告了「有检出」的门禁读起来就像满足了准则。1 与所需数字之间的差距，只有把所需数字写下来才看得见。
+\emph{问题。}找出你门禁里的每一个阈值，问它是运行前声明的还是从结果里读出来的。任何你说不出日期的阈值，都是事后挑的阈值。
+\emph{最小示例。}一台敏感性门禁在 72 个臂中只有 1 个作出反应时通过，并被报告为「已证明敏感性」。
+
+\paragraph{M4：分母计入了对两个臂都空洞的比较。}
+\emph{结构特征。}比率是在一组比较上报告的，而其中一些比较不可能区分，因为两个臂都永远产生不出差异。
+\emph{为何漏掉。}分母卫生在击杀率语境下是被讨论的（等价 mutant 要排除），却很少被应用到比较计数上；而一个被虚增的分母让门禁看起来更周密，而不是更不周密。
+\emph{问题。}对分母里的每一个比较，问什么样的观测能让它的两个臂不同。若答案是「没有」，它就不是一个比较。
+\emph{最小示例。}把 24 组隐藏比较中的 10 组报告为敏感，而在这 24 组里有 14 组中被扰动的行根本没进入被查询的 snapshot，因此两个臂都无法反应。
+
+\paragraph{M5：某个合取项把一个值与它自己比较。}
+\emph{结构特征。}一个相等式的两个操作数来自同一次加载，常常经由不同的变量名，于是该比较是自反的。
+\emph{为何漏掉。}静态分析会在单个表达式里标出自我比较，但通常不会追踪「两个不同名的局部变量别名到同一个已加载对象」。审稿人读的是断言，不是它背后的数据流。
+\emph{问题。}对每一个相等式，把两个操作数都追到它们的加载点。从一次加载出发的两条路径，就是一个操作数。
+\emph{最小示例。}\texttt{assert case1.context == case2.context}，而两个 case 由同一份 prediction 对象构建、只有 checkpoint 不同。
+
+\paragraph{M6：合取项的某一半是审计脚本自身控制流的定理。}
+\emph{结构特征。}某个合取项由检查器自身的写法保证——一份从不被变异的拷贝、一条从不被走到的分支、一个总是被应用的默认值——而不是由被测系统的任何性质保证。
+\emph{为何漏掉。}这是高了一层的 M2：定理住在审计者里，不在被审计者里。一个只扰动被测系统输入的自测到不了它，因为该系统的任何输入都不能使这个合取项为假。
+\emph{问题。}扰动检查器，而不是被检查者。若某个合取项在被测系统的每一次扰动下都存活，就问它实际上是哪些东西的函数。
+\emph{最小示例。}把一个分支与它被深拷贝自的那份记录做 diff，然后断言 diff 为空。
+
+\paragraph{M7：空输入集满足谓词。}
+\emph{结构特征。}一个在集合上的全称检查在该集合为空时通过，而「为空」是收集失败，不是系统的性质。
+\emph{为何漏掉。}多数语言里对空可迭代对象的 \texttt{all()} 为真，而一台报告「0 个失败」的门禁并不区分「没有任何东西失败」与「没有任何东西被检查」。
+\emph{问题。}对每一个全称检查，用一个你已知为空的输入跑一遍，并确认它失败。一个在空集上通过的全称断言什么也没说。
+\emph{最小示例。}一个没有任何查询行的 family 报告 \texttt{query\_count: 0}，并通过一项「没有查询是畸形的」的检查。
+
+\paragraph{M8：探针检查的是字符串是否出现，而不是主张的方向。}
+\emph{结构特征。}一个回归探针断言某个 token 出现在文档里，而真正要紧的主张是关于文档得出了什么结论。
+\emph{为何漏掉。}在场性探针便宜、稳定、好写，于是大量增殖。一个数字或术语这样的 token，在一段撤回里和在一段同等量级的断言里都会出现，而探针分不出二者。
+\emph{问题。}对每一个在场性探针，写出那句能让它通过、同时让底层主张为假的话。若你能轻易写出来，这个探针测的是词汇。
+\emph{最小示例。}要求字符串 \texttt{2864} 出现在一份已经撤回了由 \texttt{2864} 得出的全部结论的稿件里。
+
+\paragraph{M9：单点探针无法反驳一条关系型主张。}
+\emph{结构特征。}主张是两个臂之间的一种关系——等价、单调、不变——而每一个探针都只孤立地评估一个臂。
+\emph{为何漏掉。}一组单点探针可以很多、且每一个都通过，报告读起来很周密。那层关系从未被评估，因此电池里没有任何东西本可以反驳它。这正是 metamorphic testing 存在的目的所要处理的形状，而一个没有采纳它的套件不会注意到它的缺席。
+\emph{问题。}对每一条关系型主张，找出那个同时评估两个臂、并对这一对作出断言的探针。若一个都没有，那么无论多少探针通过，该主张都是未经测试的。
+\emph{最小示例。}九个静态探针各自描述一个匹配器的某条性质，被引来作为「协同变换后的输入保持判决」的证据，而其中没有任何探针比较过两个判决。
+
+\paragraph{九者的共同点。}每一种都是「使检查不可反驳的是断言而不是系统」的情形，且九者中的大多数，门禁产出的报告在该检查有无检测力两种情况下完全相同——按逐条阅读是八种，此处标为派生量而不是引自某个字段，因为没有任何 artifact 供给它，也因为它的分母正是下面构念有效性段拒绝固定的那个：把两对彼此邻近的机制各自合并的读者会得到七种而不是九种。这正是登记表把每一条绑定到保留的 artifact 与脚本摘要、而不是绑定到一段叙述的原因：把 M1 到 M9 与一台健康门禁区分开的唯一办法，是扰动这台门禁并观察哪些检查会动。第九种，即那条递归条目，是这样一个观察——关于登记表的这条主张本身就是登记表所分类的那一类断言；附录~\ref{app:reissue-history-zh} 记录了它没有被扰动时发生了什么。
+
+\section*{有效性威胁}
+\noindent\textbf{构念有效性。} 登记表的九种机制是一条关于断言的轴，而「它们结构上互不相同」这一主张的依据是每一种都有一个已产出的 artifact，不是一份形式化的独立性证明。有两对彼此靠得很近——M5 与 M6 都涉及一个不可能失败的合取项，区别在于原因是被比较的取值还是审计脚本自身的控制流；M1 与 M2 都涉及一个从未变成差异的扰动，区别在于它是被下游丢弃还是被签名吸收——因此把每对合并的读者会得到七种机制而不是九种，而本文没有任何东西在这两个计数之间作出裁决。无论取哪个计数都成立的，是这条轴本身。对「九种」作完备性主张需要扰动那条完备性主张本身，也就是那条递归条目，本文不提供这样的扰动。
+
+\noindent\textbf{内部有效性。} 本稿从 artifact 引用的每一个计数都可定位到「数据与代码可用性」中点名的字段；要紧的那些派生量是从逐实例数据重算的，而不是从上一份报告抄来的：语料抑制计数、判决翻转数、以及信息性比较标志的共线性。这比本段早先修订所作的声称要窄。早先那一版说「本稿的每一个计数要么读自具名字段、要么标明为派生量」，而有四类数字把它证伪了：第 4 节的重放计数，其供应 artifact 在本稿中此前任何位置都没有被点名；按指标拆分的抑制数，它们是被点名语料字段的归约而不是字段本身，却未标为派生；1,200 秒新鲜度窗口与 zero-retries 设置，二者是完全没有供应字段的设计常量；以及边界守卫摘要，它被完整引用而被摘要的文件只在配套登记册里点名。这四类现在都在其出现处被点名、标为派生、或标为设计常量，摘要一项则点名了登记册。关于自己数字的全称陈述，正是本文所审计的那一类断言，所以此处给出收窄后的形式并连同反例一起写出，而不是悄悄替换掉。另有两类数字在本稿早先修订中是错的，此处予以更正而不是悄悄删除：一个在同一份编译 PDF 的两段之间自相矛盾的序数，以及一句中文里让分子等于自身分母的先行词。两者都属于登记表 M13 所命名的转录失效——M13 是该登记册的本地标识符，指「一份文档从另一份文档复制取值，随后源文档变动而它自己变陈旧」，其定义在登记册里而不在本稿——这也正是配套冻结生成器现在校验自身输出、而不再信任它所复制字段的原因。
+
+\noindent\textbf{外部有效性。} 单一系统、单一外部基准快照（固定在某个 commit）、门禁中零模型调用、任何语义判断只有一位评分者。这些机制是候选的可迁移类别，不是已测量的分类学：要迁移就必须把同一套逐算子认证与同一套语料扫描应用到第二个许可证干净的 scorer 上，而这件事没有做。语料发现在「scorer 假阴性」与「fixture 标注选择」之间明确不作裁定，且它在本语料上的判决层后果为 0，因此它不授权任何关于已发布分数的主张。
+
+\noindent\textbf{结论有效性。} 本文不报告推断统计，因此不存在可被威胁的显著性主张。凡能算出比率之处都连同其分母一起报告；凡分母不具区分力之处，都附一句该数字不可作为比率引用。Wilson 区间只出现在本会存在检出率分母的地方，而这样的分母目前还不存在。
+
+\section{结论与下一步}
+第一部分目前支持的是一次无模型的合同可行性检验，以及对单一系统自身门禁的可复现失败审计。它不支持端到端意义上的合同可行性：真正能使该合同产生差异的机制——来源声明有效期——在全部模型批次中一次都没有被触发，而本该承载它的非干扰检查是空洞的、已撤回。门禁变异测试和参考差分属于既有技术，本身不是新贡献。与我们原先计划形状完全相同的跨基准协议已经发表（Sun，2026），因此后续的测量研究只能在研究对象上与之不同，而不能在方法上：本文的对象是一套 observer-scoped 证据合同与它自己的门禁历史，而不是泛指的 task-scoped state oracle。后续测量研究需要把故障注入同一被测执行路径，保持数据与评估目标一致，并审计多个独立选取的公开 harness。来源声明策略的效果主张另需基线与能够输掉的条件；当前结果尚未确立任一路线。既有语料与重放工具仍可作为技术 artifact 复用。后续模型研究须补齐对照、冻结分析方案，并明确采用单人语义盲评加延迟重评，不报告 inter-rater reliability。
+
+\section*{落点与本稿的范围}
+本稿是为可复现性与评测方法学类落点写的，不是为经验软件工程类期刊写的，原因是它缺少一项测量。它的外部对象只有一个基准快照、固定在一个 commit 上，第 4 节的逐算子认证与语料扫描没有在第二个许可证干净的 scorer 上重复过，因此良性变换规则的可迁移性只有一台仪器作支撑。经验类期刊会合理地问：这个发现有多少是该 scorer 的性质、而不是 scorer 这一类东西的性质——本稿回答不了。把认证在第二个 scorer 上重做一遍是无模型且只读的，也是通往答案最短的路；它经考虑后被判定不在本稿范围内，落点是在这个裁定在手的情况下选定的，因为在一个治理链尚未收敛的包里再加一个 artifact 家族，损失的信任会多于增加的。因此它是本稿的一项限制，不是本稿欠下的一项任务；裁定记录在登记册里，而本句早先的写法把它描述成仍然待办。本稿能提供的替代物是一条完整的审计轨迹：每一个计数都绑定到具名 artifact 字段、或标为派生量、或标为设计常量；每一台门禁都绑定到脚本摘要；每一份被取代的 artifact 都保留——按被取代 artifact 索引自己写明的限定意义，即「未被本工具链改写」而不是「可恢复」，因为这个目录没有版本控制——并编入索引；本审计撤回的每一条主张都记录在取代它的那条主张旁边。
+
+所属领域是软件评测基础设施的可靠性——那些判定「智能体记忆与智能体基准的结果是否如其分数所言」的仪器，本身能否在不报告的情况下失效。谱系即第 2 节所引：oracle 的权威从何而来、oracle 质量靠什么判定（Mughal 与 Bilal，2026）；故障触发不等于故障检出（Hamidi 等，2026）；变异测试被转向评测器与基准严谨性（Bhadra，2026；Yang 等，2026；Delcourt 等，2026；Shulepov，2026）；对智能体环境做契约审计并把分数追到判决层（Bellibatlu 等，2026）；与本文九种机制中一种同族、与另一种只是近亲的 oracle 侧属性（Canedo，2026）；以及「评测报告必须携带其方法学而不只是分数」这一论点（Kapoor 等，2025）。
+
+\section*{资助声明}
+本研究未获得来自公共、商业或非营利部门任何资助机构的专项资助。
+
+\section*{数据与代码可用性}
+本稿由本地实验目录 \texttt{experiments/e0\_observation/} 支撑，正文引用的每一个 artifact 计数都定位到某个具名文件的具名字段。完整的逐字段索引——哪份报告取代哪份、探针与 allocation 记录的摘要、以及哪些内容是刻意不再分发的——见附录~\ref{app:availability-index-zh}。它不放在正文，因为它是一张查询表，而没有人会线性地读一张查询表。
+
+有三件事属于正文而不是附录。第一，门禁状态登记文件 \path{GATE_STATUS_AND_KNOWN_BAD_REGISTER_2026-10-05.md} 记录每一台门禁脚本的完整摘要与本稿引用的每一个判决的状态，那些取值以它为准而不以本稿为准；本稿与登记册不一致时，以登记册与最近一次一致性审计的 PASS 报告为准。第二，逐实例语料文件\emph{不}随本文分发：它携带上游 target 取值与 checkpoint 标识符，任何人可从固定的上游 commit 用上述具名脚本本地重算。第三，本稿自身的字节目前不可发布，这是一个条件而不是细节：宿主项目的一个角色名在每个语言版本里各出现四次，另有一个真实地名各出现一次。因而发布需要分别记录三个条件：只对派生副本做不透明 ID 变换；由作者对保留的真实地名类别作放行裁定；以及该裁定落盘前扫描器的实况（当前派生副本为 0 ADMIT、2 EXCLUDE）。必须记录与冻结原件的差异，且不得改写原件；三个条件全部满足前，本稿都不可发布，但配套的公开仓库可以公开工具、schema、去标识合成 fixture 与图表脚本。
+
+公开代码、不透明合成 fixture、聚合审计记录、图表源文件与脱敏稿件派生件位于 \url{https://github.com/puresky271/observer-evidence-study}。正式发布 tag 与 commit 标识会记录在配套 release manifest 中。隐藏评估标签、可逆映射和未经脱敏的源稿不随仓库分发。
+
+\section*{参考文献}
+本轮本地核对使用了项目写作与批判性思考工作流。写作辅助不构成科学证据或人工核验。
+\sloppy
+\begin{enumerate}[leftmargin=*,nosep]\small
+\item Wu, Di 等. ``LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory.'' ICLR (2025). arXiv:2410.10813. \url{https://arxiv.org/abs/2410.10813}
+\item Ahn, Jaewoo；Taehyun Lee；Junyoung Lim；Jin-Hwa Kim；Sangdoo Yun；Hwaran Lee；Gunhee Kim. ``TimeChara: Evaluating Point-in-Time Character Hallucination of Role-Playing Large Language Models.'' Findings of ACL 2024, 3291--3325 页. DOI: 10.18653/v1/2024.findings-acl.197. \url{https://aclanthology.org/2024.findings-acl.197/}
+\item Tallam, Krti. ``Partial Evidence Bench: Benchmarking Authorization-Limited Evidence in Agentic Systems.'' arXiv:2605.05379 (2026). \url{https://arxiv.org/abs/2605.05379}
+\item Snodgrass, Richard T., and Ilsoo Ahn. ``A Taxonomy of Time Databases.'' ACM SIGMOD 1985. DOI: 10.1145/318898.318921.
+\item TSQL2 Language Specification Committee. ``The TSQL2 Language Specification (Version 1.2).'' SIGMOD Record 23(2) (1994). DOI: 10.1145/181550.181562.
+\item Snodgrass, Richard T., ed. ``The TSQL2 Temporal Query Language.'' Kluwer Academic Publishers (1995). DOI: 10.1007/978-1-4615-2289-8.
+\item Jensen, Christian S., Richard T. Snodgrass, and Michael D. Soo. ``Extending Existing Dependency Theory to Temporal Databases.'' IEEE TKDE 8(4) (1996): 563--582. DOI: 10.1109/69.536250.
+\item Dyreson, Curtis E., and Richard T. Snodgrass. ``Valid-Time Indeterminacy.'' IEEE ICDE 1993. DOI: 10.1109/ICDE.1993.344048.
+\item Microsoft. ``Temporal table conventions''（\texttt{FOR\_SYSTEM\_TIME AS OF} 的半开区间语义）. \url{https://learn.microsoft.com/en-us/sql/relational-databases/tables/temporal/overview}
+\item W3C. ``SSN --- Semantic Sensor Network Ontology''（2017-10-19 Recommendation）: \texttt{phenomenonTime} 与 \texttt{resultTime}. \url{https://www.w3.org/TR/vocab-ssn/}
+\item Rasmussen, Preston, Pavlo Paliychuk, Travis Beauvais, Jack Ryan, and Daniel Chalef. ``Zep: A Temporal Knowledge Graph Architecture for Agent Memory.'' arXiv:2501.13956 (2025). \url{https://arxiv.org/abs/2501.13956}
+\item Shi, Zitong, Yixuan Tang, and Anthony Kum Hoe Tung. ``A-TMA: Decoupling State-Aware Memory Failures in Long-Term Agent Memory.'' arXiv:2607.01935 (2026). \url{https://arxiv.org/abs/2607.01935}
+\item Zhang, Yehang 等. ``WorldLines: Benchmarking and Modeling Long-Horizon Stateful Embodied Agents.'' arXiv:2606.18847 (2026). \url{https://arxiv.org/abs/2606.18847}
+\item Chao, Hanxiang, Yihan Bai, Rui Sheng, Tianle Li, and Yushi Sun. ``STALE: Can LLM Agents Know When Their Memories Are No Longer Valid?'' arXiv:2605.06527 (2026). \url{https://arxiv.org/abs/2605.06527}
+\item Zhou, Yan, Yue Ouyang, Kaiyang Zheng, and Suncheng Xiang. ``TEPA: Revoking Stale Memories for Conflict-Robust Language Agents.'' arXiv:2608.07429 (2026). \url{https://arxiv.org/abs/2608.07429}
+\item Panthi, Sugam, Muhaiminul Yeamin, Siyan Luo, and Rabab Abdelfattah. ``Memory Consolidation Flattens the Temporal Shape of User Facts.'' arXiv:2609.36457 (2026). \url{https://arxiv.org/abs/2609.36457}
+\item Ouyang, Jie 等. ``HoH: A Dynamic Benchmark for Evaluating the Impact of Outdated Information on Retrieval-Augmented Generation.'' arXiv:2503.04800 (2025). \url{https://arxiv.org/abs/2503.04800}
+\item Thorne, James 等. ``FEVER: a large-scale dataset for Fact Extraction and VERification with Unstructured and Structured sources.'' NAACL 2018. DOI: 10.18653/v1/N18-1074. \url{https://arxiv.org/abs/1803.05355}
+\item Zhou, Xinyu, Chang Jin, Carsten Eickhoff, Zhijiang Guo, and Seyed Ali Bahrainian. ``When Silence Is Golden: Can LLMs Learn to Abstain in Temporal QA and Beyond?'' arXiv:2602.04755 (2026). \url{https://arxiv.org/abs/2602.04755}
+\item Kirichenko, Polina, Mark Ibrahim, Kamalika Chaudhuri, and Samuel J. Bell. ``AbstentionBench: Reasoning LLMs Fail on Unanswerable Questions.'' arXiv:2506.09038 (2025). \url{https://arxiv.org/abs/2506.09038}
+\item Geifman, Yonatan, and Ran El-Yaniv. ``Selective Classification for Deep Neural Networks.'' NeurIPS 2017. arXiv:1705.08500. \url{https://arxiv.org/abs/1705.08500}
+\item Hurlbert, Stuart H. ``Pseudoreplication and the Design of Ecological Field Experiments.'' Ecological Monographs 54(2) (1984): 187--211. DOI: 10.2307/1942661.
+\item Goguen, Joseph A., and Juan Meseguer. ``Security Policies and Security Models.'' IEEE Symposium on Security and Privacy 1982. DOI: 10.1109/SP.1982.10014.
+\item Barthe, Gilles, Pablo R. D'Argenio, and Timothy Rezk. ``Secure information flow by self-composition.'' IEEE CSFW 2004. DOI: 10.1109/CSFW.2004.1310735.
+\item Hrițcu, Cătălin, John Hughes, Benjamin C. Pierce, Antal Spector-Zabusky, Dimitrios Vytiniotis, and Arthur Azevedo de Amorim. ``Testing noninterference, quickly.'' ACM SIGPLAN Notices 48(9) (ICFP 2013). DOI: 10.1145/2544174.2500574.
+\item Beer, Ilan, Shoham Ben-David, Cindy Eisner, and Yoav Rodeh. ``Efficient Detection of Vacuity in Temporal Model Checking.'' Formal Methods in System Design 18(2) (2001). DOI: 10.1023/A:1008779610539.
+\item DeMillo, Richard A., Richard J. Lipton, and Frederick G. Sayward. ``Hints on Test Data Selection: Help for the Practicing Programmer.'' IEEE Computer 11(4) (1978). DOI: 10.1109/C-M.1978.218136.
+\item Chen, T. Y., T. H. Tse, and Z. Q. Zhou. ``Fault-based testing without the need of oracles.'' Information and Software Technology 45(1) (2003). DOI: 10.1016/S0950-5849(02)00129-5.
+\item Ribeiro, Marco Tulio, Tongshuang Wu, Carlos Guestrin, and Sameer Singh. ``Beyond Accuracy: Behavioral Testing of NLP Models with CheckList.'' ACL 2020. DOI: 10.18653/v1/2020.acl-main.442. \url{https://aclanthology.org/2020.acl-main.442/}
+\item Poliak, Adam, Jason Naradowsky, Aparajita Haldar, Rachel Rudinger, and Benjamin Van Durme. ``Hypothesis Only Baselines in Natural Language Inference.'' 7th Joint Conference on Lexical and Computational Semantics (SEM 2018). DOI: 10.18653/v1/s18-2023.
+\item Garware, Chaitanya Vilas, and Sharif Noor Zisad. ``When the Ruler is Broken: Parsing-Induced Suppression in LLM-Based Security Log Evaluation.'' arXiv:2605.07293 (2026). \url{https://arxiv.org/abs/2605.07293}
+\item Kapoor, Sayash, Benedikt Stroebl, Peter Kirgis, Nitya Nadgir, Zachary S. Siegel 等. ``Holistic Agent Leaderboard: The Missing Infrastructure for AI Agent Evaluation.'' arXiv:2510.11977 (2025). \url{https://arxiv.org/abs/2510.11977}
+\item Ren, Zhe；Yibo Yang；Yimeng Chen；Zijun Zhao；Benshuo Fu；Zhihao Shu；Bingjie Zhang；Yangyang Xu；Dandan Guo；Shuicheng Yan. ``GateMem: Benchmarking Memory Governance in Multi-Principal Shared-Memory Agents.'' arXiv 预印本 arXiv:2606.18829 (2026). DOI: 10.48550/arXiv.2606.18829. \url{https://arxiv.org/abs/2606.18829}
+\item Xiong, Wenjun；Shengtao Zhang；Shangding Gu；Bo Tang；Zhiyu Li；Feiyu Xiong；Ying Wen；Muning Wen. ``TRACE: Governing Memory Validity in Evolving Multi-Agent Systems.'' arXiv:2609.33517 (2026). \url{https://arxiv.org/abs/2609.33517}
+\item Yang, Jiayuxuan；Jie M. Zhang；Yiling Lou；Zhenpeng Chen. ``Mubric: Mutation Testing-Guided Rubric Generation for LLM Evaluation.'' arXiv:2609.37322 (2026). \url{https://arxiv.org/abs/2609.37322}
+\item Delcourt, Kevin；Meriem Ben Chaaben；Abdelhamid Rouatbi；Luciano Marchezan；Houari Sahraoui. ``Breaking Models to Test the Judge: A Mutation Testing Approach for Semantic Evaluators of Domain Class Diagrams.'' arXiv:2608.14315 (2026). \url{https://arxiv.org/abs/2608.14315}
+\item Bhadra, Meet. ``GateTruth: Auditing the Rigor of RTL Design Benchmarks via Mutation Testing.'' arXiv:2608.12635 (2026). \url{https://arxiv.org/abs/2608.12635}
+\item Shulepov, Ilya. ``Mutation Testing for Reproducibility Safeguards in Machine Learning Research Software: An Empirical Study.'' arXiv:2608.27100 (2026). \url{https://arxiv.org/abs/2608.27100}
+\item Canedo, Arquimedes. ``Oracles That Cannot Fail: Anchoring and the Expectation That Moves With the Fault.'' arXiv:2608.17214 (2026). \url{https://arxiv.org/abs/2608.17214}
+\item Hill, Erik. ``Four Ways to Forge a Bundle My Own Verifier Calls Clean: Refusal-Site Mutation Testing of an Evidence-Bundle Verifier.'' arXiv preprint arXiv:2608.26183 (2026). \url{https://arxiv.org/abs/2608.26183}
+\item Bellibatlu, Rohith Reddy；Zichong Wang；Wenbin Zhang. ``Do Agent Benchmarks Do What They Say? An Executable-Contract Audit of Tool-Using Agent Environments.'' arXiv:2609.37315 (2026). \url{https://arxiv.org/abs/2609.37315}
+\item Fu, Hao；Baiting Zhu；Minglei Chen；Yinjie Huang；Shuai Ding. ``Verify, Don't Trust: Agentic Model Development for Video Discovery Retrieval at Scale.'' arXiv:2609.21257 (2026)；预印本内的 ACM reference format 标注为 KDD '27. \url{https://arxiv.org/abs/2609.21257}
+\item Sun, Shengyao. ``Mutation Testing of Task-Scoped State Oracles in Software-Agent Benchmarks: A Cross-Benchmark Empirical Study.'' Research Square 预印本，2026 年 8 月 18 日发布. DOI: 10.21203/rs.3.rs-10665114/v1. CC BY 4.0；复现附件 \texttt{SQJReplicationArtifactv1.zip}. \url{https://doi.org/10.21203/rs.3.rs-10665114/v1}
+\item Zhang, Xing 等. ``Who Grades the Grader? Co-Evolving Evaluation Metrics and Skills for Self-Improving LLM Agents.'' arXiv:2607.12790 (2026). \url{https://arxiv.org/abs/2607.12790}
+\item Liu, Sibo. ``Audience-Bound Persistent Memory: Authorization Across the Memory Lifecycle.'' arXiv:2609.36373 (2026). \url{https://arxiv.org/abs/2609.36373}
+\item Cheng, Yezhou；Runjia Du；Zeming Liu；Qibai Chen；Hang Lyu；Yankai Zeng；Yilan Wei；Bojun Lin. ``Scope Before You Persist: Preventing Cross-Family Interference in Agent Memory.'' arXiv:2609.29144 (2026). \url{https://arxiv.org/abs/2609.29144}
+\item Singh, Vivek Kumar；Preeti Priyam；Gautam Bhowmick. ``ChurnBench: A Drift-Aware Benchmark Demonstrating That Refresh Scheduling, Not Cache Age, Governs Staleness in Agentic AI.'' arXiv:2609.11515 (2026). \url{https://arxiv.org/abs/2609.11515}
+\item Mughal, Ali Hassaan；Muhammad Bilal. ``LLM-Based Test Oracles: Source-of-Authority Taxonomy --- A Systematic Literature Review.'' arXiv:2607.05031 (2026)。arXiv 的 \texttt{journal\_ref} 标注 IEEE Access, vol. 14, 2026；本次审计期间出版社 DOI 未能解析，因此以预印本标识符为引用记录。 \url{https://arxiv.org/abs/2607.05031}
+\item Chitan, Florin Adrian. ``Session Risk Memory (SRM): Temporal Authorization for Deterministic Pre-Execution Safety Gates.'' arXiv:2603.22350 (2026). \url{https://arxiv.org/abs/2603.22350}
+\item Ahad, Tanzim；Ismail Hossain；Md Jahangir Alam；Sai Puppala；Syed Bahauddin Alam；Sajedul Talukder. ``The Misattribution Gap: When Memory Poisoning Looks Like Model Failure in Agentic AI Systems.'' arXiv:2605.22842 (2026). \url{https://arxiv.org/abs/2605.22842}
+\item Hamidi, Asma；Michael Konstantinou；Renzo Degiovanni；Mike Papadakis. ``How effective are traditional test criteria at detecting bugs in large language models generated code?'' arXiv:2609.09315 (2026). \url{https://arxiv.org/abs/2609.09315}
+\item Mishra, Shweta. ``Boundary-Mutation Testing for Pattern-Based Secret Detection: A Rule-Level Method and Cross-Scanner Evaluation.'' arXiv:2609.02983 (2026). \url{https://arxiv.org/abs/2609.02983}
+\item Girda, Nora；Adrian Groza. ``Review Before Trust: Source-Grounded Integrity Gates for AI-Assisted Personal Health Records.'' arXiv:2608.29965 (2026). \url{https://arxiv.org/abs/2608.29965}
+\item de Oliveira, Rodrigo；Federico Pittino；James Gwinnutt；Jay Nanavati. ``Beyond Correctness: Validity-Oriented Evaluation of Biomedical LLM Judges.'' arXiv:2608.29127 (2026). \url{https://arxiv.org/abs/2608.29127}
+\item Cho, Steven；Stefano Ruberto；Valerio Terragni. ``Metamorphic Testing of Large Language Models for Natural Language Processing.'' Proceedings of the 2025 IEEE International Conference on Software Maintenance and Evolution (ICSME), pp. 174--186 (2025). DOI: 10.1109/ICSME64153.2025.00025. \url{https://arxiv.org/abs/2511.02108}
+\end{enumerate}
+\appendix
+\section{两次控制重发的历史}
+\label{app:reissue-history-zh}
+第 4 节报告的是目标对齐控制现在测量什么。本附录报告它是怎么走到这一步的，因为这段序列是本研究中登记册那条递归条目最清楚的实例：一台报告「空洞性不存在」的仪器，与它所报告的对象受制于同一批失效模式。一份独立发表的验证器审计报告了同一形状——一台被造来找出「不做检查就通过」的检查的工具，自己产出了这样一个检查，而该失效以那台仪器能报出的最好分数出现（Hill，2026，第 7.4 节）。此处是转述而不是引用，因为本审计无法对照原文复核那段引文；被复核的是该节标题与它对 vacuous pass 的定义，后者在第 2 节被逐字引用。
+
+第一次重发发现，其前身的 headline 合取项把一个 context digest 与它自己比较。比较的两个 case 读取同一份 prediction，因此该相等按构造成立，被测系统的任何输入都不可能打破它。该合取项由检查项降级为披露，并被一个成对形式取代。
+
+第二次重发又发现同一形状的另一处合取项半项：stale 分支是一份未被变异的深拷贝，因此它与冻结记录之间的字段差异按构造为空。彼时本稿已经开始声称「不再有任何合取项是定理」，这使那条声称本身成了一条没有任何扰动能够到达的断言。要找到它，必须扰动那条完备性主张，而不只是扰动它下面的检查项；本稿因此需要再重发一次才能承载这条更正。重发只有两次、没有第三次，因此这里的序数可以对照磁盘上保留的两个脚本版本核验。
+
+本段历史的一个早先修订在一处写「第三次」、另一处写「第二次」，而编译出的 PDF 两个都带着，读者无从判断作者相信哪一个。这一点被记录在此处而不是删除：一份悄悄改掉自己序数的文档，让人没有办法核验那次更正是否改对了。
+
+一般性教训就是那条递归条目本身：完备性主张需要它自己的扰动电池，而找到的唯一防御是把「已无空洞合取项」这条主张本身也当作一个待攻击的合取项。
+
+\section{Artifact 字段索引}
+\label{app:availability-index-zh}
+正文引用的每一个计数都定位到下面点名的字段。文件名与字段名一律逐字复制，可能带有历史内部标识符（例如 \texttt{slots}、\texttt{pilot} 或 \texttt{twin}）；正文一律使用「嵌套臂」与「开发批次」。由这些字段算出的百分比与归约数，在正文出现处标明为派生量。
+\begin{sloppypar}
+本稿由本地实验目录 \texttt{experiments/e0\_observation/} 支撑。正文引用的 artifact 计数逐个定位到下列具名字段；由它们算出的百分比与归约数在正文中标明为派生量。\path{authoring_pilot_acoustic_v1/validation_report.json}（\texttt{projection\_conditions}，144）；\path{twin_v4/twin_gate_report_v4.json}（\texttt{status} \texttt{PASS\_REFERENCE\_ONLY}、\texttt{perturbation\_sensitive\_arms} 216、\texttt{families\_with\_detection\_power} 9、\texttt{visible\_positive\_controls} 9），配合 \path{twin_v4/twin_gate_detail_v4.json} 提供的逐 family \texttt{hidden\_state\_windows}，把 216 归约为 9 个不同扰动，且其每一个 \texttt{detection\_power} 条目都是运行时计算的而非断言的；它取代 \path{twin_v3/twin_gate_report_v3.json}，后者的 \texttt{status} 是无限定的 \texttt{PASS}，而门禁状态表并不携带那个状态；\path{validity_v1/validity_gate_report_v1.json}（\texttt{arms\_tested} 72、\texttt{attested\_sensitive\_arms} 62、\texttt{attested\_reaction\_required\_arms} 50、\texttt{hidden\_twin\_comparisons} 24），配合 \path{validity_v1/validity_gate_detail_v1.json} 提供的 \texttt{hidden\_power\_arms} 10/0/0；\path{validity_v3/validity_gate_gap_analysis_v2.json}（\texttt{status} REPRODUCED、\texttt{self\_test\_status} \texttt{SELF\_TEST\_PASS}、那 12 个的逐臂归因 \texttt{arm\_attribution}、24 组中 10 组信息性的 \texttt{hidden\_comparisons} 与 \texttt{hidden\_comparison\_denominator}、\texttt{power\_coverage}、\texttt{per\_family\_hidden\_power}、\texttt{source\_predicates}，以及对全部冻结聚合量的 \texttt{self\_validation}），它取代 \path{validity_v2/validity_gate_gap_analysis_v1.json}；第 4 节的共线性陈述来自该 artifact 的 \texttt{hidden\_comparison\_denominator}，别无他处，且该 artifact 自己记录了这个数字不可作为检出率引用；\path{results/gatemem_rag_policy_stub_household/summary.json}（\texttt{n\_checkpoints} 552，\texttt{n\_privacy}、\texttt{n\_safety}、\texttt{n\_utility} 各 184，\texttt{privacy\_context\_leakage\_rate}、\texttt{deletion\_context\_leakage\_rate}，以及两个 answer-leakage-rate 字段均为 0.0），它供应第 4 节的每一个重放计数与比率，而本稿早先修订引用这些数字时没有点名该文件；\path{sealed_timeline_v1/recipient_gate_report_v3.json}（\texttt{isolation\_checks} 27）；\path{e2_sealed_full_v1_response_usability.json}（\texttt{usable} 217、\texttt{empty} 68、\texttt{nonempty\_truncated} 3、\texttt{truncated} 71、\texttt{slots} 288、\texttt{model}）；\path{v1_5_admitted_validation_report.json}（覆盖层的 \texttt{projection\_conditions} 216）；\path{peer_review_revision_v3/gatemem_target_alignment_report_v3.json}（\texttt{control\_checks} 13、\texttt{mutation\_count} 15、\texttt{vacuous\_mutations} 为空、\texttt{equivalence\_operator\_count} 6、\texttt{broken\_equivalence\_count} 3、\texttt{boundary\_guard\_class\_extracted\_from\_source}、\texttt{retracted\_assertion}、\texttt{manifest\_drift}），它取代 \path{peer_review_revision_v2/gatemem_target_alignment_report_v2.json} 与 \path{peer_review_revision_v1/gatemem_target_alignment_report.json}；\path{peer_review_revision_v3/confirmatory_query_readiness_report_v3.json}（\texttt{status} FAIL、\texttt{query\_count} 84、\texttt{placeholder\_query\_count} 84、\texttt{family\_count} 24、\texttt{family\_floor}、\texttt{min\_queries\_per\_family}、\texttt{leakage\_token\_count} 0、\texttt{detection\_power.verdict} PARTIAL、\texttt{inconclusive\_families}、\texttt{status\_checks}、\texttt{self\_test\_status} \texttt{SELF\_TEST\_PASS}），它取代 \path{confirmatory_query_readiness_report_v2.json}，是下一阶段将继承的就绪状态：只要还有任何确认性查询是占位符，它就强制给出非 PASS 判决，因此上面那个 FAIL 是门禁的性质，不是本稿乐观程度的性质。第 4 节语料段中的每一个计数都定位到 \path{corpus_matcher_v1/gatemem_corpus_matcher_report_v3.json}（\texttt{denominators}、\texttt{suppression}、\texttt{separator\_variants}、\texttt{not\_adjudicated}、\texttt{boundary\_guard\_class\_extracted\_from\_source}、\texttt{upstream\_intent\_evidence}、\texttt{corpus\_sha256}、\texttt{metrics\_sha256}、\texttt{gatemem\_commit}）；它的逐实例文件 \path{corpus_matcher_v1/gatemem_corpus_matcher_instances_v3.jsonl} 携带上游 target 取值与 checkpoint 标识符，因此\emph{不}随本文分发，任何人可从固定的上游 commit 用上述具名脚本本地重算。判决翻转为 0 的那个数字定位到 \path{verdict_impact_v1/gatemem_verdict_impact_report_v1.json}（\texttt{status} \texttt{MEASURED\_ATTRIBUTION\_COMPLETE}、\texttt{pattern\_sets}、\texttt{answer\_side\_excluded}、\texttt{source\_grounding}，以及逐臂的 \texttt{attribution} 与 \texttt{verdicts\_that\_would\_flip}），该脚本的模式集合从上游 scorer 自身的源码派生，派生失败即拒绝运行；另有侧车文件 \path{corpus_matcher_v1/gatemem_corpus_matcher_output_binding_v1.json} 记录了「语料匹配器的报告不携带其输出文件摘要」这一事实，因此该绑定被显式写在外部，而不是留作隐含。\path{GATE_STATUS_AND_KNOWN_BAD_REGISTER_2026-10-05.md} 记录每一台门禁脚本的完整摘要与本稿引用的每一个判决的状态。上面的 artifact 文件名与字段名一律逐字复制，可能带有历史内部标识符（例如 \texttt{slots}、\texttt{pilot} 或 \texttt{twin}）；正文一律使用「嵌套臂」与「开发批次」。有一类标识符比历史遗留更糟：宿主项目的一个角色名在本稿每个语言版本里各出现四次——三次作为 family 标识符出现在「Family 层面的响应可用性」表中，一次出现在 artifact 路径 \path{v1_5_admitted_sub-538bf0c712} 里——因此本稿正文自己就带着任何脱敏发布都必须剥掉的标识符。判据还会在每个语言版本里命中一个真实地名，变换对它只报告不改写，因此当前派生副本在作者放行裁定前仍是 0 ADMIT、2 EXCLUDE；发布仍需不透明 ID 变换、该类别的人工放行裁定及其前置扫描实况。本句的早先修订只点名了那条 artifact 路径，于是把自己的披露少数了三处（每个文件各三处）；一份只点名某个出现四次的 token 中一处的披露，是读者无法据以行动的披露，其形状与「抽查一个样本却对总体作报告」的检查相同。发布还必须把与冻结原件的差异记录下来，且不得改写原件；三个条件全部满足前本文件不可发布，配套的公开仓库可以公开工具、schema、去标识合成 fixture 与图表脚本。该变换的范围不应被说过头：它把 canon 角色标识符从研究记录里剥掉，但并不能使宿主项目不可识别——配套公开仓库自身的历史里已点名了该项目，而本稿中的真实地名是按设计保留的。因此这里的「脱敏」是关于角色标识符的陈述，不是关于宿主项目的陈述。一份文档能在同一段里既写出发布条件又违反它，正是本文审计的那种失效模式，所以这里选择披露而不是悄悄改掉。冻结 allocation 与 artifact manifest 是本阶段的权威记录；\path{novelty_recheck_2026-10-04.md} 记录第 2 节背后的文献检索过程，包括哪些通道当日受限。该检索不是穷尽检索：\path{novelty_query_protocol_v1_2026-10-05.md} 规定原子查询、每轮一条已知占据者标定查询、逐条记录结果总数，以及对每个存活邻居阅读 scope/claims 段。外部 GateMem 代码快照采用 MIT 许可证，其数据集卡标记为 CC-BY-4.0；本文不重新分发上游 benchmark 文件、完整答案或隐藏 checkpoint。生产 secrets 与运行时 world ledger 不属于实验输入。
+\end{sloppypar}
+
+\section{Family 层面的响应可用性}
+\label{app:family-usability-zh}
+仅为描述。每行包含 24 个嵌套臂，而目标独立单位仍是 family。我们不在臂层面报告置信区间或显著性检验：臂嵌套于 family，臂层面的推断会构成伪重复（Hurlbert, 1984）。本表没有任何内容被解释为因果，且在语义评分存在之前也不得如此解释。
+
+\begin{table}[h]
+\centering
+\caption{Family 层面的响应可用性（描述性）。}
+\label{tab:family-usability-zh}
+\scriptsize
+\begin{tabular}{lrrrrr}
+\toprule
+Family & 嵌套臂数 & Usable & Empty & Length finish & 可用率 \\
+\midrule
+\texttt{access-f01} & 24 & 18 & 5 & 6 & 75.00\% \\
+\texttt{access-f02} & 24 & 13 & 11 & 11 & 54.17\% \\
+\texttt{access-f03} & 24 & 15 & 9 & 9 & 62.50\% \\
+\texttt{communication-synthetic-01} & 24 & 24 & 0 & 0 & 100.00\% \\
+\texttt{communication-synthetic-02} & 24 & 23 & 1 & 1 & 95.83\% \\
+\texttt{communication-synthetic-03} & 24 & 23 & 1 & 1 & 95.83\% \\
+\texttt{coverage-f01} & 24 & 15 & 9 & 9 & 62.50\% \\
+\texttt{coverage-f02} & 24 & 15 & 9 & 9 & 62.50\% \\
+\texttt{coverage-f03} & 24 & 17 & 7 & 7 & 70.83\% \\
+\texttt{crossday-f01} & 24 & 18 & 4 & 6 & 75.00\% \\
+\texttt{crossday-f02} & 24 & 17 & 7 & 7 & 70.83\% \\
+\texttt{crossday-f03} & 24 & 19 & 5 & 5 & 79.17\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\end{document}

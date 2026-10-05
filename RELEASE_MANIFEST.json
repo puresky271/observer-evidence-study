@@ -13,7 +13,7 @@
       "transformation": "none",
       "real_world_content": false,
       "reversible_mapping": false,
-      "sha256": "0a65021c46f1169196e38fbf6d3ab41615ea159171d5aa934033a364c741cf86",
+      "sha256": "4828bccd54a2d712778dd98090a6e8714c65da8557fc302a1039a494c8121032",
       "allowed_use": "code reuse under LICENSE",
       "exclusion_reason": ""
     },
@@ -37,8 +37,32 @@
       "transformation": "opaque ID transformation",
       "real_world_content": false,
       "reversible_mapping": false,
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256": "fd2e9ab89e53dd0145be85fd8b934919de6fdd03d8a2fa2e19a51aeb2833f933",
       "allowed_use": "CC-BY-4.0 candidate",
+      "exclusion_reason": ""
+    },
+    {
+      "path": "manuscripts/paper_part1_en_public.tex",
+      "category": "deidentified_manuscript_derivative",
+      "source": "Part I manuscript v17",
+      "upstream_license_or_tos": "this release",
+      "transformation": "HMAC opaque-ID replacement; public place prose retained under scoped decision",
+      "real_world_content": false,
+      "reversible_mapping": false,
+      "sha256": "78bcaa2f56f8181b7abc7a4ce73bf624dde31a4c59062c5e54c80d41ec0f7ec8",
+      "allowed_use": "read and cite",
+      "exclusion_reason": ""
+    },
+    {
+      "path": "manuscripts/paper_part1_zh_public.tex",
+      "category": "deidentified_manuscript_derivative",
+      "source": "Part I manuscript v17",
+      "upstream_license_or_tos": "this release",
+      "transformation": "HMAC opaque-ID replacement; public place prose retained under scoped decision",
+      "real_world_content": false,
+      "reversible_mapping": false,
+      "sha256": "f9e90b4a74289e214405557d7d696aae8d19e731068b90d1f6eb344dbf3517e0",
+      "allowed_use": "read and cite",
       "exclusion_reason": ""
     },
     {
@@ -49,7 +73,7 @@
       "transformation": "derived aggregate only",
       "real_world_content": false,
       "reversible_mapping": false,
-      "sha256": "723ee14ce8fb6d72b2055253d9c5aa33860cae3d2cd751d0e5967bf5f6d00158",
+      "sha256": "877511a82c526ba379d4d473a15687ed1c7fc093e625c4f345c4def64c0e1758",
       "allowed_use": "reproduce figures",
       "exclusion_reason": ""
     },
@@ -61,7 +85,7 @@
       "transformation": "none",
       "real_world_content": false,
       "reversible_mapping": false,
-      "sha256": "aee73bbed002c77a2971d75ec2bddfcaa253830f8edf3ea39310a3137250ecd8",
+      "sha256": "0ad3d149005387db93363d8b5bade4825d469c6da7153fc400ba9a19af1178f2",
       "allowed_use": "reproduce figures",
       "exclusion_reason": ""
     },
@@ -73,8 +97,20 @@
       "transformation": "aggregated and hashed",
       "real_world_content": false,
       "reversible_mapping": false,
-      "sha256": "261afc7fcb3af16f0e76908649ce7e4372d3586a25e713fccbc6fcb46216c0b8",
+      "sha256": "7196b0374ffec707809557d276e75642626b0a8e69db4bf6b7e53a032f977881",
       "allowed_use": "audit and reproduction",
+      "exclusion_reason": ""
+    },
+    {
+      "path": "figures/exported/",
+      "category": "svg_figure",
+      "source": "this release",
+      "upstream_license_or_tos": "none",
+      "transformation": "derived aggregate only",
+      "real_world_content": false,
+      "reversible_mapping": false,
+      "sha256": "08857023a6eeee86a00110893831932981c3a5ddf0f46bc650a6b2e3f59e8374",
+      "allowed_use": "reproduce or cite figure",
       "exclusion_reason": ""
     },
     {

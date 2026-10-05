@@ -7,4 +7,11 @@ authors:
     given-names: "Contributors"
 date-released: 2026-10-04
 license: MIT
-repository-code: https://github.com/REPLACE_AFTER_REVIEW/observer-evidence-study
+repository-code: https://github.com/puresky271/observer-evidence-study
+# The author entry above is a placeholder, not an attribution: the accompanying
+# manuscript's author list is deliberately unfilled pending external review, and a
+# CITATION.cff that invented a corporate author for it would be a fabricated
+# attribution in the one file whose whole purpose is to state attribution.
+# repository-code named a REPLACE_AFTER_REVIEW placeholder for three commits after
+# the repository was created public under its real name, so the published metadata
+# pointed at a repository that does not exist.
