@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "Cite the current manuscript and exact Git commit. Anonymous is an intentional pending-author placeholder."
-title: "Failure Attribution in Deterministic Agent Evaluations"
+title: "Instrument-Side Failure Attribution in Deterministic Agent Evaluations"
 type: software
 authors:
   - family-names: "Anonymous"

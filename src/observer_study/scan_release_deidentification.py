@@ -10,7 +10,8 @@ repository.
 The denylist lives in a separate file that is itself never published, for a
 reason this scan demonstrates: any file that enumerates the forbidden tokens
 trips the scan, so a scanner that carried its own denylist inline could not be
-published either. Load it with --denylist.
+published either. Load it with --denylist. `--self-test` alone runs the rules on
+invented tokens so a clean clone can exercise them; it cannot vouch for the real set.
 
 Checks per candidate file:
 
@@ -73,6 +74,15 @@ FIXTURE_PATH = ("script at " + chr(67) + ":" + chr(92) * 2 + "Users" + chr(92) *
                 + "someone" + chr(92) * 2 + "repo" + chr(92) * 2 + "x.py\n")
 FIXTURE_CKPT = ("office" + chr(95) + "episode" + chr(95) + "custom" + chr(95) + "en" + chr(95)
                 + "001" + chr(95) + "a" + chr(95) + "b" + chr(95) + "ckpt" + chr(95) + "03")
+
+# A clean clone has no denylist (it is never published), and `--self-test` used to
+# refuse to start without one, so a reader could not exercise the gate's logic at
+# all. The self-test may fall back to these invented tokens -- neither is a
+# character or a real place -- and says so in its output. A real scan still
+# requires --denylist: passing on synthetic tokens says the rules work, not that
+# the repository is free of the real ones. Split so this file does not match them.
+SYNTHETIC_DENYLIST = {"canon_identities": ["Vantam" + "mer Family"],
+                      "real_place_names": ["Ferro" + "wick"]}
 
 
 def load_denylist(path: Path) -> dict:
@@ -260,8 +270,9 @@ def self_test(deny: dict, tmp: Path) -> dict:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("roots", type=Path, nargs="*")
-    parser.add_argument("--denylist", type=Path, required=True,
-                        help="JSON with canon_identities and real_place_names; never published")
+    parser.add_argument("--denylist", type=Path,
+                        help="JSON with canon_identities and real_place_names; never published. "
+                             "Required for a scan; --self-test without it uses invented tokens.")
     parser.add_argument("--allowlist", type=Path,
                         help="JSON mapping a file name to the reason it is exempt from the "
                              "denylist. An exemption is printed, never silent: the two known "
@@ -276,12 +287,19 @@ def main() -> int:
     parser.add_argument("--self-test", action="store_true")
     args = parser.parse_args()
 
-    deny = load_denylist(args.denylist)
+    if args.denylist is None and not args.self_test:
+        parser.error("--denylist is required for a scan; a scan without the real token set "
+                     "cannot certify anything")
+    deny = load_denylist(args.denylist) if args.denylist else SYNTHETIC_DENYLIST
     allow = load_allowlist(args.allowlist) if args.allowlist else {}
     if args.self_test:
         import tempfile
         with tempfile.TemporaryDirectory() as tmp:
             result = self_test(deny, Path(tmp))
+        result["denylist_source"] = "file" if args.denylist else "built_in_synthetic"
+        if not args.denylist:
+            result["scope_note"] = ("rules exercised on invented tokens; this does not show that "
+                                    "the repository is free of the unpublished real identifiers")
         print(json.dumps(result, indent=2))
         return 0 if result["status"] == "SELF_TEST_PASS" else 1
 

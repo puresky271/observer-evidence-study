@@ -1,6 +1,6 @@
 # Observer Evidence Study
 
-A deterministic replay study of failure attribution in agent evaluations. The current manuscript asks whether a passing comparison reflects a healthy implementation, a discarded intervention, or an unsupported scoring interpretation.
+A deterministic replay study of instrument-side failure attribution in agent evaluations. The current manuscript asks whether a passing comparison reflects a healthy implementation, a discarded intervention, or an unsupported scoring interpretation. "Attribution" here concerns the evaluation instrument, not which agent or step caused a task failure.
 
 ## Current paper
 
@@ -39,7 +39,7 @@ The primary replay uses 12 opaque derivatives of synthetic timeline families, 28
 | Safe projector / discarding adapter | PASS_REFERENCE_ONLY | 0 | 9 |
 | Leaking projector / restored forwarding | FAIL | 216 | 9 |
 
-The signature heuristic changes its label after renaming despite identical leak rejection. Discarding the hidden input conceals the leak despite passing visible controls. Restoration reverses only the injected adapter fault. These are bounded counterexamples, not a representative mutation score or a noninterference proof.
+The signature heuristic changes its label after renaming despite identical leak rejection. Discarding the hidden input makes both sides of each comparison identical by construction, so the PASS itself is definitional; the finding is that nothing the gate reports, including the nine visible controls, distinguishes that run from a healthy one. Restoration reverses only the injected adapter fault. The hidden perturbation is one global flip per query, so the 216 arms apply one rule to 216 inputs. These are bounded counterexamples, not a representative mutation score, a prevalence estimate or a noninterference proof.
 
 Six lexical probes of a pinned auxiliary scorer change three paired decisions. None is certified semantically equivalent. Separate synthetic target-alignment and aggregation controls distinguish label errors from matcher behavior and checkpoint consequences. No published benchmark score, primary LLM judge or model quality is evaluated.
 
@@ -49,7 +49,8 @@ Six lexical probes of a pinned auxiliary scorer change three paired decisions. N
 - `data/matcher_audit/` contains exact authored inputs and auxiliary scorer outputs.
 - `src/observer_study/_vendor/gatemem/` contains two unmodified MIT-licensed source files from GateMem, with its original license. Origin and hashes are in `audits/gatemem_vendor_manifest.json`.
 - `audits/historical_aggregate_background.json` retains older delivery/readiness counts as background only; private raw answers and the unfinished confirmatory experiment are not publicly replayed.
-- `RELEASE_MANIFEST.json` binds release scopes to measured file/directory digests. [Release boundaries](RELEASE_BLOCKERS.md) distinguish current publication from historical scans.
+- `RELEASE_MANIFEST.json` binds release scopes to file/directory digests under the platform-independent construction recorded in the manifest (UTF-8 text hashed with LF line endings, other bytes raw, directories limited to files git would publish). CI re-measures it on Linux and Windows. [Release boundaries](RELEASE_BLOCKERS.md) distinguish current publication from historical scans.
+- `scan_release_deidentification.py --self-test` runs without the unpublished denylist by using invented tokens; that exercises the rules but cannot certify that private identifiers are absent.
 
 Opaque rewriting changes identifiers, questions and hashes; author-side receipts attest preserved memberships and primary failure records. Readers can reproduce the public derivative, but cannot independently verify private-to-public renaming without excluded originals. No identity map, production state, source franchise corpus, upstream benchmark episode or private spatial validator is distributed.
 

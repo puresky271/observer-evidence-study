@@ -77,5 +77,39 @@ class ManifestAuditorTest(unittest.TestCase):
             self.assertEqual(rewritten["files"][1]["digest_status"], "NOT_COMPUTED")
 
 
+class PortableDigestTest(unittest.TestCase):
+    """The defect behind the red CI run: one commit, two operating systems, two digests."""
+
+    def _checkout(self, root: Path, newline: bytes, scratch: bool) -> None:
+        subprocess.run(["git", "init", "-q", str(root)], check=True, capture_output=True)
+        (root / ".gitignore").write_bytes(b"data/local_*.json" + newline)
+        (root / "data").mkdir()
+        (root / "data" / "a.json").write_bytes(b"{" + newline + b'  "k": 1' + newline + b"}" + newline)
+        (root / "data" / "Z.txt").write_bytes(b"z" + newline)
+        (root / "data" / "blob.bin").write_bytes(b"\x00\r\n\xff")
+        if scratch:
+            (root / "data" / "local_notes.json").write_bytes(b"{}" + newline)
+
+    def test_linux_and_windows_checkouts_agree(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            linux, windows = Path(tmp) / "linux", Path(tmp) / "windows"
+            self._checkout(linux, b"\n", scratch=False)
+            self._checkout(windows, b"\r\n", scratch=True)
+            entry = {"path": "data/", "category": "data", "source": "this release",
+                     "upstream_license_or_tos": "none", "transformation": "none",
+                     "real_world_content": False, "reversible_mapping": False,
+                     "sha256": "", "allowed_use": "reuse", "exclusion_reason": ""}
+            manifest = {"schema_version": "observer-study-release-manifest-v2",
+                        "status": "DRAFT_COMPLETE", "files": [entry]}
+            path = windows / "RELEASE_MANIFEST.json"
+            path.write_text(json.dumps(manifest), encoding="utf-8")
+            written = run(["--manifest", str(path), "--root", str(windows), "--write-digests"])
+            self.assertEqual(written.returncode, 0, written.stdout + written.stderr)
+            # Digests measured on the Windows-shaped checkout must verify on Linux.
+            (linux / "RELEASE_MANIFEST.json").write_bytes(path.read_bytes())
+            checked = run(["--manifest", str(linux / "RELEASE_MANIFEST.json"), "--root", str(linux)])
+            self.assertEqual(checked.returncode, 0, checked.stdout + checked.stderr)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -323,3 +323,14 @@ A third condition applies to `RELEASE_MANIFEST.json` specifically:
 `audit_release_manifest.py --manifest RELEASE_MANIFEST.json --root .` must report
 `PASS`. Its `--self-test` constructs a violating manifest for every predicate, so
 a check that cannot fire is caught there rather than discovered by a reviewer.
+
+That condition was not met for the first two pushes of the current manuscript
+(2026-10-14): the manifest had been measured on a Windows working tree whose
+text files carried CRLF line endings and whose listed directories held
+git-ignored scratch, so Linux CI recomputed different digests for 15 of 18
+entries and failed. The auditor passed locally because it measured the same
+bytes that produced the manifest. Digest construction v3 hashes UTF-8 text with
+LF line endings, limits directories to files git would publish and sorts by
+POSIX path strings; its self-test reconstructs each of the three drift sources,
+and `tests/test_audit_release_manifest.py` checks that digests written on a
+CRLF checkout with ignored scratch verify on an LF checkout without it.

@@ -50,6 +50,20 @@ class ScannerGateTest(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertEqual(json.loads(result.stdout)["status"], "SELF_TEST_PASS")
 
+    def test_self_test_runs_in_a_clean_clone_and_says_what_it_used(self) -> None:
+        """No denylist in a clean clone: the rules still run, on declared synthetic tokens."""
+        result = run_scanner(["--self-test"])
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        report = json.loads(result.stdout)
+        self.assertEqual(report["status"], "SELF_TEST_PASS")
+        self.assertEqual(report["denylist_source"], "built_in_synthetic")
+        self.assertIn("does not show", report["scope_note"])
+
+    def test_a_scan_without_a_denylist_is_refused(self) -> None:
+        result = run_scanner(["--scope", "tracked", str(self.tmp)])
+        self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+        self.assertIn("--denylist is required", result.stderr)
+
     def test_self_test_passes_against_the_real_denylist(self) -> None:
         """Local-only: the public suite cannot cover the real denylist.
 

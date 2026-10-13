@@ -29,5 +29,5 @@ replay_output/
 final_verification/
 manuscripts/build/
 audits/_retrieve_citations*.py
-audits/citation_raw_stage*.json
+audits/citation_raw_*.json
 audits/*_pdf.pdf

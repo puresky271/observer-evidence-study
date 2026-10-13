@@ -15,6 +15,22 @@ Directory digests are sha256 over the sorted "relpath\\0filesha256" lines of eve
 file beneath the directory, skipping the same directories the de-identification
 scanner skips. The definition is part of the contract: a directory hash with no
 published construction cannot be reproduced by anyone else.
+
+The construction must also be platform-independent. Version 2 hashed working-tree
+bytes, walked every file on disk and sorted platform path objects, so a Windows
+checkout (CRLF line endings, git-ignored scratch inside listed directories) and a
+Linux checkout of the same commit disagreed on 15 of 18 digests, and continuous
+integration failed on the commit that published a manuscript claiming them.
+Version 3 fixes three rules:
+
+* Content: a file that decodes as UTF-8 and contains no NUL byte is text and is
+  hashed with CRLF converted to LF; anything else is hashed as raw bytes. Digests
+  are deliberately insensitive to line-ending conversion.
+* Membership: inside a git work tree a directory contains exactly the files git
+  would publish from it (tracked, plus untracked files that are not ignored), so
+  ignored scratch cannot change a release digest. Outside git every file is walked.
+* Order: lines sort by their POSIX relative path string, not by path objects whose
+  ordering differs between operating systems.
 """
 from __future__ import annotations
 
@@ -42,18 +58,51 @@ STATUSES = {"DRAFT_INCOMPLETE_DIGESTS", "DRAFT_COMPLETE", "PUBLIC"}
 FAKE_ABSOLUTE_PATH = chr(68) + ":" + chr(47) + "somewhere" + chr(47) + "or-other"
 
 
+DIGEST_CONSTRUCTION = ("release-digest-v3: UTF-8 text without NUL hashed with CRLF->LF, other "
+                       "bytes raw; directory = git-publishable files sorted by POSIX relpath")
+SKIPPED_NO_GIT = "SKIPPED_NO_GIT"
+
+
+def canonical_bytes(raw: bytes) -> bytes:
+    """Line-ending-independent content: UTF-8 without NUL is text, the rest is binary."""
+    if b"\0" in raw:
+        return raw
+    try:
+        raw.decode("utf-8")
+    except UnicodeDecodeError:
+        return raw
+    return raw.replace(b"\r\n", b"\n")
+
+
 def file_sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    return hashlib.sha256(canonical_bytes(path.read_bytes())).hexdigest()
+
+
+def publishable_members(target: Path) -> list[Path] | None:
+    """Files git would publish from `target`, or None when `target` is not in a work tree."""
+    try:
+        out = subprocess.run(
+            ["git", "-C", str(target), "ls-files", "-z", "--cached", "--others",
+             "--exclude-standard", "--", "."],
+            capture_output=True, check=True).stdout
+    except (OSError, subprocess.CalledProcessError):
+        return None
+    names = [name for name in out.decode("utf-8").split("\0") if name]
+    # --cached also lists files deleted from disk but still in the index.
+    return [target / name for name in names if (target / name).is_file()]
 
 
 def digest_of(target: Path) -> str:
     if target.is_file():
         return file_sha256(target)
+    members = publishable_members(target)
+    if members is None:
+        members = [p for p in target.rglob("*") if p.is_file()]
     lines = []
-    for path in sorted(p for p in target.rglob("*") if p.is_file()):
-        if any(part in SKIP_DIRS for part in path.parts):
+    for rel, path in sorted((p.relative_to(target).as_posix(), p) for p in members):
+        if any(part in SKIP_DIRS for part in rel.split("/")):
             continue
-        lines.append(f"{path.relative_to(target).as_posix()}\0{file_sha256(path)}")
+        lines.append(f"{rel}\0{file_sha256(path)}")
     return hashlib.sha256("\n".join(lines).encode("utf-8")).hexdigest()
 
 
@@ -193,9 +242,56 @@ def self_test(tmp: Path) -> dict:
             bool(audit(manifest(files=[entry(path="absent/", planned=True)]), tmp)),
         "directory_digest_is_stable": digest_of(tmp / "real") == good_digest,
     }
-    failed = sorted(k for k, v in cases.items() if v is not True)
-    return {"checks": cases, "failed": failed,
+    cases.update(_portability_checks(tmp))
+    skipped = sorted(k for k, v in cases.items() if v == SKIPPED_NO_GIT)
+    failed = sorted(k for k, v in cases.items() if v is not True and v != SKIPPED_NO_GIT)
+    return {"checks": cases, "failed": failed, "skipped": skipped,
             "status": "SELF_TEST_PASS" if not failed else "SELF_TEST_FAIL"}
+
+
+def _portability_checks(tmp: Path) -> dict:
+    """The defects that made Windows and Linux disagree, each reconstructed."""
+    pairs = {"text": (b"x\ny\n", b"x\r\ny\r\n"),
+             "nul": (b"x\n\0", b"x\r\n\0"),
+             "latin1": (b"\xe2\xe3\n", b"\xe2\xe3\r\n")}
+    digests = {}
+    for name, (lf, crlf) in pairs.items():
+        (tmp / f"{name}_lf.dat").write_bytes(lf)
+        (tmp / f"{name}_crlf.dat").write_bytes(crlf)
+        digests[name] = (file_sha256(tmp / f"{name}_lf.dat"), file_sha256(tmp / f"{name}_crlf.dat"))
+    # Upper-case names sort before lower-case ones as strings; Windows path objects
+    # compare case-insensitively, which is how directory digests drifted by platform.
+    (tmp / "order").mkdir()
+    for name in ("b.txt", "C.txt", "a.txt"):
+        (tmp / "order" / name).write_text(name, encoding="utf-8")
+    expected = hashlib.sha256("\n".join(
+        f"{n}\0{hashlib.sha256(n.encode()).hexdigest()}" for n in ("C.txt", "a.txt", "b.txt")
+    ).encode("utf-8")).hexdigest()
+    return {
+        "crlf_and_lf_text_hash_identically": digests["text"][0] == digests["text"][1],
+        "nul_bytes_keep_raw_hashing": digests["nul"][0] != digests["nul"][1],
+        "non_utf8_keeps_raw_hashing": digests["latin1"][0] != digests["latin1"][1],
+        "directory_order_is_posix_string_order": digest_of(tmp / "order") == expected,
+        "ignored_file_does_not_change_directory_digest": _membership_check(tmp),
+    }
+
+
+def _membership_check(tmp: Path):
+    """Inside a work tree, ignored files stay out of a directory digest; new ones do not."""
+    repo = tmp / "membership_repo"
+    (repo / "pkg").mkdir(parents=True)
+    try:
+        subprocess.run(["git", "init", "-q", str(repo)], capture_output=True, check=True)
+    except (OSError, subprocess.CalledProcessError):
+        return SKIPPED_NO_GIT
+    (repo / ".gitignore").write_text("pkg/scratch.json\n", encoding="utf-8")
+    (repo / "pkg" / "kept.json").write_text("{}\n", encoding="utf-8")
+    before = digest_of(repo / "pkg")
+    (repo / "pkg" / "scratch.json").write_text('{"local": true}\n', encoding="utf-8")
+    ignored_excluded = digest_of(repo / "pkg") == before
+    (repo / "pkg" / "added.json").write_text("{}\n", encoding="utf-8")
+    unignored_included = digest_of(repo / "pkg") != before
+    return ignored_excluded and unignored_included
 
 
 def main() -> int:
@@ -242,7 +338,8 @@ def main() -> int:
         data = json.loads(args.manifest.read_text(encoding="utf-8"))
 
     errors = audit(data, args.root)
-    report = {"schema_version": "release-manifest-audit-v2",
+    report = {"schema_version": "release-manifest-audit-v3",
+              "digest_construction": DIGEST_CONSTRUCTION,
               "status": "PASS" if not errors else "FAIL",
               "manifest_status": data.get("status"),
               "file_count": len(data.get("files", [])),

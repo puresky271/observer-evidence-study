@@ -316,12 +316,13 @@
       "key": "longmemeval",
       "metadata": {
         "author": "Di Wu and Hongwei Wang and Wenhao Yu and Yuwei Zhang and Kai-Wei Chang and Dong Yu",
-        "title": "LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory",
+        "title": "{LongMemEval}: Benchmarking Chat Assistants on Long-Term Interactive Memory",
         "year": "2024",
         "eprint": "2410.10813",
         "archivePrefix": "arXiv",
         "url": "https://arxiv.org/abs/2410.10813",
-        "note": "Preprint first submitted 2024; inspected revision v2, March 2025"
+        "howpublished": "arXiv:2410.10813",
+        "note": "ICLR 2025, per the arXiv record; inspected revision v2, March 2025"
       },
       "verification": "source text inspected",
       "sources": [
@@ -334,12 +335,18 @@
           "url": "https://export.arxiv.org/api/query?id_list=2410.10813",
           "http_status": 200,
           "retrieved_at_utc": "2026-10-13T17:52:27.898108+00:00"
+        },
+        {
+          "url": "https://export.arxiv.org/api/query?id_list=2410.10813&max_results=1",
+          "retrieved_at_utc": "2026-10-13T19:19:16.557986+00:00",
+          "http_status": 200
         }
       ],
       "source_excerpt": [
         "[2410.10813] LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory Skip to main content Search Submit Donate Log in Search arXiv Press Enter to search · Advanced search Computer Science > Computation and Language arXiv:2410.10813 (cs) [Submitted on 14 Oct 2024 ( v1 ), last revised 4 Mar 2025 (this version, v2)] Title: LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory Authors: Di Wu , Hongwei Wang , Wenhao Yu , Yuwei Zhang , Kai-Wei Chang , Dong Yu View a PDF of the paper titled LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory, by Di Wu and 5 other authors View PDF HTML (experimental) Abstract: Recent large language model (LLM)-driven chat assistant systems have integrated memory components to track user-assistant chat histories, enabling more accurate and personalized responses. However, their long-term memory capabilities in sustained interactions remain underexplored. We introduce LongMemEval, a comprehensive benchmark designed to evaluate five core long-term memory abilities of chat assistants: information extraction, multi-session reasoning, temporal reasoning, knowledge updates, and abstention. With 500 meticulously curated questions embedded within freely scalable user-assistant chat histories, LongMemEval presents a significant challenge to existing long-term memory systems, with commercial chat assistants and long-context LLMs showing a 30% accuracy drop on memorizing information across sustained interactions. We then present a unified framework that breaks down the long-term memory design into three stages: indexing, retrieval, and reading. Built upon key experimental insights, we propose several memory design optimizations including session decomposition for value granularity, fact-augmented key expansion for indexing, and time-aware query expansion for refining the search scope. Extensive experiments show that these optimizations greatly improve both memory recall and downstream question answering on LongMemEval. Overall, our study provides valuable resources and guidance for advancing the long-term memory capabilities of LLM-based chat assistants, paving the way toward more personalized and reliable conversational AI. Our benchmark and code are publicly available at this https URL . Comments: ICLR 2025 Subjects: Computation and Language (cs.CL) Cite as: arXiv:2410.10813 [cs.CL] ",
         "https://arxiv.org/api/Kalp/dFg12PI5+OQmhbWniiCXOs arXiv Query: search_query=&id_list=2410.10813&start=0&max_results=10 2026-10-13T17:02:39Z 10 1 0 http://arxiv.org/abs/2410.10813v2 LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory 2025-03-04T22:19:41Z Recent large language model (LLM)-driven chat assistant systems have integrated memory components to track user-assistant chat histories, enabling more accurate and personalized responses. However, their long-term memory capabilities in sustained interactions remain underexplored. We introduce LongMemEval, a comprehensive benchmark designed to evaluate five core long-term memory abilities of chat assistants: information extraction, multi-session reasoning, temporal reasoning, knowledge updates, and abstention. With 500 meticulously curated questions embedded within freely scalable user-assistant chat histories, LongMemEval presents a significant challenge to existing long-term memory systems, with commercial chat assistants and long-context LLMs showing a 30% accuracy drop on memorizing information across sustained interactions. We then present a unified framework that breaks down the long-term memory design into three stages: indexing, retrieval, and reading. Built upon key experimental insights, we propose several memory design optimizations including session decomposition for value granularity, fact-augmented key expansion for indexing, and time-aware query expansion for refining the search scope. Extensive experiments show that these optimizations greatly improve both memory recall and downstream question answering on LongMemEval. Overall, our study provides valuable resources and guidance for advancing the long-term memory capabilities of LLM-based chat assistants, paving the way toward more personalized and reliable conversational AI. Our benchmark and code are publicly available at https://github.com/xiaowu0162/LongMemEval. 2024-10-14T17:59:44Z ICLR 2025 Di Wu Hongwei Wang Wenhao Yu Yuwei Zhang Kai-Wei Chang Dong Yu"
-      ]
+      ],
+      "correction": "Venue added from the arXiv comment field ('ICLR 2025'); previously cited as preprint only."
     },
     {
       "key": "ssn",
@@ -390,12 +397,379 @@
         "[2609.00065] Scientific Agent Skills: A Library of Procedural Knowledge for Research Agents Skip to main content Search Submit Donate Log in Search arXiv Press Enter to search · Advanced search Computer Science > Computation and Language arXiv:2609.00065 (cs) [Submitted on 30 Aug 2026 ( v1 ), last revised 2 Sep 2026 (this version, v2)] Title: Scientific Agent Skills: A Library of Procedural Knowledge for Research Agents Authors: Timothy Kassis , Vinayak Agarwal , Yuhuan He , Darshil Patel , Aubrey M. Brueckner View a PDF of the paper titled Scientific Agent Skills: A Library of Procedural Knowledge for Research Agents, by Timothy Kassis and 4 other authors View PDF HTML (experimental) Abstract: A language-model agent asked to analyse an experiment will usually return working code. Whether the analysis is defensible is a different question. A defensible analysis depends on procedural choices: which test the field accepts, which identifier namespace is authoritative, and which caveats must accompany a result. We present Scientific Agent Skills, an open library of 163 such procedures in 16 areas of practice, including genomics, cheminformatics, medical imaging, study design and scientific communication. Each skill is a directory built around a versioned, human-readable instruction file. An agent loads the file only when a task calls for it; the directory often also contains reference material and runnable scripts. We report no task-level evaluation and no host selection rate. We measure two properties of the documentation corpus: the always-resident descriptions of all 163 skills cost 7.1% of a 200,000-token window, and the median documented workflow fits within 23.9% of it, although 29 of 46 would overflow if every reference file were loaded. Openly licensed and available at this https URL . Comments: 31 pages, 16 figures, 2 tables, 1 listing. v2: adds a figure of how the documented workflows compose skills, quotes the skill clauses behind the introduction's examples, replaces the appendix listing with a procedural skill, names supported hosts and the pinned install path, and reports the two corpus findings in the abstract Subjects: Computation and Language (cs.CL) ; Artificial Intelligence (cs.AI) Cite as: arXiv:2609.00065 [cs.CL] (or arXiv:2609.00065v2 [cs.CL] for this version) https://doi.org/10.48550/arXiv.2609.00065 Focus to learn more arXiv-issued DOI vi",
         "https://arxiv.org/api/5CEzSlhqX7r/IF25AFVPNFTY5kI arXiv Query: search_query=&id_list=2609.00065&start=0&max_results=10 2026-10-13T17:05:08Z 10 1 0 http://arxiv.org/abs/2609.00065v2 Scientific Agent Skills: A Library of Procedural Knowledge for Research Agents 2026-09-02T21:50:40Z A language-model agent asked to analyse an experiment will usually return working code. Whether the analysis is defensible is a different question. A defensible analysis depends on procedural choices: which test the field accepts, which identifier namespace is authoritative, and which caveats must accompany a result. We present Scientific Agent Skills, an open library of 163 such procedures in 16 areas of practice, including genomics, cheminformatics, medical imaging, study design and scientific communication. Each skill is a directory built around a versioned, human-readable instruction file. An agent loads the file only when a task calls for it; the directory often also contains reference material and runnable scripts. We report no task-level evaluation and no host selection rate. We measure two properties of the documentation corpus: the always-resident descriptions of all 163 skills cost 7.1% of a 200,000-token window, and the median documented workflow fits within 23.9% of it, although 29 of 46 would overflow if every reference file were loaded. Openly licensed and available at https://github.com/K-Dense-AI/scientific-agent-skills. 2026-08-30T15:40:35Z 31 pages, 16 figures, 2 tables, 1 listing. v2: adds a figure of how the documented workflows compose skills, quotes the skill clauses behind the introduction's examples, replaces the appendix listing with a procedural skill, names supported hosts and the pinned install path, and reports the two corpus findings in the abstract Timothy Kassis Vinayak Agarwal Yuhuan He Darshil Patel Aubrey M. Brueckner"
       ]
+    },
+    {
+      "key": "weyuker",
+      "metadata": {
+        "author": "Elaine J. Weyuker",
+        "title": "On Testing Non-Testable Programs",
+        "year": "1982",
+        "doi": "10.1093/comjnl/25.4.465",
+        "url": "https://doi.org/10.1093/comjnl/25.4.465",
+        "journal": "The Computer Journal",
+        "volume": "25",
+        "number": "4",
+        "pages": "465--470"
+      },
+      "verification": "Crossref metadata, single-DOI request",
+      "sources": [
+        {
+          "url": "https://api.crossref.org/works/10.1093%2Fcomjnl%2F25.4.465",
+          "retrieved_at_utc": "2026-10-13T19:19:26.238919+00:00",
+          "http_status": 200
+        }
+      ],
+      "abstract_excerpt": null,
+      "limits": "Bibliographic verification and abstract reading only; does not certify full-text claims. Manuscript statements about this work are limited to what its abstract states."
+    },
+    {
+      "key": "andrews",
+      "metadata": {
+        "author": "James H. Andrews and Lionel C. Briand and Yvan Labiche and Akbar Siami Namin",
+        "title": "Using Mutation Analysis for Assessing and Comparing Testing Coverage Criteria",
+        "year": "2006",
+        "doi": "10.1109/tse.2006.83",
+        "url": "https://doi.org/10.1109/tse.2006.83",
+        "journal": "IEEE Transactions on Software Engineering",
+        "volume": "32",
+        "number": "8",
+        "pages": "608--624"
+      },
+      "verification": "Crossref metadata, single-DOI request",
+      "sources": [
+        {
+          "url": "https://api.crossref.org/works/10.1109%2FTSE.2006.83",
+          "retrieved_at_utc": "2026-10-13T19:19:28.498716+00:00",
+          "http_status": 200
+        }
+      ],
+      "abstract_excerpt": null,
+      "limits": "Bibliographic verification and abstract reading only; does not certify full-text claims. Manuscript statements about this work are limited to what its abstract states."
+    },
+    {
+      "key": "kupferman",
+      "metadata": {
+        "author": "Orna Kupferman and Moshe Y. Vardi",
+        "title": "Vacuity Detection in Temporal Model Checking",
+        "year": "2003",
+        "doi": "10.1007/s100090100062",
+        "url": "https://doi.org/10.1007/s100090100062",
+        "journal": "International Journal on Software Tools for Technology Transfer",
+        "volume": "4",
+        "number": "2",
+        "pages": "224--233"
+      },
+      "verification": "Crossref metadata, single-DOI request",
+      "sources": [
+        {
+          "url": "https://api.crossref.org/works/10.1007%2Fs100090100062",
+          "retrieved_at_utc": "2026-10-13T19:19:35.787967+00:00",
+          "http_status": 200
+        }
+      ],
+      "abstract_excerpt": null,
+      "limits": "Bibliographic verification and abstract reading only; does not certify full-text claims. Manuscript statements about this work are limited to what its abstract states."
+    },
+    {
+      "key": "hill",
+      "metadata": {
+        "author": "Erik Hill",
+        "title": "Four Ways to Forge a Bundle My Own Verifier Calls Clean: Refusal-Site Mutation Testing of an Evidence-Bundle Verifier",
+        "year": "2026",
+        "eprint": "2608.26183",
+        "archivePrefix": "arXiv",
+        "url": "https://arxiv.org/abs/2608.26183",
+        "howpublished": "arXiv:2608.26183"
+      },
+      "verification": "arXiv API, single-identifier request; returned id matched the requested id",
+      "sources": [
+        {
+          "url": "https://export.arxiv.org/api/query?id_list=2608.26183&max_results=1",
+          "retrieved_at_utc": "2026-10-13T19:19:11.802379+00:00",
+          "http_status": 200
+        }
+      ],
+      "abstract_excerpt": "I built a protocol whose premise is that a stranger can re-run my claims offline and get the same answer. An outside engineer audited it and broke it: a bundle whose headline numbers were false verified clean, the cheapest forgery four bytes. I merged his fix, then pointed my own instruments at the fixed verifier and found the same defect four more times, in places his audit did not reach. The cheapest is one capital letter. The unifying defect is not cryptographic or exotic: a check that reports success along a path where it never examined anything. Vacuous pass is a working label, not a disc",
+      "limits": "Bibliographic verification and abstract reading only; does not certify full-text claims. Manuscript statements about this work are limited to what its abstract states."
+    },
+    {
+      "key": "poliak",
+      "metadata": {
+        "author": "Adam Poliak and Jason Naradowsky and Aparajita Haldar and Rachel Rudinger and Benjamin Van Durme",
+        "title": "Hypothesis Only Baselines in Natural Language Inference",
+        "year": "2018",
+        "eprint": "1805.01042",
+        "archivePrefix": "arXiv",
+        "url": "https://arxiv.org/abs/1805.01042",
+        "howpublished": "arXiv:1805.01042",
+        "note": "*SEM 2018, per the arXiv record"
+      },
+      "verification": "arXiv API, single-identifier request; returned id matched the requested id",
+      "sources": [
+        {
+          "url": "https://export.arxiv.org/api/query?id_list=1805.01042&max_results=1",
+          "retrieved_at_utc": "2026-10-13T19:18:42.995525+00:00",
+          "http_status": 200
+        }
+      ],
+      "abstract_excerpt": "We propose a hypothesis only baseline for diagnosing Natural Language Inference (NLI). Especially when an NLI dataset assumes inference is occurring based purely on the relationship between a context and a hypothesis, it follows that assessing entailment relations while ignoring the provided context is a degenerate solution. Yet, through experiments on ten distinct NLI datasets, we find that this approach, which we refer to as a hypothesis-only model, is able to significantly outperform a majority class baseline across a number of NLI datasets. Our analysis suggests that statistical irregulari",
+      "limits": "Bibliographic verification and abstract reading only; does not certify full-text claims. Manuscript statements about this work are limited to what its abstract states."
+    },
+    {
+      "key": "adebayo",
+      "metadata": {
+        "author": "Julius Adebayo and Justin Gilmer and Michael Muelly and Ian Goodfellow and Moritz Hardt and Been Kim",
+        "title": "Sanity Checks for Saliency Maps",
+        "year": "2018",
+        "eprint": "1810.03292",
+        "archivePrefix": "arXiv",
+        "url": "https://arxiv.org/abs/1810.03292",
+        "howpublished": "arXiv:1810.03292"
+      },
+      "verification": "arXiv API, single-identifier request; returned id matched the requested id",
+      "sources": [
+        {
+          "url": "https://export.arxiv.org/api/query?id_list=1810.03292&max_results=1",
+          "retrieved_at_utc": "2026-10-13T19:18:47.837647+00:00",
+          "http_status": 200
+        }
+      ],
+      "abstract_excerpt": "Saliency methods have emerged as a popular tool to highlight features in an input deemed relevant for the prediction of a learned model. Several saliency methods have been proposed, often guided by visual appeal on image data. In this work, we propose an actionable methodology to evaluate what kinds of explanations a given method can and cannot provide. We find that reliance, solely, on visual assessment can be misleading. Through extensive experiments we show that some existing saliency methods are independent both of the model and of the data generating process. Consequently, methods that fa",
+      "limits": "Bibliographic verification and abstract reading only; does not certify full-text claims. Manuscript statements about this work are limited to what its abstract states."
+    },
+    {
+      "key": "brown",
+      "metadata": {
+        "author": "Ellis Brown and Jihan Yang and Shusheng Yang and Rob Fergus and Saining Xie",
+        "title": "Benchmark Designers Should ``Train on the Test Set'' to Expose Exploitable Non-Visual Shortcuts",
+        "year": "2025",
+        "eprint": "2511.04655",
+        "archivePrefix": "arXiv",
+        "url": "https://arxiv.org/abs/2511.04655",
+        "howpublished": "arXiv:2511.04655",
+        "note": "COLM 2026, per the arXiv record"
+      },
+      "verification": "arXiv API, single-identifier request; returned id matched the requested id",
+      "sources": [
+        {
+          "url": "https://export.arxiv.org/api/query?id_list=2511.04655&max_results=1",
+          "retrieved_at_utc": "2026-10-13T19:18:33.361315+00:00",
+          "http_status": 200
+        }
+      ],
+      "abstract_excerpt": "Multimodal LLMs can answer many questions in vision-centric benchmarks without looking at the image, using linguistic priors and skewed answer distributions. Blind evaluation shows what a model already answers this way, but not what it could learn from the test set's own regularities. Extending partial-input auditing (e.g., hypothesis-only baselines in natural language inference), we argue that benchmark designers should \"train on the test set\": probe the artifact they release for exploitable patterns. Our Test-set Stress-Test (TsT) cross-validates a text-only Qwen2-7B on the test set's questi",
+      "limits": "Bibliographic verification and abstract reading only; does not certify full-text claims. Manuscript statements about this work are limited to what its abstract states."
+    },
+    {
+      "key": "rewolinski",
+      "metadata": {
+        "author": "Zachary T. Rewolinski and Austin V. Zane and Hao Huang and Chandan Singh and Chenglong Wang and Jianfeng Gao and Bin Yu",
+        "title": "Sanity Checks for Agentic Data Science",
+        "year": "2026",
+        "eprint": "2604.11003",
+        "archivePrefix": "arXiv",
+        "url": "https://arxiv.org/abs/2604.11003",
+        "howpublished": "arXiv:2604.11003"
+      },
+      "verification": "arXiv API, single-identifier request; returned id matched the requested id",
+      "sources": [
+        {
+          "url": "https://export.arxiv.org/api/query?id_list=2604.11003&max_results=1",
+          "retrieved_at_utc": "2026-10-13T19:18:38.025553+00:00",
+          "http_status": 200
+        }
+      ],
+      "abstract_excerpt": "Agentic data science (ADS) pipelines have grown rapidly in both capability and adoption, with systems such as OpenAI Codex now able to directly analyze datasets and produce answers to statistical questions. However, these systems can reach falsely optimistic conclusions that are difficult for users to detect. To address this, we propose a pair of lightweight sanity checks grounded in the Predictability-Computability-Stability (PCS) framework for veridical data science. These checks use reasonable perturbations to screen whether an agent can reliably distinguish signal from noise, acting as a f",
+      "limits": "Bibliographic verification and abstract reading only; does not certify full-text claims. Manuscript statements about this work are limited to what its abstract states."
+    },
+    {
+      "key": "kapoor",
+      "metadata": {
+        "author": "Sayash Kapoor and Benedikt Stroebl and Zachary S. Siegel and Nitya Nadgir and Arvind Narayanan",
+        "title": "{AI} Agents That Matter",
+        "year": "2024",
+        "eprint": "2407.01502",
+        "archivePrefix": "arXiv",
+        "url": "https://arxiv.org/abs/2407.01502",
+        "howpublished": "arXiv:2407.01502"
+      },
+      "verification": "arXiv API, single-identifier request; returned id matched the requested id",
+      "sources": [
+        {
+          "url": "https://export.arxiv.org/api/query?id_list=2407.01502&max_results=1",
+          "retrieved_at_utc": "2026-10-13T19:19:21.420498+00:00",
+          "http_status": 200
+        }
+      ],
+      "abstract_excerpt": "AI agents are an exciting new research direction, and agent development is driven by benchmarks. Our analysis of current agent benchmarks and evaluation practices reveals several shortcomings that hinder their usefulness in real-world applications. First, there is a narrow focus on accuracy without attention to other metrics. As a result, SOTA agents are needlessly complex and costly, and the community has reached mistaken conclusions about the sources of accuracy gains. Our focus on cost in addition to accuracy motivates the new goal of jointly optimizing the two metrics. We design and implem",
+      "limits": "Bibliographic verification and abstract reading only; does not certify full-text claims. Manuscript statements about this work are limited to what its abstract states."
+    },
+    {
+      "key": "mast",
+      "metadata": {
+        "author": "Mert Cemri and Melissa Z. Pan and Shuyi Yang and Lakshya A. Agrawal and Bhavya Chopra and Rishabh Tiwari and Kurt Keutzer and Aditya Parameswaran and Dan Klein and Kannan Ramchandran and Matei Zaharia and Joseph E. Gonzalez and Ion Stoica",
+        "title": "Why Do Multi-Agent {LLM} Systems Fail?",
+        "year": "2025",
+        "eprint": "2503.13657",
+        "archivePrefix": "arXiv",
+        "url": "https://arxiv.org/abs/2503.13657",
+        "howpublished": "arXiv:2503.13657"
+      },
+      "verification": "arXiv API, single-identifier request; returned id matched the requested id",
+      "sources": [
+        {
+          "url": "https://export.arxiv.org/api/query?id_list=2503.13657&max_results=1",
+          "retrieved_at_utc": "2026-10-13T19:18:18.470078+00:00",
+          "http_status": 200
+        }
+      ],
+      "abstract_excerpt": "Despite enthusiasm for Multi-Agent LLM Systems (MAS), their performance gains on popular benchmarks are often minimal. This gap highlights a critical need for a principled understanding of why MAS fail. Addressing this question requires systematic identification and analysis of failure patterns. We introduce MAST-Data, a comprehensive dataset of 1600+ annotated traces collected across 7 popular MAS frameworks. MAST-Data is the first multi-agent system dataset to outline the failure dynamics in MAS for guiding the development of better future systems. To enable systematic classification of fail",
+      "limits": "Bibliographic verification and abstract reading only; does not certify full-text claims. Manuscript statements about this work are limited to what its abstract states."
+    },
+    {
+      "key": "whowhen",
+      "metadata": {
+        "author": "Shaokun Zhang and Ming Yin and Jieyu Zhang and Jiale Liu and Zhiguang Han and Jingyang Zhang and Beibin Li and Chi Wang and Huazheng Wang and Yiran Chen and Qingyun Wu",
+        "title": "Which Agent Causes Task Failures and When? On Automated Failure Attribution of {LLM} Multi-Agent Systems",
+        "year": "2025",
+        "eprint": "2505.00212",
+        "archivePrefix": "arXiv",
+        "url": "https://arxiv.org/abs/2505.00212",
+        "howpublished": "arXiv:2505.00212"
+      },
+      "verification": "arXiv API, single-identifier request; returned id matched the requested id",
+      "sources": [
+        {
+          "url": "https://export.arxiv.org/api/query?id_list=2505.00212&max_results=1",
+          "retrieved_at_utc": "2026-10-13T19:18:23.614949+00:00",
+          "http_status": 200
+        }
+      ],
+      "abstract_excerpt": "Failure attribution in LLM multi-agent systems-identifying the agent and step responsible for task failures-provides crucial clues for systems debugging but remains underexplored and labor-intensive. In this paper, we propose and formulate a new research area: automated failure attribution for LLM multi-agent systems. To support this initiative, we introduce the Who&When dataset, comprising extensive failure logs from 127 LLM multi-agent systems with fine-grained annotations linking failures to specific agents and decisive error steps. Using the Who&When, we develop and evaluate three automate",
+      "limits": "Bibliographic verification and abstract reading only; does not certify full-text claims. Manuscript statements about this work are limited to what its abstract states."
+    },
+    {
+      "key": "zep",
+      "metadata": {
+        "author": "Preston Rasmussen and Pavlo Paliychuk and Travis Beauvais and Jack Ryan and Daniel Chalef",
+        "title": "{Zep}: A Temporal Knowledge Graph Architecture for Agent Memory",
+        "year": "2025",
+        "eprint": "2501.13956",
+        "archivePrefix": "arXiv",
+        "url": "https://arxiv.org/abs/2501.13956",
+        "howpublished": "arXiv:2501.13956"
+      },
+      "verification": "arXiv API, single-identifier request; returned id matched the requested id",
+      "sources": [
+        {
+          "url": "https://export.arxiv.org/api/query?id_list=2501.13956&max_results=1",
+          "retrieved_at_utc": "2026-10-13T19:18:52.487698+00:00",
+          "http_status": 200
+        }
+      ],
+      "abstract_excerpt": "We introduce Zep, a novel memory layer service for AI agents that outperforms the current state-of-the-art system, MemGPT, in the Deep Memory Retrieval (DMR) benchmark. Additionally, Zep excels in more comprehensive and challenging evaluations than DMR that better reflect real-world enterprise use cases. While existing retrieval-augmented generation (RAG) frameworks for large language model (LLM)-based agents are limited to static document retrieval, enterprise applications demand dynamic knowledge integration from diverse sources including ongoing conversations and business data. Zep addresse",
+      "limits": "Bibliographic verification and abstract reading only; does not certify full-text claims. Manuscript statements about this work are limited to what its abstract states."
+    },
+    {
+      "key": "mem0",
+      "metadata": {
+        "author": "Prateek Chhikara and Dev Khant and Saket Aryan and Taranjeet Singh and Deshraj Yadav",
+        "title": "{Mem0}: Building Production-Ready {AI} Agents with Scalable Long-Term Memory",
+        "year": "2025",
+        "eprint": "2504.19413",
+        "archivePrefix": "arXiv",
+        "url": "https://arxiv.org/abs/2504.19413",
+        "howpublished": "arXiv:2504.19413"
+      },
+      "verification": "arXiv API, single-identifier request; returned id matched the requested id",
+      "sources": [
+        {
+          "url": "https://export.arxiv.org/api/query?id_list=2504.19413&max_results=1",
+          "retrieved_at_utc": "2026-10-13T19:18:57.358885+00:00",
+          "http_status": 200
+        }
+      ],
+      "abstract_excerpt": "Large Language Models (LLMs) have demonstrated remarkable prowess in generating contextually coherent responses, yet their fixed context windows pose fundamental challenges for maintaining consistency over prolonged multi-session dialogues. We introduce Mem0, a scalable memory-centric architecture that addresses this issue by dynamically extracting, consolidating, and retrieving salient information from ongoing conversations. Building on this foundation, we further propose an enhanced variant that leverages graph-based memory representations to capture complex relational structures among conve",
+      "limits": "Bibliographic verification and abstract reading only; does not certify full-text claims. Manuscript statements about this work are limited to what its abstract states."
+    },
+    {
+      "key": "amem",
+      "metadata": {
+        "author": "Wujiang Xu and Zujie Liang and Kai Mei and Hang Gao and Juntao Tan and Yongfeng Zhang",
+        "title": "{A-MEM}: Agentic Memory for {LLM} Agents",
+        "year": "2025",
+        "eprint": "2502.12110",
+        "archivePrefix": "arXiv",
+        "url": "https://arxiv.org/abs/2502.12110",
+        "howpublished": "arXiv:2502.12110",
+        "note": "NeurIPS 2025, per the arXiv record"
+      },
+      "verification": "arXiv API, single-identifier request; returned id matched the requested id",
+      "sources": [
+        {
+          "url": "https://export.arxiv.org/api/query?id_list=2502.12110&max_results=1",
+          "retrieved_at_utc": "2026-10-13T19:19:02.128298+00:00",
+          "http_status": 200
+        }
+      ],
+      "abstract_excerpt": "While large language model (LLM) agents can effectively use external tools for complex real-world tasks, they require memory systems to leverage historical experiences. Current memory systems enable basic storage and retrieval but lack sophisticated memory organization, despite recent attempts to incorporate graph databases. Moreover, these systems' fixed operations and structures limit their adaptability across diverse tasks. To address this limitation, this paper proposes a novel agentic memory system for LLM agents that can dynamically organize memories in an agentic way. Following the basi",
+      "limits": "Bibliographic verification and abstract reading only; does not certify full-text claims. Manuscript statements about this work are limited to what its abstract states."
+    },
+    {
+      "key": "tmem",
+      "metadata": {
+        "author": "Junyou Guo and Chongyang Tao and Yan He and Yong Wang and Shuai Ma",
+        "title": "Temporal Evidence Forests for Long-Horizon Multi-Party Conversational Memory",
+        "year": "2026",
+        "eprint": "2610.12874",
+        "archivePrefix": "arXiv",
+        "url": "https://arxiv.org/abs/2610.12874",
+        "howpublished": "arXiv:2610.12874"
+      },
+      "verification": "arXiv API, single-identifier request; returned id matched the requested id",
+      "sources": [
+        {
+          "url": "https://export.arxiv.org/api/query?id_list=2610.12874&max_results=1",
+          "retrieved_at_utc": "2026-10-13T19:19:06.997460+00:00",
+          "http_status": 200
+        }
+      ],
+      "abstract_excerpt": "Long-term memory has been widely adopted in LLM-based agents to support persistent interaction and personalized assistance. Long-term multi-party interactions, however, accumulate substantially more detailed information, with decisions repeatedly updated and states evolving across participants and interaction stages. Temporal structure is therefore crucial for tracing such memories: relevant information often appears densely within short intervals, while transitions among different states are anchored by a strict temporal order. Existing temporally aware memory frameworks primarily store time ",
+      "limits": "Bibliographic verification and abstract reading only; does not certify full-text claims. Manuscript statements about this work are limited to what its abstract states."
     }
   ],
   "excluded_identifiers": [
     {
       "arxiv": "2405.07886",
       "reason": "Not TimeChara; Russian-language multimodal summarization dataset. Correct TimeChara DOI10.18653/v1/2024.findings-acl.197."
+    },
+    {
+      "arxiv": "2007.06776",
+      "reason": "Exists (Verification of ML Systems via Reparameterization), but its abstract concerns machine-checked proofs of probabilistic ML programs, not reparameterizing systems into degenerate configurations to expose evaluation-missed bugs as an external review described it. Not cited."
+    },
+    {
+      "arxiv": "2502.15313",
+      "reason": "Proposed by an external review sub-agent; resolved by the reviewer's own API check to an unrelated paper: microfluidics physics, not agent-state oracle mutation testing. Not cited."
+    },
+    {
+      "arxiv": "2606.00693",
+      "reason": "Proposed by an external review sub-agent; resolved by the reviewer's own API check to an unrelated paper: number theory. Not cited."
+    },
+    {
+      "arxiv": "2509.13144",
+      "reason": "Proposed by an external review sub-agent; resolved by the reviewer's own API check to an unrelated paper: AI-native grey-literature review. Not cited."
+    },
+    {
+      "arxiv": "2609.00533",
+      "reason": "Proposed by an external review sub-agent; resolved by the reviewer's own API check to an unrelated paper: algebraic geometry. Not cited."
+    },
+    {
+      "arxiv": "2505.05448",
+      "reason": "Proposed by an external review sub-agent; resolved by the reviewer's own API check to an unrelated paper: AdS physics. Not cited."
+    },
+    {
+      "arxiv": "2403.07531",
+      "reason": "Proposed by an external review sub-agent; resolved by the reviewer's own API check to an unrelated paper: not TimeChara (TimeChara is DOI 10.18653/v1/2024.findings-acl.197). Not cited."
     }
   ]
 }

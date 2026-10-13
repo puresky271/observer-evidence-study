@@ -1,9 +1,9 @@
 {
   "schema_version": "observer-study-release-manifest-v2",
   "status": "PUBLIC",
-  "status_note": "Public repository includes current bilingual manuscript TeX/PDF, offline six-configuration replay, opaque derivative fixtures, matcher controls, selected verified citations and exact source provenance. Private mappings, raw answers, original oracle and upstream episodes remain excluded. Historical v17 manuscripts remain superseded. See README.md and RELEASE_BLOCKERS.md for boundaries.",
+  "status_note": "Public repository includes current bilingual manuscript TeX/PDF (instrument-side failure attribution), offline six-configuration replay, opaque derivative fixtures, matcher controls, selected verified citations and exact source provenance. Private mappings, raw answers, original oracle and upstream episodes remain excluded. Historical v17 manuscripts remain superseded. See README.md and RELEASE_BLOCKERS.md for boundaries.",
   "remote": "https://github.com/puresky271/observer-evidence-study",
-  "digest_construction": "For a directory, sha256 over the UTF-8 encoding of the sorted lines 'relpath\\0filesha256' for every file beneath it, skipping .git, __pycache__, build, venv, node_modules and .pytest_cache. Recompute with: audit_release_manifest.py --manifest RELEASE_MANIFEST.json --root . --write-digests. Digests are measured, never transcribed; the previous revision of this file carried the literal string 'generated-at-release' in all seven sha256 fields and its auditor passed it.",
+  "digest_construction": "release-digest-v3. A file is hashed with sha256 over its canonical bytes: a file that decodes as UTF-8 and contains no NUL byte is text and has CRLF converted to LF; any other file is hashed as raw bytes. A directory is sha256 over the UTF-8 encoding of the lines 'relpath\u0000filesha256', sorted by POSIX relative-path string, for every file git would publish from it (tracked, plus untracked files that are not ignored; every file when outside a git work tree), skipping .git, __pycache__, build, venv, node_modules and .pytest_cache. v2 hashed raw working-tree bytes of every file on disk, which made Windows and Linux checkouts of one commit disagree. Recompute with: audit_release_manifest.py --manifest RELEASE_MANIFEST.json --root . --write-digests. Digests are measured, never transcribed.",
   "files": [
     {
       "path": "src/",
@@ -13,7 +13,7 @@
       "transformation": "author-owned replay functions adapted from original experiment; vendored GateMem source byte-identical",
       "real_world_content": false,
       "reversible_mapping": false,
-      "sha256": "b2a03d45bea9d416ac6b5c83073f191d4685fac76e27d40c39133026a58f32e8",
+      "sha256": "da2fd35bfbcef16e36239b4fe95aa0b2007961230cf929e3350d8365df8ad7ae",
       "allowed_use": "code reuse under LICENSE",
       "exclusion_reason": ""
     },
@@ -25,7 +25,7 @@
       "transformation": "none",
       "real_world_content": false,
       "reversible_mapping": false,
-      "sha256": "0e97551b06e02dfafac390989e72f0ec2398d82a268618f0cccc9d736d342e74",
+      "sha256": "ff6482ed0b323500fe60457aa8dc65e2975c10f5def2b7f088311eb052f3924b",
       "allowed_use": "protocol reuse",
       "exclusion_reason": ""
     },
@@ -37,7 +37,7 @@
       "transformation": "opaque ID transformation",
       "real_world_content": false,
       "reversible_mapping": false,
-      "sha256": "8905fa48e4fe1addced080b1c21672de074ec0f71a2532e993744aabe24b3661",
+      "sha256": "04a78509d71563adb10ccca1143f7e7c308ddf9ceeb5d8ff048eb6d247651261",
       "allowed_use": "CC-BY-4.0 candidate",
       "exclusion_reason": ""
     },
@@ -49,7 +49,7 @@
       "transformation": "HMAC opaque-ID replacement; public place prose retained under scoped decision",
       "real_world_content": false,
       "reversible_mapping": false,
-      "sha256": "78bcaa2f56f8181b7abc7a4ce73bf624dde31a4c59062c5e54c80d41ec0f7ec8",
+      "sha256": "96846c028e008a23c486961248806e1847b6cafe66174f3c7bef28874a289528",
       "allowed_use": "read and cite",
       "exclusion_reason": "retained for traceability; not current study conclusions"
     },
@@ -61,7 +61,7 @@
       "transformation": "HMAC opaque-ID replacement; public place prose retained under scoped decision",
       "real_world_content": false,
       "reversible_mapping": false,
-      "sha256": "f9e90b4a74289e214405557d7d696aae8d19e731068b90d1f6eb344dbf3517e0",
+      "sha256": "22ffb5ccfcfc0075b176dcc4bf5b44cf3e2bb990d4481b14c0573974f277064e",
       "allowed_use": "read and cite",
       "exclusion_reason": "retained for traceability; not current study conclusions"
     },
@@ -73,7 +73,7 @@
       "transformation": "derived aggregate only",
       "real_world_content": false,
       "reversible_mapping": false,
-      "sha256": "a4c0219e22d6ac9bc8883105b2e5e47dad9784aee934189d6993d396abbdd193",
+      "sha256": "4417733fc62298c775f9780e9302851797cec7626a66285c905fd382c1fdc19c",
       "allowed_use": "reproduce figures",
       "exclusion_reason": ""
     },
@@ -85,7 +85,7 @@
       "transformation": "none",
       "real_world_content": false,
       "reversible_mapping": false,
-      "sha256": "cf88233c810715a18108a8bbfe022cae0542a300400df7b86b1a004fa89b3f02",
+      "sha256": "0ad3d149005387db93363d8b5bade4825d469c6da7153fc400ba9a19af1178f2",
       "allowed_use": "reproduce figures",
       "exclusion_reason": ""
     },
@@ -97,7 +97,7 @@
       "transformation": "derived metadata only; historical aggregate counts are not raw private data",
       "real_world_content": false,
       "reversible_mapping": false,
-      "sha256": "49b2f4df637aefa87816549cd5c467038548cfb2d722bd2b49d19e70ecb6a949",
+      "sha256": "37d91ca8a24209d9823df1784d29f4fb956976dde303e1f4d8b369166d479447",
       "allowed_use": "audit and reproduction",
       "exclusion_reason": ""
     },
@@ -109,7 +109,7 @@
       "transformation": "derived aggregate only",
       "real_world_content": false,
       "reversible_mapping": false,
-      "sha256": "82f03d0732daa4bfb805321a918be4be9ce43904304285bc23bc507a0cf47a62",
+      "sha256": "4f63de0a935fe196159ff28fbb816b3555acc0e1e14df316cd4ff81e6198dc83",
       "allowed_use": "reproduce or cite figure",
       "exclusion_reason": ""
     },
@@ -135,7 +135,7 @@
       "transformation": "consistent random ID/free-text rewrite; dependent hashes recomputed",
       "real_world_content": false,
       "reversible_mapping": false,
-      "sha256": "ca077648a89bc7276dbbe900a4d075e2e14a91b494700a8be52fe61cf58b1ca4",
+      "sha256": "9c591f887b18ac6742f796e2d9b05ce1eb2dc05d4763ba2da74782fda053cec9",
       "allowed_use": "offline replay",
       "exclusion_reason": "private originals and map excluded; receipt is author-side attestation"
     },
@@ -147,7 +147,7 @@
       "transformation": "results from pinned MIT auxiliary scorer",
       "real_world_content": false,
       "reversible_mapping": false,
-      "sha256": "0f18f27a390d64ee726cbba4e85645c8f4a4fdea7e4d92bb7aec21755cae011b",
+      "sha256": "5f4a96df23d670099da763e66835793c483a622456d7ab4b07cd1c84e0d13962",
       "allowed_use": "audit and reproduction",
       "exclusion_reason": ""
     },
@@ -159,7 +159,7 @@
       "transformation": "none",
       "real_world_content": false,
       "reversible_mapping": false,
-      "sha256": "cca994b6cf1724eb8d5d6e4d0ceba74b018095f7d74e7e562fd6b284c031380c",
+      "sha256": "091281069cddb7a0dbfee1d9d38bab320fe8796148f836d31d5bc99e27c38234",
       "allowed_use": "read and reproduce",
       "exclusion_reason": ""
     },
@@ -183,7 +183,7 @@
       "transformation": "original writing",
       "real_world_content": false,
       "reversible_mapping": false,
-      "sha256": "9702383bea274d472d8ec75c83059d603f61c9dad36928fefff092fbc5a1670a",
+      "sha256": "26d35a851122bfcfa919c844731e5ef82854afc3a9aa9ae2bbeda0891b7fbccf",
       "allowed_use": "read and cite",
       "exclusion_reason": "anonymous author placeholder"
     },
@@ -195,7 +195,7 @@
       "transformation": "Chinese parallel presentation",
       "real_world_content": false,
       "reversible_mapping": false,
-      "sha256": "49d2f69023a98c2ca35de856a21176dacc09fdec433297324c537e801af317d5",
+      "sha256": "b2bbbe204cae8ec2562ff1d1b9aa988a8410173ed87310678f0218ea17970ba6",
       "allowed_use": "read and cite",
       "exclusion_reason": "anonymous author placeholder"
     },
@@ -207,7 +207,7 @@
       "transformation": "compiled",
       "real_world_content": false,
       "reversible_mapping": false,
-      "sha256": "d873dfca77c32492057dd31fd737d19ff19fd48791e912f7dae6eab66ac73222",
+      "sha256": "2b72cb188e6377776f85f6a3dc62c78d285ef08619e57848779f769b736ac250",
       "allowed_use": "read and cite",
       "exclusion_reason": ""
     },
@@ -219,7 +219,7 @@
       "transformation": "compiled",
       "real_world_content": false,
       "reversible_mapping": false,
-      "sha256": "db386e1f2f6e61c5c1005551a22827647bb975f7aca71df03c6ba6f3ad904de5",
+      "sha256": "4058f1a3f748d95a4ce434682dd994f6d9dcd77b21c893f8057940fc53400d57",
       "allowed_use": "read and cite",
       "exclusion_reason": ""
     },
@@ -231,7 +231,7 @@
       "transformation": "metadata compilation and verification",
       "real_world_content": false,
       "reversible_mapping": false,
-      "sha256": "b6a6399f1b38d659606bf9868c05483fe89a7200720b2fe100501b62b33c80ba",
+      "sha256": "5abf018690cdf464b9edfe4c4543af61e79dbc8b071605be49005504b2ce1e46",
       "allowed_use": "citation",
       "exclusion_reason": ""
     }
