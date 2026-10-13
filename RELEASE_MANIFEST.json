@@ -1,19 +1,19 @@
 {
   "schema_version": "observer-study-release-manifest-v2",
   "status": "PUBLIC",
-  "status_note": "The repository is published. What is public is the tooling, the schemas and the opaque synthetic fixtures listed below. The research material - manuscripts, gate reports, freezes, corpus measurement - is deliberately absent and is gated by RELEASE_BLOCKERS.md.",
+  "status_note": "Public repository includes current bilingual manuscript TeX/PDF, offline six-configuration replay, opaque derivative fixtures, matcher controls, selected verified citations and exact source provenance. Private mappings, raw answers, original oracle and upstream episodes remain excluded. Historical v17 manuscripts remain superseded. See README.md and RELEASE_BLOCKERS.md for boundaries.",
   "remote": "https://github.com/puresky271/observer-evidence-study",
   "digest_construction": "For a directory, sha256 over the UTF-8 encoding of the sorted lines 'relpath\\0filesha256' for every file beneath it, skipping .git, __pycache__, build, venv, node_modules and .pytest_cache. Recompute with: audit_release_manifest.py --manifest RELEASE_MANIFEST.json --root . --write-digests. Digests are measured, never transcribed; the previous revision of this file carried the literal string 'generated-at-release' in all seven sha256 fields and its auditor passed it.",
   "files": [
     {
       "path": "src/",
       "category": "original_code",
-      "source": "this release",
-      "upstream_license_or_tos": "none",
-      "transformation": "none",
+      "source": "this release; includes exact two-file MIT GateMem auxiliary scorer vendor under _vendor",
+      "upstream_license_or_tos": "MIT for vendored GateMem source; repository MIT for original code",
+      "transformation": "author-owned replay functions adapted from original experiment; vendored GateMem source byte-identical",
       "real_world_content": false,
       "reversible_mapping": false,
-      "sha256": "4828bccd54a2d712778dd98090a6e8714c65da8557fc302a1039a494c8121032",
+      "sha256": "b2a03d45bea9d416ac6b5c83073f191d4685fac76e27d40c39133026a58f32e8",
       "allowed_use": "code reuse under LICENSE",
       "exclusion_reason": ""
     },
@@ -25,7 +25,7 @@
       "transformation": "none",
       "real_world_content": false,
       "reversible_mapping": false,
-      "sha256": "ff6482ed0b323500fe60457aa8dc65e2975c10f5def2b7f088311eb052f3924b",
+      "sha256": "0e97551b06e02dfafac390989e72f0ec2398d82a268618f0cccc9d736d342e74",
       "allowed_use": "protocol reuse",
       "exclusion_reason": ""
     },
@@ -37,33 +37,33 @@
       "transformation": "opaque ID transformation",
       "real_world_content": false,
       "reversible_mapping": false,
-      "sha256": "fd2e9ab89e53dd0145be85fd8b934919de6fdd03d8a2fa2e19a51aeb2833f933",
+      "sha256": "8905fa48e4fe1addced080b1c21672de074ec0f71a2532e993744aabe24b3661",
       "allowed_use": "CC-BY-4.0 candidate",
       "exclusion_reason": ""
     },
     {
       "path": "manuscripts/paper_part1_en_public.tex",
       "category": "deidentified_manuscript_derivative",
-      "source": "Part I manuscript v17",
+      "source": "historical v17 de-identified manuscript, superseded",
       "upstream_license_or_tos": "this release",
       "transformation": "HMAC opaque-ID replacement; public place prose retained under scoped decision",
       "real_world_content": false,
       "reversible_mapping": false,
       "sha256": "78bcaa2f56f8181b7abc7a4ce73bf624dde31a4c59062c5e54c80d41ec0f7ec8",
       "allowed_use": "read and cite",
-      "exclusion_reason": ""
+      "exclusion_reason": "retained for traceability; not current study conclusions"
     },
     {
       "path": "manuscripts/paper_part1_zh_public.tex",
       "category": "deidentified_manuscript_derivative",
-      "source": "Part I manuscript v17",
+      "source": "historical v17 de-identified manuscript, superseded",
       "upstream_license_or_tos": "this release",
       "transformation": "HMAC opaque-ID replacement; public place prose retained under scoped decision",
       "real_world_content": false,
       "reversible_mapping": false,
       "sha256": "f9e90b4a74289e214405557d7d696aae8d19e731068b90d1f6eb344dbf3517e0",
       "allowed_use": "read and cite",
-      "exclusion_reason": ""
+      "exclusion_reason": "retained for traceability; not current study conclusions"
     },
     {
       "path": "figures/source_data/",
@@ -73,7 +73,7 @@
       "transformation": "derived aggregate only",
       "real_world_content": false,
       "reversible_mapping": false,
-      "sha256": "877511a82c526ba379d4d473a15687ed1c7fc093e625c4f345c4def64c0e1758",
+      "sha256": "a4c0219e22d6ac9bc8883105b2e5e47dad9784aee934189d6993d396abbdd193",
       "allowed_use": "reproduce figures",
       "exclusion_reason": ""
     },
@@ -85,19 +85,19 @@
       "transformation": "none",
       "real_world_content": false,
       "reversible_mapping": false,
-      "sha256": "0ad3d149005387db93363d8b5bade4825d469c6da7153fc400ba9a19af1178f2",
+      "sha256": "cf88233c810715a18108a8bbfe022cae0542a300400df7b86b1a004fa89b3f02",
       "allowed_use": "reproduce figures",
       "exclusion_reason": ""
     },
     {
       "path": "audits/",
       "category": "audit_report",
-      "source": "this release",
+      "source": "this release; verified bibliographic metadata, source provenance and background summaries",
       "upstream_license_or_tos": "see report",
-      "transformation": "aggregated and hashed",
+      "transformation": "derived metadata only; historical aggregate counts are not raw private data",
       "real_world_content": false,
       "reversible_mapping": false,
-      "sha256": "7196b0374ffec707809557d276e75642626b0a8e69db4bf6b7e53a032f977881",
+      "sha256": "49b2f4df637aefa87816549cd5c467038548cfb2d722bd2b49d19e70ecb6a949",
       "allowed_use": "audit and reproduction",
       "exclusion_reason": ""
     },
@@ -109,7 +109,7 @@
       "transformation": "derived aggregate only",
       "real_world_content": false,
       "reversible_mapping": false,
-      "sha256": "08857023a6eeee86a00110893831932981c3a5ddf0f46bc650a6b2e3f59e8374",
+      "sha256": "82f03d0732daa4bfb805321a918be4be9ce43904304285bc23bc507a0cf47a62",
       "allowed_use": "reproduce or cite figure",
       "exclusion_reason": ""
     },
@@ -126,6 +126,114 @@
       "planned": true,
       "allowed_use": "citation and acquisition instructions",
       "exclusion_reason": "raw upstream data not redistributed; the directory does not exist yet, and the previous revision of this manifest listed it as though it did"
+    },
+    {
+      "path": "data/replay_opaque/",
+      "category": "synthetic_opaque_replay",
+      "source": "opaque derivative of author-owned sealed timeline fixtures",
+      "upstream_license_or_tos": "DATA_LICENSE",
+      "transformation": "consistent random ID/free-text rewrite; dependent hashes recomputed",
+      "real_world_content": false,
+      "reversible_mapping": false,
+      "sha256": "0bef9ebba683b577122f381ecc717347926aa20ca5226bb36b1db1e2fe740e53",
+      "allowed_use": "offline replay",
+      "exclusion_reason": "private originals and map excluded; receipt is author-side attestation"
+    },
+    {
+      "path": "data/matcher_audit/",
+      "category": "synthetic_probe_result",
+      "source": "author-written synthetic probe inputs",
+      "upstream_license_or_tos": "DATA_LICENSE",
+      "transformation": "results from pinned MIT auxiliary scorer",
+      "real_world_content": false,
+      "reversible_mapping": false,
+      "sha256": "0f18f27a390d64ee726cbba4e85645c8f4a4fdea7e4d92bb7aec21755cae011b",
+      "allowed_use": "audit and reproduction",
+      "exclusion_reason": ""
+    },
+    {
+      "path": "docs/",
+      "category": "reproduction_documentation",
+      "source": "this release",
+      "upstream_license_or_tos": "repository MIT",
+      "transformation": "none",
+      "real_world_content": false,
+      "reversible_mapping": false,
+      "sha256": "cca994b6cf1724eb8d5d6e4d0ceba74b018095f7d74e7e562fd6b284c031380c",
+      "allowed_use": "read and reproduce",
+      "exclusion_reason": ""
+    },
+    {
+      "path": "scripts/",
+      "category": "reproduction_and_build_scripts",
+      "source": "this release",
+      "upstream_license_or_tos": "repository MIT",
+      "transformation": "none",
+      "real_world_content": false,
+      "reversible_mapping": false,
+      "sha256": "23424ddb62b769e6c0784479230fd6300e1cc5b207afd980c1f33abc1f85866d",
+      "allowed_use": "execute and audit",
+      "exclusion_reason": ""
+    },
+    {
+      "path": "manuscripts/failure_attribution_en.tex",
+      "category": "current_manuscript",
+      "source": "this release",
+      "upstream_license_or_tos": "author manuscript",
+      "transformation": "original writing",
+      "real_world_content": false,
+      "reversible_mapping": false,
+      "sha256": "9702383bea274d472d8ec75c83059d603f61c9dad36928fefff092fbc5a1670a",
+      "allowed_use": "read and cite",
+      "exclusion_reason": "anonymous author placeholder"
+    },
+    {
+      "path": "manuscripts/failure_attribution_zh.tex",
+      "category": "current_translation",
+      "source": "this release",
+      "upstream_license_or_tos": "author manuscript",
+      "transformation": "Chinese parallel presentation",
+      "real_world_content": false,
+      "reversible_mapping": false,
+      "sha256": "49d2f69023a98c2ca35de856a21176dacc09fdec433297324c537e801af317d5",
+      "allowed_use": "read and cite",
+      "exclusion_reason": "anonymous author placeholder"
+    },
+    {
+      "path": "manuscripts/failure_attribution_en.pdf",
+      "category": "current_manuscript_pdf",
+      "source": "XeLaTeX from current TeX",
+      "upstream_license_or_tos": "author manuscript",
+      "transformation": "compiled",
+      "real_world_content": false,
+      "reversible_mapping": false,
+      "sha256": "d873dfca77c32492057dd31fd737d19ff19fd48791e912f7dae6eab66ac73222",
+      "allowed_use": "read and cite",
+      "exclusion_reason": ""
+    },
+    {
+      "path": "manuscripts/failure_attribution_zh.pdf",
+      "category": "current_translation_pdf",
+      "source": "XeLaTeX from current TeX",
+      "upstream_license_or_tos": "author manuscript",
+      "transformation": "compiled",
+      "real_world_content": false,
+      "reversible_mapping": false,
+      "sha256": "db386e1f2f6e61c5c1005551a22827647bb975f7aca71df03c6ba6f3ad904de5",
+      "allowed_use": "read and cite",
+      "exclusion_reason": ""
+    },
+    {
+      "path": "manuscripts/references_verified.bib",
+      "category": "bibliography",
+      "source": "Crossref, OpenAlex, W3C and arXiv metadata",
+      "upstream_license_or_tos": "metadata under source terms",
+      "transformation": "metadata compilation and verification",
+      "real_world_content": false,
+      "reversible_mapping": false,
+      "sha256": "b6a6399f1b38d659606bf9868c05483fe89a7200720b2fe100501b62b33c80ba",
+      "allowed_use": "citation",
+      "exclusion_reason": ""
     }
   ]
 }

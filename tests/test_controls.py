@@ -10,8 +10,8 @@ class ControlTests(unittest.TestCase):
     def setUp(self):
         self.context = {
             "as_of_jst": "2026-10-20T09:10:00+09:00",
-            "current": [{"subject": "person:anon", "object": "geo:home", "validity": "current"}],
-            "history": [{"subject": "person:anon", "object": "geo:venue", "validity": "historical"}],
+            "current": [{"subject": "person:sample", "object": "geo:home", "validity": "current"}],
+            "history": [{"subject": "person:sample", "object": "geo:venue", "validity": "historical"}],
             "unknown": [],
         }
 

@@ -23,3 +23,11 @@ audits/confirmatory_query_readiness_report*.json
 # Any artifact staging area: research material enters this repository only as a
 # de-identified derivative, never by being copied in first.
 staging_not_for_release/
+
+# Local execution and document compiler artifacts.
+replay_output/
+final_verification/
+manuscripts/build/
+audits/_retrieve_citations*.py
+audits/citation_raw_stage*.json
+audits/*_pdf.pdf

@@ -1,3 +1,13 @@
+# Current release boundary (2026-10-14)
+
+The new deterministic study is now included: both manuscript sources/PDFs, the complete 12-family opaque replay derivative, six-configuration reports, authored matcher controls, source receipts and vendored MIT scorer functions. The original private mapping, spatial validator, raw model outputs, original oracle/hidden corpus and upstream benchmark episodes remain excluded. Public numerical replay covers the new deterministic study, not the historical model batch or corpus audits.
+
+The original v17 manuscript copies remain historical. Statements below about missing manuscripts or unfinished opaque transformation describe their dated scopes and are not the current release status. The new replay scope was transformed separately; it does not release all formerly blocked corpora. The manifest and current privacy audit identify the actual files checked. Simulated submission readiness is a separate scientific review gate, not a privacy scan result.
+
+---
+
+## Historical release notes retained verbatim
+
 # Release blockers — de-identification must pass before the research artifacts are added
 
 This repository is **public**. What it does not yet contain is the research

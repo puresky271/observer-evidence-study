@@ -1,0 +1,37 @@
+{
+  "scope": "Historical aggregate background only. Original model answers and query artifacts are excluded; these aggregates are not independently re-executable from this release.",
+  "records": [
+    {
+      "source_artifact": "e2_sealed_full_v1_response_usability.json",
+      "source_sha256": "d061f0020576f12e9086e017422ee714ffe04566b00219d5f87a1a8a569b1232",
+      "aggregate": {
+        "schema_version": "e2-response-usability-report-v1",
+        "status": "DESCRIPTIVE_ONLY",
+        "model": "deepseek-flash",
+        "temperature": 0,
+        "max_tokens": 1024,
+        "overall": {
+          "slots": 288,
+          "usable": 217,
+          "empty": 68,
+          "truncated": 71,
+          "nonempty_truncated": 3,
+          "usable_rate": 0.7534722222222222,
+          "mean_latency_ms": 3678.0138888888887,
+          "total_tokens": 291851,
+          "completion_tokens": 181745
+        }
+      }
+    },
+    {
+      "source_artifact": "peer_review_revision_v3/confirmatory_query_readiness_report_v3.json",
+      "source_sha256": "54de56dbc1399fb48daca7046d3eae692aa36d59a9f74edec99145b6a293cafc",
+      "aggregate": {
+        "schema_version": "confirmatory-query-readiness-v3",
+        "status": "FAIL",
+        "query_count": 84,
+        "placeholder_query_count": 84
+      }
+    }
+  ]
+}

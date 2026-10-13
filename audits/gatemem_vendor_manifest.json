@@ -1,0 +1,19 @@
+{
+  "upstream_url": "https://github.com/rzhub/GateMem",
+  "commit": "603f9f4b4ba4b77f043c20f85687fa016fd720b0",
+  "license": "MIT",
+  "files": [
+    {
+      "upstream_path": "bench/eval/metrics.py",
+      "vendored_path": "src/observer_study/_vendor/gatemem/metrics.py",
+      "sha256": "6ac7ee60febf88e174b0cf457d62b1f5a0a7532ebdaeba1591f34dff4dc532bb",
+      "transformation": "none"
+    },
+    {
+      "upstream_path": "bench/eval/scorer.py",
+      "vendored_path": "src/observer_study/_vendor/gatemem/scorer.py",
+      "sha256": "359318a600f99eec236344a1e8838c2446fc45c00b86cee69d79aa605e5a517f",
+      "transformation": "none"
+    }
+  ]
+}

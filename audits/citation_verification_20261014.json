@@ -1,0 +1,401 @@
+{
+  "records": [
+    {
+      "key": "snodgrass",
+      "metadata": {
+        "author": "Richard T. Snodgrass and Ilsoo Ahn",
+        "title": "Temporal Databases",
+        "year": "1986",
+        "doi": "10.1109/mc.1986.1663327",
+        "url": "https://doi.org/10.1109/mc.1986.1663327",
+        "journal": "Computer",
+        "volume": "19",
+        "number": "9",
+        "pages": "35--42"
+      },
+      "verification": "Crossref metadata and OpenAlex record",
+      "sources": [
+        {
+          "url": "https://api.crossref.org/works/10.1109%2FMC.1986.1663327",
+          "retrieved_at_utc": "2026-10-13T17:52:25.132230+00:00",
+          "http_status": 200
+        },
+        {
+          "url": "https://api.openalex.org/works/https://doi.org/10.1109/MC.1986.1663327",
+          "retrieved_at_utc": "2026-10-13T17:52:25.132601+00:00",
+          "http_status": 200
+        }
+      ],
+      "abstract_excerpt": null,
+      "limits": "Bibliographic verification does not certify manuscript novelty or all full-text claims.",
+      "correction": "Crossref author OCR corrected using author publications identity; title and DOI retained."
+    },
+    {
+      "key": "jia",
+      "metadata": {
+        "author": "Yue Jia and Mark Harman",
+        "title": "An Analysis and Survey of the Development of Mutation Testing",
+        "year": "2011",
+        "doi": "10.1109/tse.2010.62",
+        "url": "https://doi.org/10.1109/tse.2010.62",
+        "journal": "IEEE Transactions on Software Engineering",
+        "volume": "37",
+        "number": "5",
+        "pages": "649--678"
+      },
+      "verification": "Crossref metadata and OpenAlex record",
+      "sources": [
+        {
+          "url": "https://api.crossref.org/works/10.1109%2FTSE.2010.62",
+          "retrieved_at_utc": "2026-10-13T17:52:25.132911+00:00",
+          "http_status": 200
+        },
+        {
+          "url": "https://api.openalex.org/works/https://doi.org/10.1109/TSE.2010.62",
+          "retrieved_at_utc": "2026-10-13T17:52:25.133079+00:00",
+          "http_status": 200
+        }
+      ],
+      "abstract_excerpt": "Mutation Testing is a fault-based software testing technique that has been widely studied for over three decades. The literature on Mutation Testing has contributed a set of approaches, tools, developments, and empirical results. This paper provides a comprehensive analysis and survey of Mutation Testing. The paper also presents the results of several development trend analyses. These analyses provide evidence that Mutation Testing techniques and tools are reaching a state of maturity and applicability, while the topic of Mutation Testing itself is the subject of increasing interest.",
+      "limits": "Bibliographic verification does not certify manuscript novelty or all full-text claims."
+    },
+    {
+      "key": "segura",
+      "metadata": {
+        "author": "Sergio Segura and Gordon Fraser and Ana B. Sanchez and Antonio Ruiz-Cortes",
+        "title": "A Survey on Metamorphic Testing",
+        "year": "2016",
+        "doi": "10.1109/tse.2016.2532875",
+        "url": "https://doi.org/10.1109/tse.2016.2532875",
+        "journal": "IEEE Transactions on Software Engineering",
+        "volume": "42",
+        "number": "9",
+        "pages": "805--824"
+      },
+      "verification": "Crossref metadata and OpenAlex record",
+      "sources": [
+        {
+          "url": "https://api.crossref.org/works/10.1109%2FTSE.2016.2532875",
+          "retrieved_at_utc": "2026-10-13T17:52:25.133505+00:00",
+          "http_status": 200
+        },
+        {
+          "url": "https://api.openalex.org/works/https://doi.org/10.1109/TSE.2016.2532875",
+          "retrieved_at_utc": "2026-10-13T17:52:25.134276+00:00",
+          "http_status": 200
+        }
+      ],
+      "abstract_excerpt": "A test oracle determines whether a test execution reveals a fault, often by comparing the observed program output to the expected output. This is not always practical, for example when a program's input-output relation is complex and difficult to capture formally. Metamorphic testing provides an alternative, where correctness is not determined by checking an individual concrete output, but by applying a transformation to a test input and observing how the program output “morphs” into a different one as a result. Since the introduction of such metamorphic relations in 1998, many contributions on metamorphic testing have been made, and the technique has seen successful applications in a variety of domains, ranging from web services to computer graphics. This article provides a comprehensive survey on metamorphic testing: It summarises the research results and application areas, and analyses common practice in empirical studies of metamorphic testing as well as the main open challenges.",
+      "limits": "Bibliographic verification does not certify manuscript novelty or all full-text claims."
+    },
+    {
+      "key": "chen",
+      "metadata": {
+        "author": "Tsong Yueh Chen and Fei-Ching Kuo and Huai Liu and Pak-Lok Poon and Dave Towey and T. H. Tse and Zhi Quan Zhou",
+        "title": "Metamorphic Testing: A Review of Challenges and Opportunities",
+        "year": "2018",
+        "doi": "10.1145/3143561",
+        "url": "https://doi.org/10.1145/3143561",
+        "journal": "ACM Computing Surveys",
+        "volume": "51",
+        "number": "1",
+        "pages": "1--27"
+      },
+      "verification": "Crossref metadata and OpenAlex record",
+      "sources": [
+        {
+          "url": "https://api.crossref.org/works/10.1145%2F3143561",
+          "retrieved_at_utc": "2026-10-13T17:53:56.240894+00:00",
+          "http_status": 200
+        },
+        {
+          "url": "https://api.openalex.org/works/https://doi.org/10.1145/3143561",
+          "retrieved_at_utc": "2026-10-13T17:53:56.272743+00:00",
+          "http_status": 200
+        }
+      ],
+      "abstract_excerpt": "Metamorphic testing is an approach to both test case generation and test result verification. A central element is a set of metamorphic relations, which are necessary properties of the target function or algorithm in relation to multiple inputs and their expected outputs. Since its first publication, we have witnessed a rapidly increasing body of work examining metamorphic testing from various perspectives, including metamorphic relation identification, test case generation, integration with other software engineering techniques, and the validation and evaluation of software systems. In this article, we review the current research of metamorphic testing and discuss the challenges yet to be addressed. We also present visions for further improvement of metamorphic testing and highlight opportunities for new research.",
+      "limits": "Bibliographic verification does not certify manuscript novelty or all full-text claims.",
+      "correction": "Includes Crossref subtitle."
+    },
+    {
+      "key": "goguen",
+      "metadata": {
+        "author": "J. A. Goguen and J. Meseguer",
+        "title": "Security Policies and Security Models",
+        "year": "1982",
+        "doi": "10.1109/sp.1982.10014",
+        "url": "https://doi.org/10.1109/sp.1982.10014",
+        "booktitle": "1982 IEEE Symposium on Security and Privacy",
+        "note": "Publisher metadata records only starting page 11; complete page range not independently confirmed"
+      },
+      "verification": "Crossref metadata and OpenAlex record",
+      "sources": [
+        {
+          "url": "https://api.crossref.org/works/10.1109%2FSP.1982.10014",
+          "retrieved_at_utc": "2026-10-13T17:53:54.778888+00:00",
+          "http_status": 200
+        },
+        {
+          "url": "https://api.openalex.org/works/https://doi.org/10.1109/SP.1982.10014",
+          "retrieved_at_utc": "2026-10-13T17:53:54.779693+00:00",
+          "http_status": 200
+        }
+      ],
+      "abstract_excerpt": "We assune that the reader is familiar with the ubiquity of information in the modern world and is sympathetic with the need for restricting rights to read, add, modify, or delete information in specific contexts. This need is particularly acute for systems having computers as significant components.",
+      "limits": "Bibliographic verification does not certify manuscript novelty or all full-text claims.",
+      "unresolved": "Complete page range omitted; Crossref and OpenAlex both record 11-11."
+    },
+    {
+      "key": "barthe",
+      "metadata": {
+        "author": "G. Barthe and P.R. D'Argenio and T. Rezk",
+        "title": "Secure information flow by self-composition",
+        "year": "2004",
+        "doi": "10.1109/csfw.2004.1310735",
+        "url": "https://doi.org/10.1109/csfw.2004.1310735",
+        "booktitle": "Proceedings. 17th IEEE Computer Security Foundations Workshop, 2004.",
+        "pages": "100--114"
+      },
+      "verification": "Crossref metadata and OpenAlex record",
+      "sources": [
+        {
+          "url": "https://api.crossref.org/works/10.1109%2FCSFW.2004.1310735",
+          "retrieved_at_utc": "2026-10-13T17:53:56.141350+00:00",
+          "http_status": 200
+        },
+        {
+          "url": "https://api.openalex.org/works/https://doi.org/10.1109/CSFW.2004.1310735",
+          "retrieved_at_utc": "2026-10-13T17:53:56.155294+00:00",
+          "http_status": 200
+        }
+      ],
+      "abstract_excerpt": "Non-interference is a high-level security property that guarantees the absence of illicit information leakages through executing programs. More precisely, non-interference for a program assumes a separation between secret inputs and public inputs on the one hand, and secret outputs and public outputs on the other hand, and requires that the value of public outputs does not depend on the value of secret inputs. A common means to enforce non-interference is to use an information flow type system. However, such type systems are inherently imprecise, and reject many secure programs, even for simple programming languages. The purpose of this paper is to investigate logical formulations of noninterference that allow a more precise analysis of programs. It appears that such formulations are often sound and complete, and also amenable to interactive or automated verification techniques, such as theorem-proving or model-checking. We illustrate the applicability of our method in several scenarios, including a simple imperative language, a non-deterministic language, and finally a language with shared mutable data structures.",
+      "limits": "Bibliographic verification does not certify manuscript novelty or all full-text claims."
+    },
+    {
+      "key": "hritcu",
+      "metadata": {
+        "author": "Catalin Hritcu and John Hughes and Benjamin C. Pierce and Antal Spector-Zabusky and Dimitrios Vytiniotis and Arthur Azevedo de Amorim and Leonidas Lampropoulos",
+        "title": "Testing noninterference, quickly",
+        "year": "2013",
+        "doi": "10.1145/2500365.2500574",
+        "url": "https://doi.org/10.1145/2500365.2500574",
+        "booktitle": "Proceedings of the 18th ACM SIGPLAN international conference on Functional programming",
+        "pages": "455--468"
+      },
+      "verification": "Crossref metadata and OpenAlex record",
+      "sources": [
+        {
+          "url": "https://api.crossref.org/works/10.1145%2F2500365.2500574",
+          "retrieved_at_utc": "2026-10-13T17:55:07.158073+00:00",
+          "http_status": 200
+        },
+        {
+          "url": "https://api.openalex.org/works/https://doi.org/10.1145/2500365.2500574",
+          "retrieved_at_utc": "2026-10-13T17:55:07.158501+00:00",
+          "http_status": 200
+        }
+      ],
+      "abstract_excerpt": "Information-flow control mechanisms are difficult to design and labor intensive to prove correct. To reduce the time wasted on proof attempts doomed to fail due to broken definitions, we advocate modern random testing techniques for finding counterexamples during the design process. We show how to use QuickCheck, a property-based random-testing tool, to guide the design of a simple information-flow abstract machine. We find that both sophisticated strategies for generating well-distributed random programs and readily falsifiable formulations of noninterference properties are critically important. We propose several approaches and evaluate their effectiveness on a collection of injected bugs of varying subtlety. We also present an effective technique for shrinking large counterexamples to minimal, easily comprehensible ones. Taken together, our best methods enable us to quickly and automatically generate simple counterexamples for all these bugs.",
+      "limits": "Bibliographic verification does not certify manuscript novelty or all full-text claims."
+    },
+    {
+      "key": "beer",
+      "metadata": {
+        "author": "Ilan Beer and Shoham Ben-David and Cindy Eisner and Yoav Rodeh",
+        "title": "Efficient Detection of Vacuity in Temporal Model Checking",
+        "year": "2001",
+        "doi": "10.1023/a:1008779610539",
+        "url": "https://doi.org/10.1023/a:1008779610539",
+        "journal": "Formal Methods in System Design",
+        "volume": "18",
+        "number": "2",
+        "pages": "141--163"
+      },
+      "verification": "Crossref metadata and OpenAlex record",
+      "sources": [
+        {
+          "url": "https://api.crossref.org/works/10.1023%2FA%3A1008779610539",
+          "retrieved_at_utc": "2026-10-13T17:55:07.157355+00:00",
+          "http_status": 200
+        },
+        {
+          "url": "https://api.openalex.org/works/https://doi.org/10.1023/A:1008779610539",
+          "retrieved_at_utc": "2026-10-13T17:55:07.157756+00:00",
+          "http_status": 200
+        }
+      ],
+      "abstract_excerpt": null,
+      "limits": "Bibliographic verification does not certify manuscript novelty or all full-text claims."
+    },
+    {
+      "key": "hurlbert",
+      "metadata": {
+        "author": "Stuart H. Hurlbert",
+        "title": "Pseudoreplication and the Design of Ecological Field Experiments",
+        "year": "1984",
+        "doi": "10.2307/1942661",
+        "url": "https://doi.org/10.2307/1942661",
+        "journal": "Ecological Monographs",
+        "volume": "54",
+        "number": "2",
+        "pages": "187--211"
+      },
+      "verification": "Crossref metadata and OpenAlex record",
+      "sources": [
+        {
+          "url": "https://api.crossref.org/works/10.2307%2F1942661",
+          "retrieved_at_utc": "2026-10-13T17:52:25.135385+00:00",
+          "http_status": 200
+        },
+        {
+          "url": "https://api.openalex.org/works/https://doi.org/10.2307/1942661",
+          "retrieved_at_utc": "2026-10-13T17:52:25.136757+00:00",
+          "http_status": 200
+        }
+      ],
+      "abstract_excerpt": "Pseudoreplication is defined as the use of inferential statistics to test for treatment effects with data from experiments where either treatments are not replicated (though samples may be) or replicates are not statistically independent. In ANOVA terminology, it is the testing for treatment effects with an error term inappropriate to the hypothesis being considered. Scrutiny of 176 experimental studies published between 1960 and the present revealed that pseudoreplication occurred in 27% of them, or 48% of all such studies that applied inferential statistics. The incidence of pseudoreplication is especially high in studies of marine benthos and small mammals. The critical features of controlled experimentation are reviewed. Nondemonic intrusion is defined as the impingement of chance events on an experiment in progress. As a safeguard against both it and preexisting gradients, interspersion of treatments is argued to be an obligatory feature of good design. Especially in small experiments, adequate interspersion can sometimes be assured only by dispensing with strict randomization procedures. Comprehension of this conflict between interspersion and randomization is aided by distinguishing pre—layout (or conventional) and layout—specific alpha (probability of type I error). Suggestions are offered to statisticians and editors of ecological journals as to how ecologists' understanding of experimental design and statistics might be improved.",
+      "limits": "Bibliographic verification does not certify manuscript novelty or all full-text claims."
+    },
+    {
+      "key": "fever",
+      "metadata": {
+        "author": "James Thorne and Andreas Vlachos and Christos Christodoulopoulos and Arpit Mittal",
+        "title": "FEVER: a Large-scale Dataset for Fact Extraction and VERification",
+        "year": "2018",
+        "doi": "10.18653/v1/n18-1074",
+        "url": "https://doi.org/10.18653/v1/n18-1074",
+        "booktitle": "Proceedings of the 2018 Conference of the North American Chapter of\n          the Association for Computational Linguistics: Human Language\n          Technologies, Volume 1 (Long Papers)",
+        "pages": "809--819"
+      },
+      "verification": "Crossref metadata and OpenAlex record",
+      "sources": [
+        {
+          "url": "https://api.crossref.org/works/10.18653%2Fv1%2FN18-1074",
+          "retrieved_at_utc": "2026-10-13T17:52:26.489181+00:00",
+          "http_status": 200
+        },
+        {
+          "url": "https://api.openalex.org/works/https://doi.org/10.18653/v1/N18-1074",
+          "retrieved_at_utc": "2026-10-13T17:52:26.513097+00:00",
+          "http_status": 200
+        }
+      ],
+      "abstract_excerpt": "James Thorne, Andreas Vlachos, Christos Christodoulopoulos, Arpit Mittal. Proceedings of the 2018 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long Papers). 2018.",
+      "limits": "Bibliographic verification does not certify manuscript novelty or all full-text claims."
+    },
+    {
+      "key": "timechara",
+      "metadata": {
+        "author": "Jaewoo Ahn and Taehyun Lee and Junyoung Lim and Jin-Hwa Kim and Sangdoo Yun and Hwaran Lee and Gunhee Kim",
+        "title": "TimeChara: Evaluating Point-in-Time Character Hallucination of Role-Playing Large Language Models",
+        "year": "2024",
+        "doi": "10.18653/v1/2024.findings-acl.197",
+        "url": "https://doi.org/10.18653/v1/2024.findings-acl.197",
+        "booktitle": "Findings of the Association for Computational Linguistics ACL 2024",
+        "pages": "3291--3325"
+      },
+      "verification": "Crossref metadata and OpenAlex record",
+      "sources": [
+        {
+          "url": "https://api.crossref.org/works/10.18653%2Fv1%2F2024.findings-acl.197",
+          "retrieved_at_utc": "2026-10-13T17:55:07.158911+00:00",
+          "http_status": 200
+        },
+        {
+          "url": "https://api.openalex.org/works/https://doi.org/10.18653/v1/2024.findings-acl.197",
+          "retrieved_at_utc": "2026-10-13T17:55:07.159735+00:00",
+          "http_status": 200
+        }
+      ],
+      "abstract_excerpt": "While Large Language Models (LLMs) can serve as agents to simulate human behaviors (i.e., role-playing agents), we emphasize the importance of point-in-time role-playing.This situates characters at specific moments in the narrative progression for three main reasons: (i) enhancing users' narrative immersion, (ii) avoiding spoilers, and (iii) fostering engagement in fandom role-playing.To accurately represent characters at specific time points, agents must avoid character hallucination, where they display knowledge that contradicts their characters' identities and historical timelines.We introduce TIMECHARA, a new benchmark designed to evaluate point-in-time character hallucination in role-playing LLMs.Comprising 10,895 instances generated through an automated pipeline, this benchmark reveals significant hallucination issues in current state-ofthe-art LLMs (e.g., GPT-4o).To counter this challenge, we propose NARRATIVE-EXPERTS, a method that decomposes the reasoning steps and utilizes narrative experts to reduce point-intime character hallucinations effectively.Still, our findings with TIMECHARA highlight the ongoing challenges of point-in-time character hallucination, calling for further study.1",
+      "limits": "Bibliographic verification does not certify manuscript novelty or all full-text claims."
+    },
+    {
+      "key": "longmemeval",
+      "metadata": {
+        "author": "Di Wu and Hongwei Wang and Wenhao Yu and Yuwei Zhang and Kai-Wei Chang and Dong Yu",
+        "title": "LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory",
+        "year": "2024",
+        "eprint": "2410.10813",
+        "archivePrefix": "arXiv",
+        "url": "https://arxiv.org/abs/2410.10813",
+        "note": "Preprint first submitted 2024; inspected revision v2, March 2025"
+      },
+      "verification": "source text inspected",
+      "sources": [
+        {
+          "url": "https://arxiv.org/abs/2410.10813",
+          "http_status": 200,
+          "retrieved_at_utc": "2026-10-13T17:52:27.692394+00:00"
+        },
+        {
+          "url": "https://export.arxiv.org/api/query?id_list=2410.10813",
+          "http_status": 200,
+          "retrieved_at_utc": "2026-10-13T17:52:27.898108+00:00"
+        }
+      ],
+      "source_excerpt": [
+        "[2410.10813] LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory Skip to main content Search Submit Donate Log in Search arXiv Press Enter to search · Advanced search Computer Science > Computation and Language arXiv:2410.10813 (cs) [Submitted on 14 Oct 2024 ( v1 ), last revised 4 Mar 2025 (this version, v2)] Title: LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory Authors: Di Wu , Hongwei Wang , Wenhao Yu , Yuwei Zhang , Kai-Wei Chang , Dong Yu View a PDF of the paper titled LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory, by Di Wu and 5 other authors View PDF HTML (experimental) Abstract: Recent large language model (LLM)-driven chat assistant systems have integrated memory components to track user-assistant chat histories, enabling more accurate and personalized responses. However, their long-term memory capabilities in sustained interactions remain underexplored. We introduce LongMemEval, a comprehensive benchmark designed to evaluate five core long-term memory abilities of chat assistants: information extraction, multi-session reasoning, temporal reasoning, knowledge updates, and abstention. With 500 meticulously curated questions embedded within freely scalable user-assistant chat histories, LongMemEval presents a significant challenge to existing long-term memory systems, with commercial chat assistants and long-context LLMs showing a 30% accuracy drop on memorizing information across sustained interactions. We then present a unified framework that breaks down the long-term memory design into three stages: indexing, retrieval, and reading. Built upon key experimental insights, we propose several memory design optimizations including session decomposition for value granularity, fact-augmented key expansion for indexing, and time-aware query expansion for refining the search scope. Extensive experiments show that these optimizations greatly improve both memory recall and downstream question answering on LongMemEval. Overall, our study provides valuable resources and guidance for advancing the long-term memory capabilities of LLM-based chat assistants, paving the way toward more personalized and reliable conversational AI. Our benchmark and code are publicly available at this https URL . Comments: ICLR 2025 Subjects: Computation and Language (cs.CL) Cite as: arXiv:2410.10813 [cs.CL] ",
+        "https://arxiv.org/api/Kalp/dFg12PI5+OQmhbWniiCXOs arXiv Query: search_query=&id_list=2410.10813&start=0&max_results=10 2026-10-13T17:02:39Z 10 1 0 http://arxiv.org/abs/2410.10813v2 LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory 2025-03-04T22:19:41Z Recent large language model (LLM)-driven chat assistant systems have integrated memory components to track user-assistant chat histories, enabling more accurate and personalized responses. However, their long-term memory capabilities in sustained interactions remain underexplored. We introduce LongMemEval, a comprehensive benchmark designed to evaluate five core long-term memory abilities of chat assistants: information extraction, multi-session reasoning, temporal reasoning, knowledge updates, and abstention. With 500 meticulously curated questions embedded within freely scalable user-assistant chat histories, LongMemEval presents a significant challenge to existing long-term memory systems, with commercial chat assistants and long-context LLMs showing a 30% accuracy drop on memorizing information across sustained interactions. We then present a unified framework that breaks down the long-term memory design into three stages: indexing, retrieval, and reading. Built upon key experimental insights, we propose several memory design optimizations including session decomposition for value granularity, fact-augmented key expansion for indexing, and time-aware query expansion for refining the search scope. Extensive experiments show that these optimizations greatly improve both memory recall and downstream question answering on LongMemEval. Overall, our study provides valuable resources and guidance for advancing the long-term memory capabilities of LLM-based chat assistants, paving the way toward more personalized and reliable conversational AI. Our benchmark and code are publicly available at https://github.com/xiaowu0162/LongMemEval. 2024-10-14T17:59:44Z ICLR 2025 Di Wu Hongwei Wang Wenhao Yu Yuwei Zhang Kai-Wei Chang Dong Yu"
+      ]
+    },
+    {
+      "key": "ssn",
+      "metadata": {
+        "author": "{World Wide Web Consortium}",
+        "title": "Semantic Sensor Network Ontology",
+        "year": "2017",
+        "howpublished": "W3C Recommendation",
+        "url": "https://www.w3.org/TR/2017/REC-vocab-ssn-20171019/"
+      },
+      "verification": "source text inspected",
+      "sources": [
+        {
+          "url": "https://w3c.github.io/sdw/ssn/",
+          "http_status": 200,
+          "retrieved_at_utc": "2026-10-13T17:55:11.241645+00:00"
+        }
+      ],
+      "source_excerpt": [
+        "Semantic Sensor Network Ontology The Semantic Sensor Network (SSN) ontology is an ontology for describing\n      observations, in terms of the procedures executed and sensors used, the properties observed, which relate to the\n      features (entities) of interest.\n      Sensor stimuli, and aggregations of observations are included, relationships to other elements of the process.\n      Samplings using samplers, and actuations using actuators are described using essentially the same terminology and\n      relationships, which is described with common superclasses Execution and System.\n\n      The core classes and properties are defined using minimal axiomatization in a module called SOSA (Sensor,\n      Observation, Sample, and Actuator).\n      Additional axiomatization and terms are provided in further modules.\n      These allow SSN to support a wide range of applications and use cases, including satellite imagery, large-scale\n      scientific monitoring, industrial and household infrastructures, social sensing, citizen science,\n      observation-driven ontology engineering, and the Web of Things.\n      Alignments to some related ontologies are also provided, including to PROV-O and DUL.\n\n      The preparation of this edition of the SSN Ontology was prompted by the publication of a new edition of ISO 19156\n      [[OMS]] which had been a key source for the conceptual model underlying SSN.\n      This document contains the canonical RDF- and OWL-implementations of OMS. New Edition A new edition of the SSN Ontology is in preparation. Editor's Draft Issue Tracker"
+      ]
+    },
+    {
+      "key": "skills",
+      "metadata": {
+        "author": "Timothy Kassis and Vinayak Agarwal and Yuhuan He and Darshil Patel and Aubrey M. Brueckner",
+        "title": "Scientific Agent Skills: A Library of Procedural Knowledge for Research Agents",
+        "year": "2026",
+        "eprint": "2609.00065",
+        "archivePrefix": "arXiv",
+        "url": "https://arxiv.org/abs/2609.00065",
+        "note": "Workflow provenance only, not evidence for study results"
+      },
+      "verification": "source text inspected",
+      "sources": [
+        {
+          "url": "https://arxiv.org/abs/2609.00065",
+          "http_status": 200,
+          "retrieved_at_utc": "2026-10-13T17:52:27.919861+00:00"
+        },
+        {
+          "url": "https://export.arxiv.org/api/query?id_list=2609.00065",
+          "http_status": 200,
+          "retrieved_at_utc": "2026-10-13T17:52:27.922725+00:00"
+        }
+      ],
+      "source_excerpt": [
+        "[2609.00065] Scientific Agent Skills: A Library of Procedural Knowledge for Research Agents Skip to main content Search Submit Donate Log in Search arXiv Press Enter to search · Advanced search Computer Science > Computation and Language arXiv:2609.00065 (cs) [Submitted on 30 Aug 2026 ( v1 ), last revised 2 Sep 2026 (this version, v2)] Title: Scientific Agent Skills: A Library of Procedural Knowledge for Research Agents Authors: Timothy Kassis , Vinayak Agarwal , Yuhuan He , Darshil Patel , Aubrey M. Brueckner View a PDF of the paper titled Scientific Agent Skills: A Library of Procedural Knowledge for Research Agents, by Timothy Kassis and 4 other authors View PDF HTML (experimental) Abstract: A language-model agent asked to analyse an experiment will usually return working code. Whether the analysis is defensible is a different question. A defensible analysis depends on procedural choices: which test the field accepts, which identifier namespace is authoritative, and which caveats must accompany a result. We present Scientific Agent Skills, an open library of 163 such procedures in 16 areas of practice, including genomics, cheminformatics, medical imaging, study design and scientific communication. Each skill is a directory built around a versioned, human-readable instruction file. An agent loads the file only when a task calls for it; the directory often also contains reference material and runnable scripts. We report no task-level evaluation and no host selection rate. We measure two properties of the documentation corpus: the always-resident descriptions of all 163 skills cost 7.1% of a 200,000-token window, and the median documented workflow fits within 23.9% of it, although 29 of 46 would overflow if every reference file were loaded. Openly licensed and available at this https URL . Comments: 31 pages, 16 figures, 2 tables, 1 listing. v2: adds a figure of how the documented workflows compose skills, quotes the skill clauses behind the introduction's examples, replaces the appendix listing with a procedural skill, names supported hosts and the pinned install path, and reports the two corpus findings in the abstract Subjects: Computation and Language (cs.CL) ; Artificial Intelligence (cs.AI) Cite as: arXiv:2609.00065 [cs.CL] (or arXiv:2609.00065v2 [cs.CL] for this version) https://doi.org/10.48550/arXiv.2609.00065 Focus to learn more arXiv-issued DOI vi",
+        "https://arxiv.org/api/5CEzSlhqX7r/IF25AFVPNFTY5kI arXiv Query: search_query=&id_list=2609.00065&start=0&max_results=10 2026-10-13T17:05:08Z 10 1 0 http://arxiv.org/abs/2609.00065v2 Scientific Agent Skills: A Library of Procedural Knowledge for Research Agents 2026-09-02T21:50:40Z A language-model agent asked to analyse an experiment will usually return working code. Whether the analysis is defensible is a different question. A defensible analysis depends on procedural choices: which test the field accepts, which identifier namespace is authoritative, and which caveats must accompany a result. We present Scientific Agent Skills, an open library of 163 such procedures in 16 areas of practice, including genomics, cheminformatics, medical imaging, study design and scientific communication. Each skill is a directory built around a versioned, human-readable instruction file. An agent loads the file only when a task calls for it; the directory often also contains reference material and runnable scripts. We report no task-level evaluation and no host selection rate. We measure two properties of the documentation corpus: the always-resident descriptions of all 163 skills cost 7.1% of a 200,000-token window, and the median documented workflow fits within 23.9% of it, although 29 of 46 would overflow if every reference file were loaded. Openly licensed and available at https://github.com/K-Dense-AI/scientific-agent-skills. 2026-08-30T15:40:35Z 31 pages, 16 figures, 2 tables, 1 listing. v2: adds a figure of how the documented workflows compose skills, quotes the skill clauses behind the introduction's examples, replaces the appendix listing with a procedural skill, names supported hosts and the pinned install path, and reports the two corpus findings in the abstract Timothy Kassis Vinayak Agarwal Yuhuan He Darshil Patel Aubrey M. Brueckner"
+      ]
+    }
+  ],
+  "excluded_identifiers": [
+    {
+      "arxiv": "2405.07886",
+      "reason": "Not TimeChara; Russian-language multimodal summarization dataset. Correct TimeChara DOI10.18653/v1/2024.findings-acl.197."
+    }
+  ]
+}

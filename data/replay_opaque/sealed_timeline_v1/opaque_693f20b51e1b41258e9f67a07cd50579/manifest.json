@@ -1,0 +1,29 @@
+{
+  "answer_model_calls": 0,
+  "authoring_procedure": "independent family slots generated under a frozen authoring procedure",
+  "family_id": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+  "hidden_twin_rule": "Change only unobserved world state; all observer artifacts remain byte-identical.",
+  "package_files_sha256": "a99f681cb4c5a55740535d852079cc2f5735aedcbafa2c8089504d8739545796",
+  "package_id": "opaque_b7e6cf993aed40f09fd3ae84a9a4a908",
+  "provenance": {
+    "generator_sha256": "b3e75240c0021f7cfebe310dea2d25858b259c0eee0946c6281d17bc22c412c2",
+    "sampler_sha256": "d7dd20abff5b7a9e2e9972c3753df88e620de1580431aca0442d89ef0718915f",
+    "validator_sha256": "7d8d3f111bee2d3c930c1686b17dfc2bc0e04335df4ebd2db70a2882990a3f99"
+  },
+  "query_ids": [
+    "opaque_a95b3e2db821426ab2f79d64419a66e6",
+    "opaque_72742921d99e43628347681f68435712",
+    "opaque_a5dec3f93b0f4ea88a1f1b86a9c483c0",
+    "opaque_757474468d464f25987fdb00ecff19cf"
+  ],
+  "query_wording": [
+    "opaque_1e655c49a1974c339ecdce657483be56",
+    "opaque_1e0711a55d674ec8b7c744ae6e405266",
+    "opaque_75909320554d47129babf04de8168e50",
+    "opaque_2889750ba5934f319d64808d21b338bf"
+  ],
+  "scene_class_id": "cross_day_history_retention",
+  "schema_version": "observer-sealed-family-v2",
+  "source_registry_sha256": "7912b366e1099ee8b156f24ba04bd6a8fbd6c9f407d15eb96945ee664a7b7a6f",
+  "stream_sha256": "761d1f20bc050fdf1e3ec102c3c3d92f00b81a18378b24357751bea3e3f1e9a2"
+}

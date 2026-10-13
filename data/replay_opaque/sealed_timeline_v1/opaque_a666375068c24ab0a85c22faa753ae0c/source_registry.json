@@ -1,0 +1,106 @@
+{
+  "registry_id": "opaque_fafafb3132f9498985852ddab85446dc",
+  "schema_version": "observer-source-registry-v2",
+  "sources": [
+    {
+      "actor_observer_relation": "not_applicable",
+      "actor_ref": null,
+      "authorization": "direct_sense",
+      "available_at_jst": "2026-10-15T09:00:00+09:00",
+      "eligible_trigger_kinds": [
+        "sensor_update"
+      ],
+      "event_time_jst": "2026-10-15T09:00:00+09:00",
+      "explicit_valid_until_jst": null,
+      "explicit_validity_json_pointer": null,
+      "lineage_source_refs": [],
+      "modality": "proprioceptive",
+      "observer_position_ref": "opaque_6b5841e99f9148458095882cc159bc79",
+      "origin_class": "observer_sensor_log",
+      "payload": {
+        "actor_observer_relation": "not_applicable",
+        "actor_ref": null,
+        "authorization": "direct_sense",
+        "available_at_jst": "2026-10-15T09:00:00+09:00",
+        "claim": {
+          "assertion_kind": "state",
+          "object": "opaque_0827e9c3fff14f5881e0480f9b8fd8bd",
+          "polarity": "positive",
+          "predicate": "package_membership",
+          "subject_ref": "opaque_d9e4c235b1134916a954910775b25fcc"
+        },
+        "event_time_jst": "2026-10-15T09:00:00+09:00",
+        "family_id": "opaque_720eb89d347446b3be6736542b911b5c",
+        "modality": "proprioceptive",
+        "observer_position_ref": "opaque_6b5841e99f9148458095882cc159bc79",
+        "permitted_observer_refs": [
+          "opaque_411d6f36468a4918a0605bf4c2192dd1"
+        ],
+        "recipient_refs": [],
+        "sender_ref": null,
+        "source_kind": "opaque_faf9b644fa9844cba4f642223184aeb0",
+        "target_space_ref": "opaque_6b5841e99f9148458095882cc159bc79",
+        "valid_until_jst": null
+      },
+      "payload_sha256": "86a6b1401193778f93ed2c9a81cbdfbe08a0bae6995cf3e3c4070be410844ea5",
+      "permitted_observer_refs": [
+        "opaque_411d6f36468a4918a0605bf4c2192dd1"
+      ],
+      "recipient_refs": [],
+      "sender_ref": null,
+      "source_kind": "opaque_faf9b644fa9844cba4f642223184aeb0",
+      "source_ref": "opaque_5cb7a7a68fa649fe8c00f35b65e30175",
+      "target_space_ref": "opaque_6b5841e99f9148458095882cc159bc79"
+    },
+    {
+      "actor_observer_relation": "same_person_source_attested",
+      "actor_ref": "opaque_411d6f36468a4918a0605bf4c2192dd1",
+      "authorization": "self_action",
+      "available_at_jst": "2026-10-15T09:15:00+09:00",
+      "eligible_trigger_kinds": [
+        "self_action_receipt"
+      ],
+      "event_time_jst": "2026-10-15T09:15:00+09:00",
+      "explicit_valid_until_jst": null,
+      "explicit_validity_json_pointer": null,
+      "lineage_source_refs": [],
+      "modality": "action",
+      "observer_position_ref": null,
+      "origin_class": "executed_action_receipt",
+      "payload": {
+        "actor_observer_relation": "same_person_source_attested",
+        "actor_ref": "opaque_411d6f36468a4918a0605bf4c2192dd1",
+        "authorization": "self_action",
+        "available_at_jst": "2026-10-15T09:15:00+09:00",
+        "claim": {
+          "assertion_kind": "occurrence",
+          "object": "opaque_d9e4c235b1134916a954910775b25fcc",
+          "polarity": "positive",
+          "predicate": "current_location",
+          "subject_ref": "opaque_411d6f36468a4918a0605bf4c2192dd1"
+        },
+        "event_time_jst": "2026-10-15T09:15:00+09:00",
+        "family_id": "opaque_720eb89d347446b3be6736542b911b5c",
+        "modality": "action",
+        "observer_position_ref": null,
+        "permitted_observer_refs": [
+          "opaque_411d6f36468a4918a0605bf4c2192dd1"
+        ],
+        "recipient_refs": [],
+        "sender_ref": null,
+        "source_kind": "opaque_e17d7ff28008485d8a96689fd6eae737",
+        "target_space_ref": null,
+        "valid_until_jst": null
+      },
+      "payload_sha256": "a2446606a3c652ddd68df0fe4ae54ceca849ae437064667f89a917151d1cff1f",
+      "permitted_observer_refs": [
+        "opaque_411d6f36468a4918a0605bf4c2192dd1"
+      ],
+      "recipient_refs": [],
+      "sender_ref": null,
+      "source_kind": "opaque_e17d7ff28008485d8a96689fd6eae737",
+      "source_ref": "opaque_65d1a9b5b9e045b785be3ea81571f203",
+      "target_space_ref": null
+    }
+  ]
+}

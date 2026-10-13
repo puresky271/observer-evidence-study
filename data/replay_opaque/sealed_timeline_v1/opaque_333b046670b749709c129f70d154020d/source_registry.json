@@ -1,0 +1,114 @@
+{
+  "registry_id": "opaque_870f715e42fe4e6db0cbd040e4c4faeb",
+  "schema_version": "observer-source-registry-v2",
+  "sources": [
+    {
+      "actor_observer_relation": "different_people",
+      "actor_ref": "opaque_f5426f4dcf174d37abeffda7a698dd04",
+      "authorization": "recipient",
+      "available_at_jst": "2026-10-20T09:00:00+09:00",
+      "eligible_trigger_kinds": [
+        "message_received"
+      ],
+      "event_time_jst": "2026-10-20T09:00:00+09:00",
+      "explicit_valid_until_jst": null,
+      "explicit_validity_json_pointer": null,
+      "lineage_source_refs": [],
+      "modality": "communication",
+      "observer_position_ref": null,
+      "origin_class": "delivered_message",
+      "payload": {
+        "actor_observer_relation": "different_people",
+        "actor_ref": "opaque_f5426f4dcf174d37abeffda7a698dd04",
+        "authorization": "recipient",
+        "available_at_jst": "2026-10-20T09:00:00+09:00",
+        "claim": {
+          "assertion_kind": "reported_occurrence",
+          "object": "opaque_c3d9378ffc1b400897302b814a9f27d9",
+          "polarity": "positive",
+          "predicate": "message_state",
+          "subject_ref": "opaque_f498c026daf04612a1aa25c4e3c62176"
+        },
+        "event_time_jst": "2026-10-20T09:00:00+09:00",
+        "family_id": "opaque_4a02ecb31c9348ac8bc9d9488b2b50de",
+        "modality": "communication",
+        "observer_position_ref": null,
+        "permitted_observer_refs": [
+          "opaque_411d6f36468a4918a0605bf4c2192dd1"
+        ],
+        "recipient_refs": [
+          "opaque_411d6f36468a4918a0605bf4c2192dd1"
+        ],
+        "sender_ref": "opaque_f5426f4dcf174d37abeffda7a698dd04",
+        "source_kind": "opaque_b89a7f7ff50141a59abbd47c5a4fd654",
+        "target_space_ref": null,
+        "valid_until_jst": null
+      },
+      "payload_sha256": "f4458237eb482cc67a4f10cc314debaed1e7c3525aca21419ee83dd62ef567ce",
+      "permitted_observer_refs": [
+        "opaque_411d6f36468a4918a0605bf4c2192dd1"
+      ],
+      "recipient_refs": [
+        "opaque_411d6f36468a4918a0605bf4c2192dd1"
+      ],
+      "sender_ref": "opaque_f5426f4dcf174d37abeffda7a698dd04",
+      "source_kind": "opaque_b89a7f7ff50141a59abbd47c5a4fd654",
+      "source_ref": "opaque_33342328be2b4e6dad2f37ebf714c008",
+      "target_space_ref": null
+    },
+    {
+      "actor_observer_relation": "different_people",
+      "actor_ref": "opaque_f5426f4dcf174d37abeffda7a698dd04",
+      "authorization": "recipient",
+      "available_at_jst": "2026-10-20T09:15:00+09:00",
+      "eligible_trigger_kinds": [
+        "message_received"
+      ],
+      "event_time_jst": "2026-10-20T09:15:00+09:00",
+      "explicit_valid_until_jst": null,
+      "explicit_validity_json_pointer": null,
+      "lineage_source_refs": [],
+      "modality": "communication",
+      "observer_position_ref": null,
+      "origin_class": "delivered_message",
+      "payload": {
+        "actor_observer_relation": "different_people",
+        "actor_ref": "opaque_f5426f4dcf174d37abeffda7a698dd04",
+        "authorization": "recipient",
+        "available_at_jst": "2026-10-20T09:15:00+09:00",
+        "claim": {
+          "assertion_kind": "reported_occurrence",
+          "object": true,
+          "polarity": "positive",
+          "predicate": "message_state",
+          "subject_ref": "opaque_f498c026daf04612a1aa25c4e3c62176"
+        },
+        "event_time_jst": "2026-10-20T09:15:00+09:00",
+        "family_id": "opaque_4a02ecb31c9348ac8bc9d9488b2b50de",
+        "modality": "communication",
+        "observer_position_ref": null,
+        "permitted_observer_refs": [
+          "opaque_411d6f36468a4918a0605bf4c2192dd1"
+        ],
+        "recipient_refs": [
+          "opaque_411d6f36468a4918a0605bf4c2192dd1"
+        ],
+        "sender_ref": "opaque_f5426f4dcf174d37abeffda7a698dd04",
+        "source_kind": "opaque_b89a7f7ff50141a59abbd47c5a4fd654",
+        "target_space_ref": null,
+        "valid_until_jst": null
+      },
+      "payload_sha256": "fc38103257e13d7b76ac29a9289a826729c04f5ff1c5100e6e389f48d3cc3b71",
+      "permitted_observer_refs": [
+        "opaque_411d6f36468a4918a0605bf4c2192dd1"
+      ],
+      "recipient_refs": [
+        "opaque_411d6f36468a4918a0605bf4c2192dd1"
+      ],
+      "sender_ref": "opaque_f5426f4dcf174d37abeffda7a698dd04",
+      "source_kind": "opaque_b89a7f7ff50141a59abbd47c5a4fd654",
+      "source_ref": "opaque_c5ad5938bf3b4aa7a4c70dc71d4c84e1",
+      "target_space_ref": null
+    }
+  ]
+}

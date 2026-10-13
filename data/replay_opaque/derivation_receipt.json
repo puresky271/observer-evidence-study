@@ -1,0 +1,28 @@
+{
+  "family_count": 12,
+  "files_per_family": 8,
+  "identity_mapping_written": false,
+  "limitations": [
+    "Derived bytes and identities differ from the private originals.",
+    "This checks current/history membership, not language understanding or spatial truth.",
+    "Only the eight visible replay inputs per family are included; hidden/oracle/package data are excluded."
+  ],
+  "projection_membership_arms_checked": 288,
+  "projection_membership_preserved": true,
+  "schema_version": "opaque-fixture-derivation-v1",
+  "source_family_bundle_sha256_unordered": [
+    "0a4472f6cd3cd06d075e601878e1707a7344aeaaa9190f68ab55fc4688472c8a",
+    "0b001e4c6f17339857da19f3c6fd27dc8a2e8c26ad28428d4a1deec977972bf3",
+    "115cb0cca1a4404299456bbdd972cb59478c9f53c678af5d0ba5c09afaab7c35",
+    "31f32ca9cfe5614226c43c3e760695fc877b3aa40a47ad73a2ce100f670c8a60",
+    "51ff7981f633a1488a068515636412da4cf39f12c494fee81f2fe2ab47e53c66",
+    "68a690b82d014971f6a74865ce8c6984f5e653113f985f0f28b0e2f54b93dcd5",
+    "6e5db99e5f74385e6d0aa805a9a80bc9dc48df68c25af5e1017adf65468b3af3",
+    "739e4b6bcfe0aa2e73e09a5acba28f69f784d38bbc5f002be1c6dc1382856155",
+    "869923cc08c51526f9e33637db0a2ce44a45f08e222b37ffba6378198cc5c9d2",
+    "8f470ff1bc38b01df95561607078f9ab143c32d72f914238ba546899d8929f85",
+    "992d688d07b24de57a76c1a521a70250db957e9b7328410fbbde24ef1661941b",
+    "caa6e395c5cc3df58b3c4dd1b14d44a333dd482f3e796cb02e5013d79704cd1e"
+  ],
+  "transformation": "random UUID opaque tokens for all identifiers and free text; timestamps/enums retained; derived hashes recomputed"
+}

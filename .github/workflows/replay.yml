@@ -1,0 +1,17 @@
+name: Offline study replay
+on: [push, pull_request]
+jobs:
+  replay:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ['3.11', '3.13']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -B -m unittest discover -s tests -v
+      - run: python -B scripts/reproduce.py --out replay_output/ci
+      - run: python -B src/observer_study/audit_release_manifest.py --manifest RELEASE_MANIFEST.json --root .

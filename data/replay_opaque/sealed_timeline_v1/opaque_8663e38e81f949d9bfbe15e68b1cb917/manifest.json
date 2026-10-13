@@ -1,0 +1,29 @@
+{
+  "answer_model_calls": 0,
+  "authoring_procedure": "independent family slots generated under a frozen authoring procedure",
+  "family_id": "opaque_e950f662a9af4c1593ef6620c9009e45",
+  "hidden_twin_rule": "Change only unobserved world state; all observer artifacts remain byte-identical.",
+  "package_files_sha256": "e7a6f3eefd727e8d594a50ee7b313323987a159e36ccd3c10a7bd740b8fe3c6d",
+  "package_id": "opaque_6482bab3e1cb4a9ab16a1e611c82f7bb",
+  "provenance": {
+    "generator_sha256": "b3e75240c0021f7cfebe310dea2d25858b259c0eee0946c6281d17bc22c412c2",
+    "sampler_sha256": "d7dd20abff5b7a9e2e9972c3753df88e620de1580431aca0442d89ef0718915f",
+    "validator_sha256": "7d8d3f111bee2d3c930c1686b17dfc2bc0e04335df4ebd2db70a2882990a3f99"
+  },
+  "query_ids": [
+    "opaque_744a496f1c184054bfcc932d6123450e",
+    "opaque_2b3f8e730c304629ac4b0027db110775",
+    "opaque_ef924ecebdfa4fb1a16bd8944787b9da",
+    "opaque_6a4933bde18e45e69f466d98057e4b4d"
+  ],
+  "query_wording": [
+    "opaque_2a853aca5dc54764affc4be7f526575b",
+    "opaque_b3f2f7d6f8644d28a751564acf9f02bf",
+    "opaque_d542dc1525c641019eb1eafaf311d736",
+    "opaque_b66bbddd95e04077b55ec4fb64cb9567"
+  ],
+  "scene_class_id": "public_private_access",
+  "schema_version": "observer-sealed-family-v2",
+  "source_registry_sha256": "4dfa73e6e66b13c726a983836feb3f5d030fad54b1ce4f03c4aefd496e899705",
+  "stream_sha256": "117d72d904d08db00e8ddc5908243cc0ced3e32b5610d80bb3b54d498b960121"
+}

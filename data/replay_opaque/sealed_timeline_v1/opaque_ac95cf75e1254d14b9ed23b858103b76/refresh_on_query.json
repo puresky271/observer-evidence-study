@@ -1,0 +1,94 @@
+{
+  "initial_snapshot_at_jst": "2026-10-22T08:59:00+09:00",
+  "initial_snapshot_evidence_ids": [],
+  "initial_snapshot_id": "opaque_5ff288fedf924964a1a047d18b3c2ab8",
+  "observer_ref": "opaque_411d6f36468a4918a0605bf4c2192dd1",
+  "queries": [
+    {
+      "at_jst": "2026-10-22T09:02:00+09:00",
+      "checkpoint_id": "opaque_01fc040abe024bc38aaf860a5f569a7f",
+      "query_id": "opaque_a75e4ecec7084af9822b5a51890c7406",
+      "snapshot_id": "opaque_05a966ae2fa64f6e9be10e5af8b220c3"
+    },
+    {
+      "at_jst": "2026-10-22T09:10:00+09:00",
+      "checkpoint_id": "opaque_64283fe1be1440478ea12b4d64b7c11d",
+      "query_id": "opaque_f268a52f22974044a4ef47df89f373bf",
+      "snapshot_id": "opaque_81dd516a47f04f4c92a13a46ce38f436"
+    },
+    {
+      "at_jst": "2026-10-22T09:15:00+09:00",
+      "checkpoint_id": "opaque_b6e7474cb6ac4821b7361b62b9e68d55",
+      "query_id": "opaque_66dfe830958141ceb148352918725c7a",
+      "snapshot_id": "opaque_aecb0d909c874a6d8b3a3cd681941658"
+    },
+    {
+      "at_jst": "2026-10-22T09:30:00+09:00",
+      "checkpoint_id": "opaque_a5b9305381b346e0b1b5b3b2a39dba35",
+      "query_id": "opaque_7780534798964dacae58fb3f5e029fae",
+      "snapshot_id": "opaque_cb06d3fe20334e7aaaaced40358d1b22"
+    }
+  ],
+  "run_end_jst": "2026-10-22T09:30:00+09:00",
+  "sample_events": [
+    {
+      "new_evidence_ids": [
+        "opaque_f1914b524255402c944701c5284a094d"
+      ],
+      "query_id": "opaque_a75e4ecec7084af9822b5a51890c7406",
+      "sample_sequence": 1,
+      "sampled_at_jst": "2026-10-22T09:02:00+09:00",
+      "snapshot_evidence_ids": [
+        "opaque_f1914b524255402c944701c5284a094d"
+      ],
+      "snapshot_id": "opaque_05a966ae2fa64f6e9be10e5af8b220c3",
+      "trigger_id": null
+    },
+    {
+      "new_evidence_ids": [],
+      "query_id": "opaque_f268a52f22974044a4ef47df89f373bf",
+      "sample_sequence": 2,
+      "sampled_at_jst": "2026-10-22T09:10:00+09:00",
+      "snapshot_evidence_ids": [
+        "opaque_f1914b524255402c944701c5284a094d"
+      ],
+      "snapshot_id": "opaque_81dd516a47f04f4c92a13a46ce38f436",
+      "trigger_id": null
+    },
+    {
+      "new_evidence_ids": [
+        "opaque_f96dd6a27f334e31a6a9b0dd28039c8a"
+      ],
+      "query_id": "opaque_66dfe830958141ceb148352918725c7a",
+      "sample_sequence": 3,
+      "sampled_at_jst": "2026-10-22T09:15:00+09:00",
+      "snapshot_evidence_ids": [
+        "opaque_f1914b524255402c944701c5284a094d",
+        "opaque_f96dd6a27f334e31a6a9b0dd28039c8a"
+      ],
+      "snapshot_id": "opaque_aecb0d909c874a6d8b3a3cd681941658",
+      "trigger_id": null
+    },
+    {
+      "new_evidence_ids": [],
+      "query_id": "opaque_7780534798964dacae58fb3f5e029fae",
+      "sample_sequence": 4,
+      "sampled_at_jst": "2026-10-22T09:30:00+09:00",
+      "snapshot_evidence_ids": [
+        "opaque_f1914b524255402c944701c5284a094d",
+        "opaque_f96dd6a27f334e31a6a9b0dd28039c8a"
+      ],
+      "snapshot_id": "opaque_cb06d3fe20334e7aaaaced40358d1b22",
+      "trigger_id": null
+    }
+  ],
+  "sampler_sha256": "d7dd20abff5b7a9e2e9972c3753df88e620de1580431aca0442d89ef0718915f",
+  "sampler_version": "sealed-sampler-v2",
+  "schema_version": "observer-refresh-trace-v2",
+  "source_registry_sha256": "249cca4e2f763647f25d22e85eecde1a0e302422b3722b37e80fc040b6cd7492",
+  "strategy": "on_query",
+  "strategy_config": {
+    "interval_seconds": null
+  },
+  "stream_sha256": "dfb0801fb957f1aaeda9f712302af9a08671923bdeeb27b3afa64d9066fbe1ae"
+}

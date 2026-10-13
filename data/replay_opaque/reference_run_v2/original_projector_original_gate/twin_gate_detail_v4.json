@@ -1,0 +1,76 @@
+{
+  "families": [
+    {
+      "family_id": "opaque_4a02ecb31c9348ac8bc9d9488b2b50de",
+      "has_detection_power": false,
+      "hidden_state_windows": 0,
+      "perturbation_sensitive_arms": 0
+    },
+    {
+      "family_id": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "has_detection_power": true,
+      "hidden_state_windows": 1,
+      "perturbation_sensitive_arms": 24
+    },
+    {
+      "family_id": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "has_detection_power": true,
+      "hidden_state_windows": 1,
+      "perturbation_sensitive_arms": 24
+    },
+    {
+      "family_id": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "has_detection_power": true,
+      "hidden_state_windows": 1,
+      "perturbation_sensitive_arms": 24
+    },
+    {
+      "family_id": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "has_detection_power": true,
+      "hidden_state_windows": 1,
+      "perturbation_sensitive_arms": 24
+    },
+    {
+      "family_id": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "has_detection_power": true,
+      "hidden_state_windows": 1,
+      "perturbation_sensitive_arms": 24
+    },
+    {
+      "family_id": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "has_detection_power": true,
+      "hidden_state_windows": 1,
+      "perturbation_sensitive_arms": 24
+    },
+    {
+      "family_id": "opaque_720eb89d347446b3be6736542b911b5c",
+      "has_detection_power": true,
+      "hidden_state_windows": 1,
+      "perturbation_sensitive_arms": 24
+    },
+    {
+      "family_id": "opaque_9a9de294f88d466a874becd0f3201645",
+      "has_detection_power": false,
+      "hidden_state_windows": 0,
+      "perturbation_sensitive_arms": 0
+    },
+    {
+      "family_id": "opaque_517a896d61b24b3ab627b33ba8141269",
+      "has_detection_power": false,
+      "hidden_state_windows": 0,
+      "perturbation_sensitive_arms": 0
+    },
+    {
+      "family_id": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "has_detection_power": true,
+      "hidden_state_windows": 1,
+      "perturbation_sensitive_arms": 24
+    },
+    {
+      "family_id": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "has_detection_power": true,
+      "hidden_state_windows": 1,
+      "perturbation_sensitive_arms": 24
+    }
+  ]
+}

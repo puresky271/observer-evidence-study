@@ -1,0 +1,10 @@
+{
+  "conflict_rule": "latest_admissible_state_wins_equal_time_conflicts_retained",
+  "freshness_window_seconds": 1200,
+  "interval_boundary": "half_open_start_inclusive_end_exclusive",
+  "occurrence_rule": "known_event_time_is_history_unknown_event_time_is_retained_but_unrated",
+  "plan_rule": "preserve_plan_assertion_kind_never_infer_execution",
+  "policy_id": "opaque_2cd9b791ba4e45e38f8ac13febdea318",
+  "schema_version": "observer-projection-policy-v2",
+  "state_freshness_mode": "timestamp_ttl"
+}

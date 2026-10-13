@@ -1,0 +1,29 @@
+{
+  "answer_model_calls": 0,
+  "authoring_procedure": "independent family slots generated under a frozen authoring procedure",
+  "family_id": "opaque_9a9de294f88d466a874becd0f3201645",
+  "hidden_twin_rule": "Change only unobserved world state; all observer artifacts remain byte-identical.",
+  "package_files_sha256": null,
+  "package_id": null,
+  "provenance": {
+    "generator_sha256": "b3e75240c0021f7cfebe310dea2d25858b259c0eee0946c6281d17bc22c412c2",
+    "sampler_sha256": "d7dd20abff5b7a9e2e9972c3753df88e620de1580431aca0442d89ef0718915f",
+    "validator_sha256": "7d8d3f111bee2d3c930c1686b17dfc2bc0e04335df4ebd2db70a2882990a3f99"
+  },
+  "query_ids": [
+    "opaque_a75e4ecec7084af9822b5a51890c7406",
+    "opaque_f268a52f22974044a4ef47df89f373bf",
+    "opaque_66dfe830958141ceb148352918725c7a",
+    "opaque_7780534798964dacae58fb3f5e029fae"
+  ],
+  "query_wording": [
+    "opaque_f7b2006315e94299bb3a2c9bcd979406",
+    "opaque_ce014ff35c3a4267bb3c184975aa031c",
+    "opaque_11f480e069d54564b8afd981098bf17c",
+    "opaque_4f77832e712744f2a1b30f5627e65b73"
+  ],
+  "scene_class_id": "recipient_scoped_communication",
+  "schema_version": "observer-sealed-family-v2",
+  "source_registry_sha256": "249cca4e2f763647f25d22e85eecde1a0e302422b3722b37e80fc040b6cd7492",
+  "stream_sha256": "dfb0801fb957f1aaeda9f712302af9a08671923bdeeb27b3afa64d9066fbe1ae"
+}

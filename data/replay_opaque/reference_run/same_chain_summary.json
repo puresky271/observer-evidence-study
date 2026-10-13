@@ -1,0 +1,71 @@
+{
+  "schema_version": "same-chain-replay-v1",
+  "model_calls": 0,
+  "fault_classes": 1,
+  "gate_fault_classes": 1,
+  "configurations": [
+    {
+      "configuration": "original_projector_original_gate",
+      "gate_status": "PASS_REFERENCE_ONLY",
+      "exit_code": 1,
+      "families": 12,
+      "nested_arms": 288,
+      "hidden_comparisons": 216,
+      "hidden_failure_entries": 0,
+      "distinct_hidden_failure_arms": 0,
+      "distinct_hidden_failure_families": 0,
+      "visible_positive_controls": 9,
+      "signature_heuristic": "REFERENCE_ONLY",
+      "other_failures": []
+    },
+    {
+      "configuration": "leaky_projector_original_gate",
+      "gate_status": "FAIL",
+      "exit_code": 1,
+      "families": 12,
+      "nested_arms": 288,
+      "hidden_comparisons": 216,
+      "hidden_failure_entries": 648,
+      "distinct_hidden_failure_arms": 216,
+      "distinct_hidden_failure_families": 9,
+      "visible_positive_controls": 9,
+      "signature_heuristic": "EVALUATED_CHAIN",
+      "other_failures": []
+    },
+    {
+      "configuration": "underscored_leak_original_gate",
+      "gate_status": "FAIL",
+      "exit_code": 1,
+      "families": 12,
+      "nested_arms": 288,
+      "hidden_comparisons": 216,
+      "hidden_failure_entries": 648,
+      "distinct_hidden_failure_arms": 216,
+      "distinct_hidden_failure_families": 9,
+      "visible_positive_controls": 9,
+      "signature_heuristic": "REFERENCE_ONLY",
+      "other_failures": []
+    },
+    {
+      "configuration": "leaky_projector_discarding_gate",
+      "gate_status": "PASS",
+      "exit_code": 0,
+      "families": 12,
+      "nested_arms": 288,
+      "hidden_comparisons": 216,
+      "hidden_failure_entries": 0,
+      "distinct_hidden_failure_arms": 0,
+      "distinct_hidden_failure_families": 0,
+      "visible_positive_controls": 9,
+      "signature_heuristic": "EVALUATED_CHAIN",
+      "other_failures": []
+    }
+  ],
+  "interpretation": [
+    "Faults are author-designed and post hoc, not a confirmatory sample.",
+    "One leaking projector semantics is exercised through two signatures.",
+    "Nested arms and three compared artifact planes are not independent mutants.",
+    "A gate adapter discarding hidden inputs is an injected gate fault.",
+    "A visible positive control alone does not establish hidden-fault detection."
+  ]
+}

@@ -1,0 +1,13 @@
+# Replay fixtures bind exact serialized bytes in their manifests.
+data/replay_opaque/** text eol=lf
+src/observer_study/_replay*.py text eol=lf
+src/observer_study/replay.py text eol=lf
+scripts/build_replay_derivative.py text eol=lf
+tests/test_replay.py text eol=lf
+docs/reproduce.md text eol=lf
+
+src/observer_study/_vendor/** -text
+manuscripts/*.tex text eol=lf
+manuscripts/*.bib text eol=lf
+manuscripts/*.pdf binary
+audits/*.json text eol=lf

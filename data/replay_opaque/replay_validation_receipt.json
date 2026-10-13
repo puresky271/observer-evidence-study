@@ -1,0 +1,15 @@
+{
+  "all_original_primary_summary_fields_preserved": true,
+  "failure_entries_checked": 1296,
+  "fixture_identity_and_free_text_replacement_check": "PASS",
+  "full_primary_failure_records_preserved_under_opaque_renaming": true,
+  "limitations": [
+    "Author-side comparison requires excluded originals.",
+    "Identity map was ephemeral and was never written.",
+    "Family/query normalization used retained timestamps and query order for comparison only."
+  ],
+  "model_calls": 0,
+  "original_summary_sha256": "56006d44def908cfc1164ad9bcd2a9118b0a65bc7a34d86289a2946b9bebb382",
+  "primary_configurations_checked": 4,
+  "schema_version": "same-chain-derivative-validation-v1"
+}

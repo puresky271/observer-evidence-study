@@ -1,0 +1,6646 @@
+{
+  "arms_tested": 288,
+  "artifact_writes": "underscored_leak_original_gate/ only; replay input fixtures untouched",
+  "authorization_probe": {
+    "families_reaching_context_without_authorization": 0,
+    "guarded_families_tested": 12,
+    "note": "covers recipient- and actor-scoped kinds only; direct observations are bounded by the package scope validator"
+  },
+  "detection_power": {
+    "authorization_probe": {
+      "capable_of_failing": true,
+      "firing_observed_in_probe": true,
+      "guarded_families_tested": 12,
+      "leaks": 0,
+      "probe": {
+        "baseline_reachability_observed": true,
+        "method": "the same authorization_probe() survival computation run with redirect=False (authorized baseline). If authorized guarded claims reach context, the predicate is not the constant False, so a True return under redirection -- and the appended authorization_probe failure -- remains observable.",
+        "observations": [
+          {
+            "authorized_baseline_claims_reach_context": true,
+            "family": "opaque_4a02ecb31c9348ac8bc9d9488b2b50de",
+            "redirected_claims_reach_context": false
+          },
+          {
+            "authorized_baseline_claims_reach_context": false,
+            "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+            "redirected_claims_reach_context": false
+          },
+          {
+            "authorized_baseline_claims_reach_context": false,
+            "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+            "redirected_claims_reach_context": false
+          },
+          {
+            "authorized_baseline_claims_reach_context": false,
+            "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+            "redirected_claims_reach_context": false
+          },
+          {
+            "authorized_baseline_claims_reach_context": false,
+            "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+            "redirected_claims_reach_context": false
+          },
+          {
+            "authorized_baseline_claims_reach_context": false,
+            "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+            "redirected_claims_reach_context": false
+          },
+          {
+            "authorized_baseline_claims_reach_context": false,
+            "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+            "redirected_claims_reach_context": false
+          },
+          {
+            "authorized_baseline_claims_reach_context": false,
+            "family": "opaque_720eb89d347446b3be6736542b911b5c",
+            "redirected_claims_reach_context": false
+          },
+          {
+            "authorized_baseline_claims_reach_context": true,
+            "family": "opaque_9a9de294f88d466a874becd0f3201645",
+            "redirected_claims_reach_context": false
+          },
+          {
+            "authorized_baseline_claims_reach_context": true,
+            "family": "opaque_517a896d61b24b3ab627b33ba8141269",
+            "redirected_claims_reach_context": false
+          },
+          {
+            "authorized_baseline_claims_reach_context": false,
+            "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+            "redirected_claims_reach_context": false
+          },
+          {
+            "authorized_baseline_claims_reach_context": false,
+            "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+            "redirected_claims_reach_context": false
+          }
+        ]
+      }
+    },
+    "description": "Every field in this block is computed at runtime: from the callee signature, from observed firing counts on the frozen corpus, or from the recorded capability probes. A check listed as incapable of failing contributes no detection power, and the status must not be read as evidence of gate adequacy.",
+    "evaluated_chain_fault_injection": {
+      "present": false,
+      "reason": "no faulty implementation is substituted into the evaluated chain, so no assertion here can reject the historical leak"
+    },
+    "hidden_equality_check": {
+      "capable_of_failing": false,
+      "reason": "project_query swallows the hidden plane via _hidden_world; projection/context/payload equality is a theorem of the callee signature"
+    },
+    "perturbation_noop_guard": {
+      "capable_of_failing": false,
+      "contributes_no_detection_power": true,
+      "families_where_guard_condition_holds": 0,
+      "fired": false,
+      "guard_condition_reachable_on_frozen_corpus": false,
+      "probe": {
+        "degenerate_straddle_probe": {
+          "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+          "maps_equal_at_shipped_straddle": false,
+          "maps_equal_at_zero_straddle": true,
+          "shipped_straddle_minutes": 8
+        },
+        "description": "the guard condition was evaluated per family at the shipped STRADDLE_MINUTES, and the same end_jst map comparison was re-run at straddle_minutes=0 on the same frozen stream to show the comparison itself can return equal (so the False below is a measurement, not a constant of the probe code)"
+      },
+      "why": "At the shipped STRADDLE_MINUTES=8 the ended end_jst (as_of-8min) of every state row differs from its ongoing end_jst (as_of+8min), so the guard condition -- a non-empty ongoing window map whose end_jst map equals the ended one -- is unreachable for ANY input stream. It cannot be made to fire even by modifying the frozen corpus, let alone without modifying it; the only way to make the two maps equal is straddle_minutes=0, which degenerates the perturbation itself into a no-op (see probe.maps_equal_at_zero_straddle). capable_of_failing is therefore computed as False. The hardcoded True in the v3 report contradicted this record's own reason field ('has never fired and contributes no detection power')."
+    },
+    "reference_differential_check": {
+      "capable_of_failing": true,
+      "firing_observed": true,
+      "reason": "computed from the observed firing count: the differential against leaky_project actually changed its verdict on this many arms of the frozen corpus, so the check is not a constant; a corpus with zero sensitive arms would compute False. Its sensitivity is evidence about the reference projector, not about the evaluated chain, which receives the perturbed plane only through **_hidden_world.",
+      "sensitive_arms": 216
+    },
+    "verdict": "REFERENCE_ONLY",
+    "visible_positive_control": {
+      "capable_of_failing": true,
+      "controls_attributed": 9,
+      "firing_observed_in_probe": true,
+      "probe": {
+        "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+        "first_probe_failure_reason": "prompt payload unchanged by authorized visible evidence",
+        "method": "same run_positive_control() code path re-run with a no-op mutation, so the payload cannot change; the 'prompt payload unchanged' failure branch must fire on that degenerate input. Probe failures go to a separate list and never enter the gate's failures.",
+        "probe_failures_recorded": 1
+      },
+      "reason": "computed by re-running the same run_positive_control() code path with a no-op mutation; the observed firing of its failure branch on that degenerate input is the evidence for capability, not an assertion."
+    }
+  },
+  "failures": [
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_4e453278311a4daf8233d876460fe69a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_4e453278311a4daf8233d876460fe69a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_4e453278311a4daf8233d876460fe69a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_c8e944c5111c4eeb991bc929d5014016"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_c8e944c5111c4eeb991bc929d5014016"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_c8e944c5111c4eeb991bc929d5014016"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_60ae1c1e9d5b43b8b0363f3866f76f5a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_60ae1c1e9d5b43b8b0363f3866f76f5a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_60ae1c1e9d5b43b8b0363f3866f76f5a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_492370f674644611b490495b8bffb59d"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_492370f674644611b490495b8bffb59d"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_492370f674644611b490495b8bffb59d"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_4e453278311a4daf8233d876460fe69a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_4e453278311a4daf8233d876460fe69a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_4e453278311a4daf8233d876460fe69a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_c8e944c5111c4eeb991bc929d5014016"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_c8e944c5111c4eeb991bc929d5014016"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_c8e944c5111c4eeb991bc929d5014016"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_60ae1c1e9d5b43b8b0363f3866f76f5a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_60ae1c1e9d5b43b8b0363f3866f76f5a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_60ae1c1e9d5b43b8b0363f3866f76f5a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_492370f674644611b490495b8bffb59d"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_492370f674644611b490495b8bffb59d"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_492370f674644611b490495b8bffb59d"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_4e453278311a4daf8233d876460fe69a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_4e453278311a4daf8233d876460fe69a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_4e453278311a4daf8233d876460fe69a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_c8e944c5111c4eeb991bc929d5014016"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_c8e944c5111c4eeb991bc929d5014016"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_c8e944c5111c4eeb991bc929d5014016"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_60ae1c1e9d5b43b8b0363f3866f76f5a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_60ae1c1e9d5b43b8b0363f3866f76f5a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_60ae1c1e9d5b43b8b0363f3866f76f5a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_492370f674644611b490495b8bffb59d"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_492370f674644611b490495b8bffb59d"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_492370f674644611b490495b8bffb59d"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_4e453278311a4daf8233d876460fe69a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_4e453278311a4daf8233d876460fe69a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_4e453278311a4daf8233d876460fe69a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_c8e944c5111c4eeb991bc929d5014016"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_c8e944c5111c4eeb991bc929d5014016"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_c8e944c5111c4eeb991bc929d5014016"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_60ae1c1e9d5b43b8b0363f3866f76f5a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_60ae1c1e9d5b43b8b0363f3866f76f5a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_60ae1c1e9d5b43b8b0363f3866f76f5a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_492370f674644611b490495b8bffb59d"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_492370f674644611b490495b8bffb59d"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_492370f674644611b490495b8bffb59d"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_4e453278311a4daf8233d876460fe69a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_4e453278311a4daf8233d876460fe69a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_4e453278311a4daf8233d876460fe69a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_c8e944c5111c4eeb991bc929d5014016"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_c8e944c5111c4eeb991bc929d5014016"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_c8e944c5111c4eeb991bc929d5014016"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_60ae1c1e9d5b43b8b0363f3866f76f5a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_60ae1c1e9d5b43b8b0363f3866f76f5a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_60ae1c1e9d5b43b8b0363f3866f76f5a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_492370f674644611b490495b8bffb59d"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_492370f674644611b490495b8bffb59d"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_492370f674644611b490495b8bffb59d"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_4e453278311a4daf8233d876460fe69a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_4e453278311a4daf8233d876460fe69a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_4e453278311a4daf8233d876460fe69a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_c8e944c5111c4eeb991bc929d5014016"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_c8e944c5111c4eeb991bc929d5014016"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_c8e944c5111c4eeb991bc929d5014016"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_60ae1c1e9d5b43b8b0363f3866f76f5a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_60ae1c1e9d5b43b8b0363f3866f76f5a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_60ae1c1e9d5b43b8b0363f3866f76f5a"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_492370f674644611b490495b8bffb59d"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_492370f674644611b490495b8bffb59d"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_492370f674644611b490495b8bffb59d"
+      ],
+      "family": "opaque_12ad72f1b2f04ecd93958504e09c8c41",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_19222fe77d424a8ca250f82e7fd26d00"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_19222fe77d424a8ca250f82e7fd26d00"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_19222fe77d424a8ca250f82e7fd26d00"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_fdc07bbde857416dbe98a74c8d9f8285"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_fdc07bbde857416dbe98a74c8d9f8285"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_fdc07bbde857416dbe98a74c8d9f8285"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_83f14ae5f5ba47a296bd8ada197f0941"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_83f14ae5f5ba47a296bd8ada197f0941"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_83f14ae5f5ba47a296bd8ada197f0941"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_ba10053146f84a99b6b49a4e6abec63e"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_ba10053146f84a99b6b49a4e6abec63e"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_ba10053146f84a99b6b49a4e6abec63e"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_19222fe77d424a8ca250f82e7fd26d00"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_19222fe77d424a8ca250f82e7fd26d00"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_19222fe77d424a8ca250f82e7fd26d00"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_fdc07bbde857416dbe98a74c8d9f8285"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_fdc07bbde857416dbe98a74c8d9f8285"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_fdc07bbde857416dbe98a74c8d9f8285"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_83f14ae5f5ba47a296bd8ada197f0941"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_83f14ae5f5ba47a296bd8ada197f0941"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_83f14ae5f5ba47a296bd8ada197f0941"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_ba10053146f84a99b6b49a4e6abec63e"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_ba10053146f84a99b6b49a4e6abec63e"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_ba10053146f84a99b6b49a4e6abec63e"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_19222fe77d424a8ca250f82e7fd26d00"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_19222fe77d424a8ca250f82e7fd26d00"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_19222fe77d424a8ca250f82e7fd26d00"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_fdc07bbde857416dbe98a74c8d9f8285"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_fdc07bbde857416dbe98a74c8d9f8285"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_fdc07bbde857416dbe98a74c8d9f8285"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_83f14ae5f5ba47a296bd8ada197f0941"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_83f14ae5f5ba47a296bd8ada197f0941"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_83f14ae5f5ba47a296bd8ada197f0941"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_ba10053146f84a99b6b49a4e6abec63e"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_ba10053146f84a99b6b49a4e6abec63e"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_ba10053146f84a99b6b49a4e6abec63e"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_19222fe77d424a8ca250f82e7fd26d00"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_19222fe77d424a8ca250f82e7fd26d00"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_19222fe77d424a8ca250f82e7fd26d00"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_fdc07bbde857416dbe98a74c8d9f8285"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_fdc07bbde857416dbe98a74c8d9f8285"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_fdc07bbde857416dbe98a74c8d9f8285"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_83f14ae5f5ba47a296bd8ada197f0941"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_83f14ae5f5ba47a296bd8ada197f0941"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_83f14ae5f5ba47a296bd8ada197f0941"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_ba10053146f84a99b6b49a4e6abec63e"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_ba10053146f84a99b6b49a4e6abec63e"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_ba10053146f84a99b6b49a4e6abec63e"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_19222fe77d424a8ca250f82e7fd26d00"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_19222fe77d424a8ca250f82e7fd26d00"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_19222fe77d424a8ca250f82e7fd26d00"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_fdc07bbde857416dbe98a74c8d9f8285"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_fdc07bbde857416dbe98a74c8d9f8285"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_fdc07bbde857416dbe98a74c8d9f8285"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_83f14ae5f5ba47a296bd8ada197f0941"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_83f14ae5f5ba47a296bd8ada197f0941"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_83f14ae5f5ba47a296bd8ada197f0941"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_ba10053146f84a99b6b49a4e6abec63e"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_ba10053146f84a99b6b49a4e6abec63e"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_ba10053146f84a99b6b49a4e6abec63e"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_19222fe77d424a8ca250f82e7fd26d00"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_19222fe77d424a8ca250f82e7fd26d00"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_19222fe77d424a8ca250f82e7fd26d00"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_fdc07bbde857416dbe98a74c8d9f8285"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_fdc07bbde857416dbe98a74c8d9f8285"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_fdc07bbde857416dbe98a74c8d9f8285"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_83f14ae5f5ba47a296bd8ada197f0941"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_83f14ae5f5ba47a296bd8ada197f0941"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_83f14ae5f5ba47a296bd8ada197f0941"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_ba10053146f84a99b6b49a4e6abec63e"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_ba10053146f84a99b6b49a4e6abec63e"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_ba10053146f84a99b6b49a4e6abec63e"
+      ],
+      "family": "opaque_f15550e176a3496384c1df811aeeac7d",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_dbe11cd42f3f41e99724bd6bca9af795"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_dbe11cd42f3f41e99724bd6bca9af795"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_dbe11cd42f3f41e99724bd6bca9af795"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_669cecdfea25413a91064af1e3faa62e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_669cecdfea25413a91064af1e3faa62e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_669cecdfea25413a91064af1e3faa62e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_5d1a435d15854822bb7ab0b9716a974e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_5d1a435d15854822bb7ab0b9716a974e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_5d1a435d15854822bb7ab0b9716a974e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_7b082276a7d44c629cc5d0965249d97a"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_7b082276a7d44c629cc5d0965249d97a"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_7b082276a7d44c629cc5d0965249d97a"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_dbe11cd42f3f41e99724bd6bca9af795"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_dbe11cd42f3f41e99724bd6bca9af795"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_dbe11cd42f3f41e99724bd6bca9af795"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_669cecdfea25413a91064af1e3faa62e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_669cecdfea25413a91064af1e3faa62e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_669cecdfea25413a91064af1e3faa62e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_5d1a435d15854822bb7ab0b9716a974e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_5d1a435d15854822bb7ab0b9716a974e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_5d1a435d15854822bb7ab0b9716a974e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_7b082276a7d44c629cc5d0965249d97a"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_7b082276a7d44c629cc5d0965249d97a"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_7b082276a7d44c629cc5d0965249d97a"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_dbe11cd42f3f41e99724bd6bca9af795"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_dbe11cd42f3f41e99724bd6bca9af795"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_dbe11cd42f3f41e99724bd6bca9af795"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_669cecdfea25413a91064af1e3faa62e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_669cecdfea25413a91064af1e3faa62e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_669cecdfea25413a91064af1e3faa62e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_5d1a435d15854822bb7ab0b9716a974e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_5d1a435d15854822bb7ab0b9716a974e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_5d1a435d15854822bb7ab0b9716a974e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_7b082276a7d44c629cc5d0965249d97a"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_7b082276a7d44c629cc5d0965249d97a"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_7b082276a7d44c629cc5d0965249d97a"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_dbe11cd42f3f41e99724bd6bca9af795"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_dbe11cd42f3f41e99724bd6bca9af795"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_dbe11cd42f3f41e99724bd6bca9af795"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_669cecdfea25413a91064af1e3faa62e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_669cecdfea25413a91064af1e3faa62e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_669cecdfea25413a91064af1e3faa62e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_5d1a435d15854822bb7ab0b9716a974e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_5d1a435d15854822bb7ab0b9716a974e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_5d1a435d15854822bb7ab0b9716a974e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_7b082276a7d44c629cc5d0965249d97a"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_7b082276a7d44c629cc5d0965249d97a"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_7b082276a7d44c629cc5d0965249d97a"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_dbe11cd42f3f41e99724bd6bca9af795"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_dbe11cd42f3f41e99724bd6bca9af795"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_dbe11cd42f3f41e99724bd6bca9af795"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_669cecdfea25413a91064af1e3faa62e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_669cecdfea25413a91064af1e3faa62e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_669cecdfea25413a91064af1e3faa62e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_5d1a435d15854822bb7ab0b9716a974e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_5d1a435d15854822bb7ab0b9716a974e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_5d1a435d15854822bb7ab0b9716a974e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_7b082276a7d44c629cc5d0965249d97a"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_7b082276a7d44c629cc5d0965249d97a"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_7b082276a7d44c629cc5d0965249d97a"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_dbe11cd42f3f41e99724bd6bca9af795"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_dbe11cd42f3f41e99724bd6bca9af795"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_dbe11cd42f3f41e99724bd6bca9af795"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_669cecdfea25413a91064af1e3faa62e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_669cecdfea25413a91064af1e3faa62e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_669cecdfea25413a91064af1e3faa62e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_5d1a435d15854822bb7ab0b9716a974e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_5d1a435d15854822bb7ab0b9716a974e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_5d1a435d15854822bb7ab0b9716a974e"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_7b082276a7d44c629cc5d0965249d97a"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_7b082276a7d44c629cc5d0965249d97a"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_7b082276a7d44c629cc5d0965249d97a"
+      ],
+      "family": "opaque_d1cc6817b4444f8e805c2240e6b8f1c1",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_a95b3e2db821426ab2f79d64419a66e6"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_a95b3e2db821426ab2f79d64419a66e6"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_a95b3e2db821426ab2f79d64419a66e6"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_72742921d99e43628347681f68435712"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_72742921d99e43628347681f68435712"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_72742921d99e43628347681f68435712"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_a5dec3f93b0f4ea88a1f1b86a9c483c0"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_a5dec3f93b0f4ea88a1f1b86a9c483c0"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_a5dec3f93b0f4ea88a1f1b86a9c483c0"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_757474468d464f25987fdb00ecff19cf"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_757474468d464f25987fdb00ecff19cf"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_757474468d464f25987fdb00ecff19cf"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_a95b3e2db821426ab2f79d64419a66e6"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_a95b3e2db821426ab2f79d64419a66e6"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_a95b3e2db821426ab2f79d64419a66e6"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_72742921d99e43628347681f68435712"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_72742921d99e43628347681f68435712"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_72742921d99e43628347681f68435712"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_a5dec3f93b0f4ea88a1f1b86a9c483c0"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_a5dec3f93b0f4ea88a1f1b86a9c483c0"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_a5dec3f93b0f4ea88a1f1b86a9c483c0"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_757474468d464f25987fdb00ecff19cf"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_757474468d464f25987fdb00ecff19cf"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_757474468d464f25987fdb00ecff19cf"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_a95b3e2db821426ab2f79d64419a66e6"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_a95b3e2db821426ab2f79d64419a66e6"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_a95b3e2db821426ab2f79d64419a66e6"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_72742921d99e43628347681f68435712"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_72742921d99e43628347681f68435712"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_72742921d99e43628347681f68435712"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_a5dec3f93b0f4ea88a1f1b86a9c483c0"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_a5dec3f93b0f4ea88a1f1b86a9c483c0"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_a5dec3f93b0f4ea88a1f1b86a9c483c0"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_757474468d464f25987fdb00ecff19cf"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_757474468d464f25987fdb00ecff19cf"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_757474468d464f25987fdb00ecff19cf"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_a95b3e2db821426ab2f79d64419a66e6"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_a95b3e2db821426ab2f79d64419a66e6"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_a95b3e2db821426ab2f79d64419a66e6"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_72742921d99e43628347681f68435712"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_72742921d99e43628347681f68435712"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_72742921d99e43628347681f68435712"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_a5dec3f93b0f4ea88a1f1b86a9c483c0"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_a5dec3f93b0f4ea88a1f1b86a9c483c0"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_a5dec3f93b0f4ea88a1f1b86a9c483c0"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_757474468d464f25987fdb00ecff19cf"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_757474468d464f25987fdb00ecff19cf"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_757474468d464f25987fdb00ecff19cf"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_a95b3e2db821426ab2f79d64419a66e6"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_a95b3e2db821426ab2f79d64419a66e6"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_a95b3e2db821426ab2f79d64419a66e6"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_72742921d99e43628347681f68435712"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_72742921d99e43628347681f68435712"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_72742921d99e43628347681f68435712"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_a5dec3f93b0f4ea88a1f1b86a9c483c0"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_a5dec3f93b0f4ea88a1f1b86a9c483c0"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_a5dec3f93b0f4ea88a1f1b86a9c483c0"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_757474468d464f25987fdb00ecff19cf"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_757474468d464f25987fdb00ecff19cf"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_757474468d464f25987fdb00ecff19cf"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_a95b3e2db821426ab2f79d64419a66e6"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_a95b3e2db821426ab2f79d64419a66e6"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_a95b3e2db821426ab2f79d64419a66e6"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_72742921d99e43628347681f68435712"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_72742921d99e43628347681f68435712"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_72742921d99e43628347681f68435712"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_a5dec3f93b0f4ea88a1f1b86a9c483c0"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_a5dec3f93b0f4ea88a1f1b86a9c483c0"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_a5dec3f93b0f4ea88a1f1b86a9c483c0"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_757474468d464f25987fdb00ecff19cf"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_757474468d464f25987fdb00ecff19cf"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_757474468d464f25987fdb00ecff19cf"
+      ],
+      "family": "opaque_43a4fa71c33044dfb55496f4c9cceb4f",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_744a496f1c184054bfcc932d6123450e"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_744a496f1c184054bfcc932d6123450e"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_744a496f1c184054bfcc932d6123450e"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_2b3f8e730c304629ac4b0027db110775"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_2b3f8e730c304629ac4b0027db110775"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_2b3f8e730c304629ac4b0027db110775"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_ef924ecebdfa4fb1a16bd8944787b9da"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_ef924ecebdfa4fb1a16bd8944787b9da"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_ef924ecebdfa4fb1a16bd8944787b9da"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_6a4933bde18e45e69f466d98057e4b4d"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_6a4933bde18e45e69f466d98057e4b4d"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_6a4933bde18e45e69f466d98057e4b4d"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_744a496f1c184054bfcc932d6123450e"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_744a496f1c184054bfcc932d6123450e"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_744a496f1c184054bfcc932d6123450e"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_2b3f8e730c304629ac4b0027db110775"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_2b3f8e730c304629ac4b0027db110775"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_2b3f8e730c304629ac4b0027db110775"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_ef924ecebdfa4fb1a16bd8944787b9da"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_ef924ecebdfa4fb1a16bd8944787b9da"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_ef924ecebdfa4fb1a16bd8944787b9da"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_6a4933bde18e45e69f466d98057e4b4d"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_6a4933bde18e45e69f466d98057e4b4d"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_6a4933bde18e45e69f466d98057e4b4d"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_744a496f1c184054bfcc932d6123450e"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_744a496f1c184054bfcc932d6123450e"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_744a496f1c184054bfcc932d6123450e"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_2b3f8e730c304629ac4b0027db110775"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_2b3f8e730c304629ac4b0027db110775"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_2b3f8e730c304629ac4b0027db110775"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_ef924ecebdfa4fb1a16bd8944787b9da"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_ef924ecebdfa4fb1a16bd8944787b9da"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_ef924ecebdfa4fb1a16bd8944787b9da"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_6a4933bde18e45e69f466d98057e4b4d"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_6a4933bde18e45e69f466d98057e4b4d"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_6a4933bde18e45e69f466d98057e4b4d"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_744a496f1c184054bfcc932d6123450e"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_744a496f1c184054bfcc932d6123450e"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_744a496f1c184054bfcc932d6123450e"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_2b3f8e730c304629ac4b0027db110775"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_2b3f8e730c304629ac4b0027db110775"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_2b3f8e730c304629ac4b0027db110775"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_ef924ecebdfa4fb1a16bd8944787b9da"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_ef924ecebdfa4fb1a16bd8944787b9da"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_ef924ecebdfa4fb1a16bd8944787b9da"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_6a4933bde18e45e69f466d98057e4b4d"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_6a4933bde18e45e69f466d98057e4b4d"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_6a4933bde18e45e69f466d98057e4b4d"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_744a496f1c184054bfcc932d6123450e"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_744a496f1c184054bfcc932d6123450e"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_744a496f1c184054bfcc932d6123450e"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_2b3f8e730c304629ac4b0027db110775"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_2b3f8e730c304629ac4b0027db110775"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_2b3f8e730c304629ac4b0027db110775"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_ef924ecebdfa4fb1a16bd8944787b9da"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_ef924ecebdfa4fb1a16bd8944787b9da"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_ef924ecebdfa4fb1a16bd8944787b9da"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_6a4933bde18e45e69f466d98057e4b4d"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_6a4933bde18e45e69f466d98057e4b4d"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_6a4933bde18e45e69f466d98057e4b4d"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_744a496f1c184054bfcc932d6123450e"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_744a496f1c184054bfcc932d6123450e"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_744a496f1c184054bfcc932d6123450e"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_2b3f8e730c304629ac4b0027db110775"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_2b3f8e730c304629ac4b0027db110775"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_2b3f8e730c304629ac4b0027db110775"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_ef924ecebdfa4fb1a16bd8944787b9da"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_ef924ecebdfa4fb1a16bd8944787b9da"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_ef924ecebdfa4fb1a16bd8944787b9da"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_6a4933bde18e45e69f466d98057e4b4d"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_6a4933bde18e45e69f466d98057e4b4d"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_6a4933bde18e45e69f466d98057e4b4d"
+      ],
+      "family": "opaque_e950f662a9af4c1593ef6620c9009e45",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_efb009e011004f2888439ce70c1097e7"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_efb009e011004f2888439ce70c1097e7"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_efb009e011004f2888439ce70c1097e7"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_b1ab5ef2c4424cd294f3f8734bd9d111"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_b1ab5ef2c4424cd294f3f8734bd9d111"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_b1ab5ef2c4424cd294f3f8734bd9d111"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_c98bee8aac074b00bcb8509e4a94bde0"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_c98bee8aac074b00bcb8509e4a94bde0"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_c98bee8aac074b00bcb8509e4a94bde0"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_676cc47b3be74ffa8f0dd46ce839493b"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_676cc47b3be74ffa8f0dd46ce839493b"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_676cc47b3be74ffa8f0dd46ce839493b"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_efb009e011004f2888439ce70c1097e7"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_efb009e011004f2888439ce70c1097e7"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_efb009e011004f2888439ce70c1097e7"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_b1ab5ef2c4424cd294f3f8734bd9d111"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_b1ab5ef2c4424cd294f3f8734bd9d111"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_b1ab5ef2c4424cd294f3f8734bd9d111"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_c98bee8aac074b00bcb8509e4a94bde0"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_c98bee8aac074b00bcb8509e4a94bde0"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_c98bee8aac074b00bcb8509e4a94bde0"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_676cc47b3be74ffa8f0dd46ce839493b"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_676cc47b3be74ffa8f0dd46ce839493b"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_676cc47b3be74ffa8f0dd46ce839493b"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_efb009e011004f2888439ce70c1097e7"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_efb009e011004f2888439ce70c1097e7"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_efb009e011004f2888439ce70c1097e7"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_b1ab5ef2c4424cd294f3f8734bd9d111"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_b1ab5ef2c4424cd294f3f8734bd9d111"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_b1ab5ef2c4424cd294f3f8734bd9d111"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_c98bee8aac074b00bcb8509e4a94bde0"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_c98bee8aac074b00bcb8509e4a94bde0"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_c98bee8aac074b00bcb8509e4a94bde0"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_676cc47b3be74ffa8f0dd46ce839493b"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_676cc47b3be74ffa8f0dd46ce839493b"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_676cc47b3be74ffa8f0dd46ce839493b"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_efb009e011004f2888439ce70c1097e7"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_efb009e011004f2888439ce70c1097e7"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_efb009e011004f2888439ce70c1097e7"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_b1ab5ef2c4424cd294f3f8734bd9d111"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_b1ab5ef2c4424cd294f3f8734bd9d111"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_b1ab5ef2c4424cd294f3f8734bd9d111"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_c98bee8aac074b00bcb8509e4a94bde0"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_c98bee8aac074b00bcb8509e4a94bde0"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_c98bee8aac074b00bcb8509e4a94bde0"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_676cc47b3be74ffa8f0dd46ce839493b"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_676cc47b3be74ffa8f0dd46ce839493b"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_676cc47b3be74ffa8f0dd46ce839493b"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_efb009e011004f2888439ce70c1097e7"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_efb009e011004f2888439ce70c1097e7"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_efb009e011004f2888439ce70c1097e7"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_b1ab5ef2c4424cd294f3f8734bd9d111"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_b1ab5ef2c4424cd294f3f8734bd9d111"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_b1ab5ef2c4424cd294f3f8734bd9d111"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_c98bee8aac074b00bcb8509e4a94bde0"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_c98bee8aac074b00bcb8509e4a94bde0"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_c98bee8aac074b00bcb8509e4a94bde0"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_676cc47b3be74ffa8f0dd46ce839493b"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_676cc47b3be74ffa8f0dd46ce839493b"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_676cc47b3be74ffa8f0dd46ce839493b"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_efb009e011004f2888439ce70c1097e7"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_efb009e011004f2888439ce70c1097e7"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_efb009e011004f2888439ce70c1097e7"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_b1ab5ef2c4424cd294f3f8734bd9d111"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_b1ab5ef2c4424cd294f3f8734bd9d111"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_b1ab5ef2c4424cd294f3f8734bd9d111"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_c98bee8aac074b00bcb8509e4a94bde0"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_c98bee8aac074b00bcb8509e4a94bde0"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_c98bee8aac074b00bcb8509e4a94bde0"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_676cc47b3be74ffa8f0dd46ce839493b"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_676cc47b3be74ffa8f0dd46ce839493b"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_676cc47b3be74ffa8f0dd46ce839493b"
+      ],
+      "family": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_8491eb3b5bfd471cb856ed6760e95821"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_8491eb3b5bfd471cb856ed6760e95821"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_8491eb3b5bfd471cb856ed6760e95821"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_20051a9812464e73b8af12d5df17f997"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_20051a9812464e73b8af12d5df17f997"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_20051a9812464e73b8af12d5df17f997"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_2cd5947e6c33458e8ccad28c2f1e3589"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_2cd5947e6c33458e8ccad28c2f1e3589"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_2cd5947e6c33458e8ccad28c2f1e3589"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_967c44460ff74bd2b2f01615c1bee823"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_967c44460ff74bd2b2f01615c1bee823"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_967c44460ff74bd2b2f01615c1bee823"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_8491eb3b5bfd471cb856ed6760e95821"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_8491eb3b5bfd471cb856ed6760e95821"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_8491eb3b5bfd471cb856ed6760e95821"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_20051a9812464e73b8af12d5df17f997"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_20051a9812464e73b8af12d5df17f997"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_20051a9812464e73b8af12d5df17f997"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_2cd5947e6c33458e8ccad28c2f1e3589"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_2cd5947e6c33458e8ccad28c2f1e3589"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_2cd5947e6c33458e8ccad28c2f1e3589"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_967c44460ff74bd2b2f01615c1bee823"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_967c44460ff74bd2b2f01615c1bee823"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_967c44460ff74bd2b2f01615c1bee823"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_8491eb3b5bfd471cb856ed6760e95821"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_8491eb3b5bfd471cb856ed6760e95821"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_8491eb3b5bfd471cb856ed6760e95821"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_20051a9812464e73b8af12d5df17f997"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_20051a9812464e73b8af12d5df17f997"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_20051a9812464e73b8af12d5df17f997"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_2cd5947e6c33458e8ccad28c2f1e3589"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_2cd5947e6c33458e8ccad28c2f1e3589"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_2cd5947e6c33458e8ccad28c2f1e3589"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_967c44460ff74bd2b2f01615c1bee823"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_967c44460ff74bd2b2f01615c1bee823"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_967c44460ff74bd2b2f01615c1bee823"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_8491eb3b5bfd471cb856ed6760e95821"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_8491eb3b5bfd471cb856ed6760e95821"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_8491eb3b5bfd471cb856ed6760e95821"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_20051a9812464e73b8af12d5df17f997"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_20051a9812464e73b8af12d5df17f997"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_20051a9812464e73b8af12d5df17f997"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_2cd5947e6c33458e8ccad28c2f1e3589"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_2cd5947e6c33458e8ccad28c2f1e3589"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_2cd5947e6c33458e8ccad28c2f1e3589"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_967c44460ff74bd2b2f01615c1bee823"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_967c44460ff74bd2b2f01615c1bee823"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_967c44460ff74bd2b2f01615c1bee823"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_8491eb3b5bfd471cb856ed6760e95821"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_8491eb3b5bfd471cb856ed6760e95821"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_8491eb3b5bfd471cb856ed6760e95821"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_20051a9812464e73b8af12d5df17f997"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_20051a9812464e73b8af12d5df17f997"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_20051a9812464e73b8af12d5df17f997"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_2cd5947e6c33458e8ccad28c2f1e3589"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_2cd5947e6c33458e8ccad28c2f1e3589"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_2cd5947e6c33458e8ccad28c2f1e3589"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_967c44460ff74bd2b2f01615c1bee823"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_967c44460ff74bd2b2f01615c1bee823"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_967c44460ff74bd2b2f01615c1bee823"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_8491eb3b5bfd471cb856ed6760e95821"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_8491eb3b5bfd471cb856ed6760e95821"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_8491eb3b5bfd471cb856ed6760e95821"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_20051a9812464e73b8af12d5df17f997"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_20051a9812464e73b8af12d5df17f997"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_20051a9812464e73b8af12d5df17f997"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_2cd5947e6c33458e8ccad28c2f1e3589"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_2cd5947e6c33458e8ccad28c2f1e3589"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_2cd5947e6c33458e8ccad28c2f1e3589"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_967c44460ff74bd2b2f01615c1bee823"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_967c44460ff74bd2b2f01615c1bee823"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_967c44460ff74bd2b2f01615c1bee823"
+      ],
+      "family": "opaque_720eb89d347446b3be6736542b911b5c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_09e5d165753e4384906dad1e732235db"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_09e5d165753e4384906dad1e732235db"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_09e5d165753e4384906dad1e732235db"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_c3356ee01e454b0ab74ae39f531da55f"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_c3356ee01e454b0ab74ae39f531da55f"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_c3356ee01e454b0ab74ae39f531da55f"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_c2d066ba1c064c1a9abb8a6438f3ec70"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_c2d066ba1c064c1a9abb8a6438f3ec70"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_c2d066ba1c064c1a9abb8a6438f3ec70"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_de53727692d24c5ab6fe8439e55d25fc"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_de53727692d24c5ab6fe8439e55d25fc"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_de53727692d24c5ab6fe8439e55d25fc"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_09e5d165753e4384906dad1e732235db"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_09e5d165753e4384906dad1e732235db"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_09e5d165753e4384906dad1e732235db"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_c3356ee01e454b0ab74ae39f531da55f"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_c3356ee01e454b0ab74ae39f531da55f"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_c3356ee01e454b0ab74ae39f531da55f"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_c2d066ba1c064c1a9abb8a6438f3ec70"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_c2d066ba1c064c1a9abb8a6438f3ec70"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_c2d066ba1c064c1a9abb8a6438f3ec70"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_de53727692d24c5ab6fe8439e55d25fc"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_de53727692d24c5ab6fe8439e55d25fc"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_de53727692d24c5ab6fe8439e55d25fc"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_09e5d165753e4384906dad1e732235db"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_09e5d165753e4384906dad1e732235db"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_09e5d165753e4384906dad1e732235db"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_c3356ee01e454b0ab74ae39f531da55f"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_c3356ee01e454b0ab74ae39f531da55f"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_c3356ee01e454b0ab74ae39f531da55f"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_c2d066ba1c064c1a9abb8a6438f3ec70"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_c2d066ba1c064c1a9abb8a6438f3ec70"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_c2d066ba1c064c1a9abb8a6438f3ec70"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_de53727692d24c5ab6fe8439e55d25fc"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_de53727692d24c5ab6fe8439e55d25fc"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_de53727692d24c5ab6fe8439e55d25fc"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_09e5d165753e4384906dad1e732235db"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_09e5d165753e4384906dad1e732235db"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_09e5d165753e4384906dad1e732235db"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_c3356ee01e454b0ab74ae39f531da55f"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_c3356ee01e454b0ab74ae39f531da55f"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_c3356ee01e454b0ab74ae39f531da55f"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_c2d066ba1c064c1a9abb8a6438f3ec70"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_c2d066ba1c064c1a9abb8a6438f3ec70"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_c2d066ba1c064c1a9abb8a6438f3ec70"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_de53727692d24c5ab6fe8439e55d25fc"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_de53727692d24c5ab6fe8439e55d25fc"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_de53727692d24c5ab6fe8439e55d25fc"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_09e5d165753e4384906dad1e732235db"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_09e5d165753e4384906dad1e732235db"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_09e5d165753e4384906dad1e732235db"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_c3356ee01e454b0ab74ae39f531da55f"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_c3356ee01e454b0ab74ae39f531da55f"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_c3356ee01e454b0ab74ae39f531da55f"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_c2d066ba1c064c1a9abb8a6438f3ec70"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_c2d066ba1c064c1a9abb8a6438f3ec70"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_c2d066ba1c064c1a9abb8a6438f3ec70"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_de53727692d24c5ab6fe8439e55d25fc"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_de53727692d24c5ab6fe8439e55d25fc"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_de53727692d24c5ab6fe8439e55d25fc"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_09e5d165753e4384906dad1e732235db"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_09e5d165753e4384906dad1e732235db"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_09e5d165753e4384906dad1e732235db"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_c3356ee01e454b0ab74ae39f531da55f"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_c3356ee01e454b0ab74ae39f531da55f"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_c3356ee01e454b0ab74ae39f531da55f"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_c2d066ba1c064c1a9abb8a6438f3ec70"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_c2d066ba1c064c1a9abb8a6438f3ec70"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_c2d066ba1c064c1a9abb8a6438f3ec70"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_de53727692d24c5ab6fe8439e55d25fc"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_de53727692d24c5ab6fe8439e55d25fc"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_de53727692d24c5ab6fe8439e55d25fc"
+      ],
+      "family": "opaque_9ed224f70b2946a1a12fe6180068683c",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_cffe25a169794264bf6b6013acc1bdbf"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_cffe25a169794264bf6b6013acc1bdbf"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_cffe25a169794264bf6b6013acc1bdbf"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_18dce710d12b43368a0ae71fbb0c336d"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_18dce710d12b43368a0ae71fbb0c336d"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_18dce710d12b43368a0ae71fbb0c336d"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_e9e6936159624de4ba3431c10cfef9f0"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_e9e6936159624de4ba3431c10cfef9f0"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_e9e6936159624de4ba3431c10cfef9f0"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_9c2184f944bc4630b3279fc26222b5d9"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_9c2184f944bc4630b3279fc26222b5d9"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "evidence_scoped",
+        "opaque_9c2184f944bc4630b3279fc26222b5d9"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_cffe25a169794264bf6b6013acc1bdbf"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_cffe25a169794264bf6b6013acc1bdbf"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_cffe25a169794264bf6b6013acc1bdbf"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_18dce710d12b43368a0ae71fbb0c336d"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_18dce710d12b43368a0ae71fbb0c336d"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_18dce710d12b43368a0ae71fbb0c336d"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_e9e6936159624de4ba3431c10cfef9f0"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_e9e6936159624de4ba3431c10cfef9f0"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_e9e6936159624de4ba3431c10cfef9f0"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_9c2184f944bc4630b3279fc26222b5d9"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_9c2184f944bc4630b3279fc26222b5d9"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "on_query",
+        "timestamp_ttl",
+        "opaque_9c2184f944bc4630b3279fc26222b5d9"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_cffe25a169794264bf6b6013acc1bdbf"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_cffe25a169794264bf6b6013acc1bdbf"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_cffe25a169794264bf6b6013acc1bdbf"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_18dce710d12b43368a0ae71fbb0c336d"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_18dce710d12b43368a0ae71fbb0c336d"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_18dce710d12b43368a0ae71fbb0c336d"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_e9e6936159624de4ba3431c10cfef9f0"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_e9e6936159624de4ba3431c10cfef9f0"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_e9e6936159624de4ba3431c10cfef9f0"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_9c2184f944bc4630b3279fc26222b5d9"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_9c2184f944bc4630b3279fc26222b5d9"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "evidence_scoped",
+        "opaque_9c2184f944bc4630b3279fc26222b5d9"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_cffe25a169794264bf6b6013acc1bdbf"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_cffe25a169794264bf6b6013acc1bdbf"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_cffe25a169794264bf6b6013acc1bdbf"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_18dce710d12b43368a0ae71fbb0c336d"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_18dce710d12b43368a0ae71fbb0c336d"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_18dce710d12b43368a0ae71fbb0c336d"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_e9e6936159624de4ba3431c10cfef9f0"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_e9e6936159624de4ba3431c10cfef9f0"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_e9e6936159624de4ba3431c10cfef9f0"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_9c2184f944bc4630b3279fc26222b5d9"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_9c2184f944bc4630b3279fc26222b5d9"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "fixed_interval",
+        "timestamp_ttl",
+        "opaque_9c2184f944bc4630b3279fc26222b5d9"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_cffe25a169794264bf6b6013acc1bdbf"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_cffe25a169794264bf6b6013acc1bdbf"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_cffe25a169794264bf6b6013acc1bdbf"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_18dce710d12b43368a0ae71fbb0c336d"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_18dce710d12b43368a0ae71fbb0c336d"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_18dce710d12b43368a0ae71fbb0c336d"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_e9e6936159624de4ba3431c10cfef9f0"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_e9e6936159624de4ba3431c10cfef9f0"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_e9e6936159624de4ba3431c10cfef9f0"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_9c2184f944bc4630b3279fc26222b5d9"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_9c2184f944bc4630b3279fc26222b5d9"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "evidence_scoped",
+        "opaque_9c2184f944bc4630b3279fc26222b5d9"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_cffe25a169794264bf6b6013acc1bdbf"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_cffe25a169794264bf6b6013acc1bdbf"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_cffe25a169794264bf6b6013acc1bdbf"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_18dce710d12b43368a0ae71fbb0c336d"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_18dce710d12b43368a0ae71fbb0c336d"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_18dce710d12b43368a0ae71fbb0c336d"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_e9e6936159624de4ba3431c10cfef9f0"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_e9e6936159624de4ba3431c10cfef9f0"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_e9e6936159624de4ba3431c10cfef9f0"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_9c2184f944bc4630b3279fc26222b5d9"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "projection"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_9c2184f944bc4630b3279fc26222b5d9"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "context"
+    },
+    {
+      "arm": [
+        "event_trigger",
+        "timestamp_ttl",
+        "opaque_9c2184f944bc4630b3279fc26222b5d9"
+      ],
+      "family": "opaque_b83c0bad0eaa4547afdac371aaf9a3e9",
+      "gate": "hidden_twin",
+      "plane": "payload"
+    }
+  ],
+  "families_with_detection_power": 9,
+  "family_count": 12,
+  "hidden_twin_comparisons": 216,
+  "interpretation_withdrawn": true,
+  "limitations": [
+    "Families with no state assertion carry no hidden event window and contribute no detection power.",
+    "The adversarial projector is a purpose-built E1-semantics clone; it shows this harness can detect that leak class, not that no other class exists.",
+    "project_query emits no unknown column, so the twin asserts equality over a context whose unknown field is always empty.",
+    "Recipient and actor scoping is now refused by the projector as well as the validator; spatial scope for direct observations remains the package validator's responsibility and is not covered by this gate."
+  ],
+  "model_calls": 0,
+  "perturbation_design": "hidden state end moved +/-8 minutes across the query instant; evidence stream, source registry, refresh trace and policy bytes unchanged",
+  "perturbation_sensitive_arms": 216,
+  "prompt_chain": "run_e2.model_context + run_e2.request_payload",
+  "replay_measurement": {
+    "experiment_role": "primary",
+    "injected_fault": {
+      "gate_discards_hidden_inputs": false,
+      "projector_hidden_currentness": true
+    },
+    "intervention": "none",
+    "measurement_state": "FAULT_REJECTED",
+    "underlying_equality_outcome": "UNEQUAL"
+  },
+  "schema_version": "observer-twin-gate-report-v4",
+  "status": "FAIL",
+  "status_semantics": {
+    "FAIL": "at least one recorded failure",
+    "INCONCLUSIVE": "no family gave the reference differential any sensitivity",
+    "PASS": "the evaluated chain consumes the perturbed plane and no failure was recorded",
+    "PASS_REFERENCE_ONLY": "the reference differential is sensitive but the evaluated-chain equality assertion cannot fail; not evidence of gate adequacy"
+  },
+  "supersedes": [
+    "twin_v3/twin_gate_report_v3.json (schema v3): its detection_power block claimed the fields were 'Computed at runtime' but hardcoded capable_of_failing=True for reference_differential_check, perturbation_noop_guard, visible_positive_control and authorization_probe -- in the perturbation_noop_guard case contradicting that record's own reason field ('has never fired and contributes no detection power'). The frozen v3 bytes are preserved unmodified; this corrected rerun writes only to the TWIN_V3_OUT directory (twin_v4/)."
+  ],
+  "visible_positive_controls": 9
+}

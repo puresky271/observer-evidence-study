@@ -1,0 +1,92 @@
+{
+  "evidence": [
+    {
+      "claim": {
+        "assertion_kind": "state",
+        "object": "opaque_0827e9c3fff14f5881e0480f9b8fd8bd",
+        "polarity": "positive",
+        "predicate": "package_membership",
+        "subject_ref": "opaque_d9e4c235b1134916a954910775b25fcc"
+      },
+      "derived_from_evidence_ids": [],
+      "event_time_basis": "direct_observation",
+      "event_time_jst": "2026-10-15T09:00:00+09:00",
+      "evidence_id": "opaque_6f1ecfb96fc5465a84d291ab9919ca19",
+      "evidence_kind": "direct_observation",
+      "observed_at_jst": "2026-10-15T09:00:00+09:00",
+      "participants": {
+        "actor_ref": null,
+        "recipient_refs": [],
+        "sender_ref": null
+      },
+      "scope": {
+        "authorization": "direct_sense",
+        "basis_evidence_ids": [],
+        "modality": "proprioceptive",
+        "observer_position_ref": "opaque_6b5841e99f9148458095882cc159bc79",
+        "target_space_ref": "opaque_6b5841e99f9148458095882cc159bc79"
+      },
+      "source_kind": "opaque_faf9b644fa9844cba4f642223184aeb0",
+      "source_ref": "opaque_5cb7a7a68fa649fe8c00f35b65e30175",
+      "support": {
+        "mode": "point",
+        "valid_until_jst": null
+      }
+    },
+    {
+      "claim": {
+        "assertion_kind": "occurrence",
+        "object": "opaque_d9e4c235b1134916a954910775b25fcc",
+        "polarity": "positive",
+        "predicate": "current_location",
+        "subject_ref": "opaque_411d6f36468a4918a0605bf4c2192dd1"
+      },
+      "derived_from_evidence_ids": [],
+      "event_time_basis": "action_receipt",
+      "event_time_jst": "2026-10-15T09:15:00+09:00",
+      "evidence_id": "opaque_867f3a8645f14108a837847548639b20",
+      "evidence_kind": "self_action_receipt",
+      "observed_at_jst": "2026-10-15T09:15:00+09:00",
+      "participants": {
+        "actor_ref": "opaque_411d6f36468a4918a0605bf4c2192dd1",
+        "recipient_refs": [],
+        "sender_ref": null
+      },
+      "scope": {
+        "authorization": "self_action",
+        "basis_evidence_ids": [],
+        "modality": "action",
+        "observer_position_ref": null,
+        "target_space_ref": null
+      },
+      "source_kind": "opaque_e17d7ff28008485d8a96689fd6eae737",
+      "source_ref": "opaque_65d1a9b5b9e045b785be3ea81571f203",
+      "support": {
+        "mode": "point",
+        "valid_until_jst": null
+      }
+    }
+  ],
+  "observable_triggers": [
+    {
+      "delivered_at_jst": "2026-10-15T09:00:00+09:00",
+      "evidence_ids": [
+        "opaque_6f1ecfb96fc5465a84d291ab9919ca19"
+      ],
+      "trigger_id": "opaque_e2e683676a44472683472ea2a9ae65b4",
+      "trigger_kind": "sensor_update"
+    },
+    {
+      "delivered_at_jst": "2026-10-15T09:15:00+09:00",
+      "evidence_ids": [
+        "opaque_867f3a8645f14108a837847548639b20"
+      ],
+      "trigger_id": "opaque_0331a8864dd84c8091fd26b190130e25",
+      "trigger_kind": "self_action_receipt"
+    }
+  ],
+  "observer_ref": "opaque_411d6f36468a4918a0605bf4c2192dd1",
+  "schema_version": "observer-evidence-stream-v2",
+  "source_registry_sha256": "daac30092bc6ee94cbe12abe0ee39768713af542db1c39292c067467a8cc2c12",
+  "stream_id": "opaque_a2c5a408ddd04aa0b29a726d36af56c2"
+}

@@ -1,0 +1,96 @@
+{
+  "evidence": [
+    {
+      "claim": {
+        "assertion_kind": "reported_occurrence",
+        "object": "opaque_c3d9378ffc1b400897302b814a9f27d9",
+        "polarity": "positive",
+        "predicate": "message_state",
+        "subject_ref": "opaque_7fc159c01e2f45dfafc5af82d5c8e3c3"
+      },
+      "derived_from_evidence_ids": [],
+      "event_time_basis": "message_report",
+      "event_time_jst": "2026-10-22T09:00:00+09:00",
+      "evidence_id": "opaque_f1914b524255402c944701c5284a094d",
+      "evidence_kind": "communication",
+      "observed_at_jst": "2026-10-22T09:00:00+09:00",
+      "participants": {
+        "actor_ref": "opaque_f5426f4dcf174d37abeffda7a698dd04",
+        "recipient_refs": [
+          "opaque_411d6f36468a4918a0605bf4c2192dd1"
+        ],
+        "sender_ref": "opaque_f5426f4dcf174d37abeffda7a698dd04"
+      },
+      "scope": {
+        "authorization": "recipient",
+        "basis_evidence_ids": [],
+        "modality": "communication",
+        "observer_position_ref": null,
+        "target_space_ref": null
+      },
+      "source_kind": "opaque_b89a7f7ff50141a59abbd47c5a4fd654",
+      "source_ref": "opaque_339045e6505240899fe1b8eb3af7deef",
+      "support": {
+        "mode": "point",
+        "valid_until_jst": null
+      }
+    },
+    {
+      "claim": {
+        "assertion_kind": "reported_occurrence",
+        "object": true,
+        "polarity": "positive",
+        "predicate": "message_state",
+        "subject_ref": "opaque_7fc159c01e2f45dfafc5af82d5c8e3c3"
+      },
+      "derived_from_evidence_ids": [],
+      "event_time_basis": "message_report",
+      "event_time_jst": "2026-10-22T09:15:00+09:00",
+      "evidence_id": "opaque_f96dd6a27f334e31a6a9b0dd28039c8a",
+      "evidence_kind": "communication",
+      "observed_at_jst": "2026-10-22T09:15:00+09:00",
+      "participants": {
+        "actor_ref": "opaque_f5426f4dcf174d37abeffda7a698dd04",
+        "recipient_refs": [
+          "opaque_411d6f36468a4918a0605bf4c2192dd1"
+        ],
+        "sender_ref": "opaque_f5426f4dcf174d37abeffda7a698dd04"
+      },
+      "scope": {
+        "authorization": "recipient",
+        "basis_evidence_ids": [],
+        "modality": "communication",
+        "observer_position_ref": null,
+        "target_space_ref": null
+      },
+      "source_kind": "opaque_b89a7f7ff50141a59abbd47c5a4fd654",
+      "source_ref": "opaque_5d2945527e7641adbf12252d735b380c",
+      "support": {
+        "mode": "point",
+        "valid_until_jst": null
+      }
+    }
+  ],
+  "observable_triggers": [
+    {
+      "delivered_at_jst": "2026-10-22T09:00:00+09:00",
+      "evidence_ids": [
+        "opaque_f1914b524255402c944701c5284a094d"
+      ],
+      "trigger_id": "opaque_1180fb76be2a485a9f4bb5064de09b83",
+      "trigger_kind": "message_received"
+    },
+    {
+      "delivered_at_jst": "2026-10-22T09:15:00+09:00",
+      "evidence_ids": [
+        "opaque_f96dd6a27f334e31a6a9b0dd28039c8a"
+      ],
+      "trigger_id": "opaque_1bf3228a5d4c447c8301d62c559bd346",
+      "trigger_kind": "message_received"
+    }
+  ],
+  "observer_ref": "opaque_411d6f36468a4918a0605bf4c2192dd1",
+  "schema_version": "observer-evidence-stream-v2",
+  "source_registry_sha256": "249cca4e2f763647f25d22e85eecde1a0e302422b3722b37e80fc040b6cd7492",
+  "stream_id": "opaque_58ef6d42b33c4f4d9f20fb7a748416d7"
+}

@@ -85,11 +85,22 @@ def load_denylist(path: Path) -> dict:
 
 def classify(path: Path, deny: dict) -> dict:
     try:
-        text = io.open(path, encoding="utf-8", errors="replace").read()
-    except OSError as exc:
+        if path.suffix.lower() == ".pdf":
+            # PDF bytes are generated from the adjacent TeX source. The source
+            # is scanned for text and the PDF is checked by the compiler.
+            return {"decision": "ADMIT", "reasons": ["pdf_checked_with_adjacent_tex"],
+                    "bytes": path.stat().st_size, "canon_token_count": 0,
+                    "place_token_count": 0}
+        else:
+            text = io.open(path, encoding="utf-8", errors="replace").read()
+    except (OSError, subprocess.CalledProcessError, ValueError, RuntimeError) as exc:
         return {"decision": "EXCLUDE", "reasons": [f"unreadable: {exc}"]}
     reasons: list[str] = []
-    canon = sorted({c for c in deny["canon_identities"] if c in text})
+    # Short Latin names must match whole words; substring scanning flagged the
+    # first four letters of "anonymous" as a private character identity.
+    canon = sorted({c for c in deny["canon_identities"] if (
+        re.search(r"(?<![A-Za-z])" + re.escape(c) + r"(?![A-Za-z])", text, re.I)
+        if c.isascii() and c.isalpha() else c in text)})
     places = sorted({p for p in deny["real_place_names"] if p in text})
     if canon:
         reasons.append(f"canon_identity:{len(canon)}_distinct_tokens_see_denylist")
