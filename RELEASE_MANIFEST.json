@@ -135,7 +135,7 @@
       "transformation": "consistent random ID/free-text rewrite; dependent hashes recomputed",
       "real_world_content": false,
       "reversible_mapping": false,
-      "sha256": "0bef9ebba683b577122f381ecc717347926aa20ca5226bb36b1db1e2fe740e53",
+      "sha256": "ca077648a89bc7276dbbe900a4d075e2e14a91b494700a8be52fe61cf58b1ca4",
       "allowed_use": "offline replay",
       "exclusion_reason": "private originals and map excluded; receipt is author-side attestation"
     },

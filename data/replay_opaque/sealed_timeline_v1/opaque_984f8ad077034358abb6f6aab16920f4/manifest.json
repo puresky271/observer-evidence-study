@@ -1,7 +1,7 @@
 {
   "answer_model_calls": 0,
   "authoring_procedure": "independent family slots generated under a frozen authoring procedure",
-  "family_id": "opaque_a0be632a713c410cbd9b10e4611b0b2a",
+  "family_id": "family_opaque_a0be632a713c410cbd9b10e4611b0b2a",
   "hidden_twin_rule": "Change only unobserved world state; all observer artifacts remain byte-identical.",
   "package_files_sha256": "5d8fe00c30953395c99e7c4823b1f93cbc2d221a8bf14d862d166988a0bc5f1b",
   "package_id": "opaque_73bf60b7ca4d48dd98a03dcce64736f3",
@@ -25,5 +25,6 @@
   "scene_class_id": "coverage_edge_vs_unobserved_inside",
   "schema_version": "observer-sealed-family-v2",
   "source_registry_sha256": "02d31befb6e44085807bc0f32ead8b99697dbdd1348adfda5affc2a168092749",
-  "stream_sha256": "bd9dc5d0dec2a073a189ad0026ab27b82731f210c5d64e212c7e1a3225168f7e"
+  "stream_sha256": "bd9dc5d0dec2a073a189ad0026ab27b82731f210c5d64e212c7e1a3225168f7e",
+  "contains_private_semantics": false
 }
